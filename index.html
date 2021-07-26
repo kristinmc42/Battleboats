@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battleship</title>
+
+  <!-- my style sheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <nav>
+      <h1>Battleship</h1>
+      <ul>
+        <li>
+          <button id="newGame">New Game</button>
+        </li>
+        <li>
+          <button id="saveGame">Save Game</button>
+        </li>
+        <li>
+          <a href="">Load Saved Game</a>
+        </li>
+        <li>
+          <a href="">Options</a>
+        </li>
+        <li>
+          <a href="">Leaderboard</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- gameboards section -->
+  <section>
+    <!-- start of legend div -->
+    <div class="legend">
+      <!-- will display all the types of ships -->
+      <div class="ships">
+        <p class="ship carrier">Carrier</p>
+        <img src="" alt="">
+        <p class="text">5 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship battleship">Battleship</p>
+        <img src="" alt="">
+        <p class="text">4 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship cruiser">Cruiser</p>
+        <img src="" alt="">
+        <p class="text">3 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship submarine">Submarine</p>
+        <img src="" alt="">
+        <p class="text">3 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship destroyer">Destroyer</p>
+        <img src="" alt="">
+        <p class="text">2 tiles long</p>
+      </div>
+    </div>
+    <!-- end of legend div -->
+    
+    <!-- start of player1 div -->
+    <div class="player1Board">
+      <!-- will display board for Player 1 (user) -->
+      <h2>Player one</h2>
+      <h3 id="user">(Your board)</h3>
+      <div class="columnHeader">
+        <div class="square header"></div>
+        <div class="square header">A</div>
+        <div class="square header">B</div>
+        <div class="square header">C</div>
+        <div class="square header">D</div>
+        <div class="square header">E</div>
+        <div class="square header">F</div>
+        <div class="square header">G</div>
+        <div class="square header">H</div>
+        <div class="square header">I</div>
+        <div class="square header">J</div>
+      </div>
+      <div class="row1">
+        <div class="square header">1</div>
+        <div class="square player1 a1"></div>
+        <div class="square player1 b1"></div>
+        <div class="square player1 c1"></div>
+        <div class="square player1 d1"></div>
+        <div class="square player1 e1"></div>
+        <div class="square player1 f1"></div>
+        <div class="square player1 g1"></div>
+        <div class="square player1 h1"></div>
+        <div class="square player1 i1"></div>
+        <div class="square player1 j1"></div>
+      </div>
+      <div class="row2">
+        <div class="square header">2</div>
+        <div class="square player1 a2"></div>
+        <div class="square player1 b2"></div>
+        <div class="square player1 c2"></div>
+        <div class="square player1 d2"></div>
+        <div class="square player1 e2"></div>
+        <div class="square player1 f2"></div>
+        <div class="square player1 g2"></div>
+        <div class="square player1 h2"></div>
+        <div class="square player1 i2"></div>
+        <div class="square player1 j2"></div>
+      </div>
+      <div class="row3">
+        <div class="square header">3</div>
+        <div class="square player1 a3"></div>
+        <div class="square player1 b3"></div>
+        <div class="square player1 c3"></div>
+        <div class="square player1 d3"></div>
+        <div class="square player1 e3"></div>
+        <div class="square player1 f3"></div>
+        <div class="square player1 g3"></div>
+        <div class="square player1 h3"></div>
+        <div class="square player1 i3"></div>
+        <div class="square player1 j3"></div>
+      </div>
+      <div class="row4">
+        <div class="square header">4</div>
+        <div class="square player1 a4"></div>
+        <div class="square player1 b4"></div>
+        <div class="square player1 c4"></div>
+        <div class="square player1 d4"></div>
+        <div class="square player1 e4"></div>
+        <div class="square player1 f4"></div>
+        <div class="square player1 g4"></div>
+        <div class="square player1 h4"></div>
+        <div class="square player1 i4"></div>
+        <div class="square player1 j4"></div>
+      </div>
+      <div class="row5">
+        <div class="square header">5</div>
+        <div class="square player1 a5"></div>
+        <div class="square player1 b5"></div>
+        <div class="square player1 c5"></div>
+        <div class="square player1 d5"></div>
+        <div class="square player1 e5"></div>
+        <div class="square player1 f5"></div>
+        <div class="square player1 g5"></div>
+        <div class="square player1 h5"></div>
+        <div class="square player1 i5"></div>
+        <div class="square player1 j5"></div>
+      </div>
+      <div class="row6">
+        <div class="square header">6</div>
+        <div class="square player1 a6"></div>
+        <div class="square player1 b6"></div>
+        <div class="square player1 c6"></div>
+        <div class="square player1 d6"></div>
+        <div class="square player1 e6"></div>
+        <div class="square player1 f6"></div>
+        <div class="square player1 g6"></div>
+        <div class="square player1 h6"></div>
+        <div class="square player1 i6"></div>
+        <div class="square player1 j6"></div>
+      </div>
+      <div class="row7">
+        <div class="square header">7</div>
+        <div class="square player1 a7"></div>
+        <div class="square player1 b7"></div>
+        <div class="square player1 c7"></div>
+        <div class="square player1 d7"></div>
+        <div class="square player1 e7"></div>
+        <div class="square player1 f7"></div>
+        <div class="square player1 g7"></div>
+        <div class="square player1 h7"></div>
+        <div class="square player1 i7"></div>
+        <div class="square player1 j7"></div>
+      </div>
+      <div class="row8">
+        <div class="square header">8</div>
+        <div class="square player1 a8"></div>
+        <div class="square player1 b8"></div>
+        <div class="square player1 c8"></div>
+        <div class="square player1 d8"></div>
+        <div class="square player1 e8"></div>
+        <div class="square player1 f8"></div>
+        <div class="square player1 g8"></div>
+        <div class="square player1 h8"></div>
+        <div class="square player1 i8"></div>
+        <div class="square player1 j8"></div>
+      </div>
+      <div class="row9">
+        <div class="square header">9</div>
+        <div class="square player1 a9"></div>
+        <div class="square player1 b9"></div>
+        <div class="square player1 c9"></div>
+        <div class="square player1 d9"></div>
+        <div class="square player1 e9"></div>
+        <div class="square player1 f9"></div>
+        <div class="square player1 g9"></div>
+        <div class="square player1 h9"></div>
+        <div class="square player1 i9"></div>
+        <div class="square player1 j9"></div>
+      </div>
+      <div class="row10">
+        <div class="square header">10</div>
+        <div class="square player1 a10"></div>
+        <div class="square player1 b10"></div>
+        <div class="square player1 c10"></div>
+        <div class="square player1 d10"></div>
+        <div class="square player1 e10"></div>
+        <div class="square player1 f10"></div>
+        <div class="square player1 g10"></div>
+        <div class="square player1 h10"></div>
+        <div class="square player1 i10"></div>
+        <div class="square player1 j10"></div>
+      </div>
+    </div>
+    <!-- end of player1 div -->
+
+    <!-- start of player2 div -->
+    <div class="player2Board">
+      <!-- will display the board for Player 2 (another user or AI) -->
+      <h2>Player two</h2>
+      <h3>(Opponent's board)</h3>
+      <div class="columnHeader">
+        <div class="square header"></div>
+        <div class="square header">A</div>
+        <div class="square header">B</div>
+        <div class="square header">C</div>
+        <div class="square header">D</div>
+        <div class="square header">E</div>
+        <div class="square header">F</div>
+        <div class="square header">G</div>
+        <div class="square header">H</div>
+        <div class="square header">I</div>
+        <div class="square header">J</div>
+      </div>
+      <div class="row1">
+        <div class="square header">1</div>
+        <div class="square player2 a1"></div>
+        <div class="square player2 b1"></div>
+        <div class="square player2 c1"></div>
+        <div class="square player2 d1"></div>
+        <div class="square player2 e1"></div>
+        <div class="square player2 f1"></div>
+        <div class="square player2 g1"></div>
+        <div class="square player2 h1"></div>
+        <div class="square player2 i1"></div>
+        <div class="square player2 j1"></div>
+      </div>
+      <div class="row2">
+        <div class="square header">2</div>
+        <div class="square player2 a2"></div>
+        <div class="square player2 b2"></div>
+        <div class="square player2 c2"></div>
+        <div class="square player2 d2"></div>
+        <div class="square player2 e2"></div>
+        <div class="square player2 f2"></div>
+        <div class="square player2 g2"></div>
+        <div class="square player2 h2"></div>
+        <div class="square player2 i2"></div>
+        <div class="square player2 j2"></div>
+      </div>
+      <div class="row3">
+        <div class="square header">3</div>
+        <div class="square player2 a3"></div>
+        <div class="square player2 b3"></div>
+        <div class="square player2 c3"></div>
+        <div class="square player2 d3"></div>
+        <div class="square player2 e3"></div>
+        <div class="square player2 f3"></div>
+        <div class="square player2 g3"></div>
+        <div class="square player2 h3"></div>
+        <div class="square player2 i3"></div>
+        <div class="square player2 j3"></div>
+      </div>
+      <div class="row4">
+        <div class="square header">4</div>
+        <div class="square player2 a4"></div>
+        <div class="square player2 b4"></div>
+        <div class="square player2 c4"></div>
+        <div class="square player2 d4"></div>
+        <div class="square player2 e4"></div>
+        <div class="square player2 f4"></div>
+        <div class="square player2 g4"></div>
+        <div class="square player2 h4"></div>
+        <div class="square player2 i4"></div>
+        <div class="square player2 j4"></div>
+      </div>
+      <div class="row5">
+        <div class="square header">5</div>
+        <div class="square player2 a5"></div>
+        <div class="square player2 b5"></div>
+        <div class="square player2 c5"></div>
+        <div class="square player2 d5"></div>
+        <div class="square player2 e5"></div>
+        <div class="square player2 f5"></div>
+        <div class="square player2 g5"></div>
+        <div class="square player2 h5"></div>
+        <div class="square player2 i5"></div>
+        <div class="square player2 j5"></div>
+      </div>
+      <div class="row6">
+        <div class="square header">6</div>
+        <div class="square player2 a6"></div>
+        <div class="square player2 b6"></div>
+        <div class="square player2 c6"></div>
+        <div class="square player2 d6"></div>
+        <div class="square player2 e6"></div>
+        <div class="square player2 f6"></div>
+        <div class="square player2 g6"></div>
+        <div class="square player2 h6"></div>
+        <div class="square player2 i6"></div>
+        <div class="square player2 j6"></div>
+      </div>
+      <div class="row7">
+        <div class="square header">7</div>
+        <div class="square player2 a7"></div>
+        <div class="square player2 b7"></div>
+        <div class="square player2 c7"></div>
+        <div class="square player2 d7"></div>
+        <div class="square player2 e7"></div>
+        <div class="square player2 f7"></div>
+        <div class="square player2 g7"></div>
+        <div class="square player2 h7"></div>
+        <div class="square player2 i7"></div>
+        <div class="square player2 j7"></div>
+      </div>
+      <div class="row8">
+        <div class="square header">8</div>
+        <div class="square player2 a8"></div>
+        <div class="square player2 b8"></div>
+        <div class="square player2 c8"></div>
+        <div class="square player2 d8"></div>
+        <div class="square player2 e8"></div>
+        <div class="square player2 f8"></div>
+        <div class="square player2 g8"></div>
+        <div class="square player2 h8"></div>
+        <div class="square player2 i8"></div>
+        <div class="square player2 j8"></div>
+      </div>
+      <div class="row9">
+        <div class="square header">9</div>
+        <div class="square player2 a9"></div>
+        <div class="square player2 b9"></div>
+        <div class="square player2 c9"></div>
+        <div class="square player2 d9"></div>
+        <div class="square player2 e9"></div>
+        <div class="square player2 f9"></div>
+        <div class="square player2 g9"></div>
+        <div class="square player2 h9"></div>
+        <div class="square player2 i9"></div>
+        <div class="square player2 j9"></div>
+      </div>
+      <div class="row10">
+        <div class="square header">10</div>
+        <div class="square player2 a10"></div>
+        <div class="square player2 b10"></div>
+        <div class="square player2 c10"></div>
+        <div class="square player2 d10"></div>
+        <div class="square player2 e10"></div>
+        <div class="square player2 f10"></div>
+        <div class="square player2 g10"></div>
+        <div class="square player2 h10"></div>
+        <div class="square player2 i10"></div>
+        <div class="square player2 j10"></div>
+      </div>
+    </div>
+    <!-- end of player2 div -->
+  </section>
+  <!-- end of gameboard section -->
+
+  <!-- start of input section -->
+  <!-- when new game is clicked ask player 1 to set ships -->
+  <div class="input">
+    <!-- h2 (Player 1) Let's set your boats -->
+ 
+    <h3>Select the starting square for your boats(eg. F4)</h3>
+    <!-- form for Carrier -->
+    <form action="#" method="#" class="setForm" name="setCarrierForm">
+      <label for="setCarrier">Carrier:</label>
+      <input type="text" id="setCarrier" name="setCarrier" placeholder="e.g. F4">
+      <label for="">Vertical</label>
+      <input type="radio" name="carrierDirection" value="carrierVertical" id="carrierVertical">
+      <label for="">Horizontal</label>
+      <input type="radio" name="carrierDirection"  value="carrierHorizontal" id="carrierHorizontal">
+      <button type="submit" id="submitCarrier">Set Carrier</button>
+    </form>
+<!-- form for Battleship -->
+    <form action="#" method="#" class="setForm" name="setBattleshipForm">
+      <label for="setBattleship">Battleship:</label>
+      <input type="text" id="setBattleship" name="setBattleship" placeholder="e.g. F4">
+      <label for="">Vertical</label>
+      <input type="radio" name="battleshipDirection" value="battleshipVertical" id="battleshipVertical">
+      <label for="">Horizontal</label>
+      <input type="radio" name="battleshipDirection"  value="battleshipHorizontal" id="battleshipHorizontal">
+      <button type="submit" id="submitBattleship">Set Battleship</button>
+    </form>
+    <!-- form for Cruiser -->
+    <form action="#" method="#" class="setForm" name="setCruiserForm">
+      <label for="setCruiser">Cruiser:</label>
+      <input type="text" id="setCruiser" name="setCruiser" placeholder="e.g. F4">
+      <label for="">Vertical</label>
+      <input type="radio" name="cruiserDirection" value="cruiserVertical" id="cruiserVertical">
+      <label for="">Horizontal</label>
+      <input type="radio" name="cruiserDirection"  value="cruiserHorizontal" id="cruiserHorizontal">
+      <button type="submit" id="submitCruiserr">Set Cruiser</button>
+    </form>
+    <!-- Form for Submarine -->
+    <form action="#" method="#" class="setForm" name="setSubmarineForm">
+      <label for="setSubmarine">Submarine:</label>
+      <input type="text" id="setSubmarine" name="setSubmarine" placeholder="e.g. F4">
+      <label for="">Vertical</label>
+      <input type="radio" name="submarineDirection" value="submarineVertical" id="submarineVertical">
+      <label for="">Horizontal</label>
+      <input type="radio" name="submarineDirection"  value="submarineHorizontal" id="submarineHorizontal">
+      <button type="submit" id="submitSubmarine">Set Submarine</button>
+    </form>
+    <!-- form for Destroyer -->
+    <form action="#" method="#" class="setForm" name="setDestroyerForm">
+      <label for="setDestroyer">Destroyer:</label>
+      <input type="text" id="setDestroyer" name="setDestroyer" placeholder="e.g. F4">
+      <label for="">Vertical</label>
+      <input type="radio" name="destroyerDirection" value="destroyerVertical" id="destroyerVertical">
+      <label for="">Horizontal</label>
+      <input type="radio" name="destroyerDirection"  value="destroyerHorizontal" id="destroyerHorizontal">
+      <button type="submit" id="submitDestroyer">Set Destroyer</button>
+    </form>
+    <!--  -->
+  </div>
+
+
+
+  <!-- end of input section -->
+  <!-- footer -->
+
+  <!-- end of footer -->
+
+  <!-- attach jquery library and js script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+  <!-- my Javascript file -->
+  <script src="script.js"></script>
+</body>
+</html>
