@@ -4,13 +4,24 @@ const app = {
 
 };
 
-app.getPlayerName = () => {
-  // asks user for their name
-  // saves name in variable
-  // displays user name under Player 1
-  app.userName = prompt("What is your name?");
-  $('#user').html(`(${app.userName}'s board)`);
-};
+app.resetForms = () => {
+  //reset all forms for setting boats
+  app.setCarrierInput = $("#setCarrier").val('');
+  app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+
+  app.setBattleshipInpuit = $('#setBattleship').val('');
+
+  app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
+
+  app.setCruiserInput = $('#setCruiser').val('');
+  app.setCruiserRadioButtons = $('input[name="cruiserDirection"]').prop('checked', false);
+
+  app.setSubmarineInput = $('#setSubmarine').val('');
+  app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
+
+  app.setDestroyerInput = $('setDestroyer').val('');
+  app.setDestroyerRadioButttons = $('input[name="destroyerDirection"]').prop('checked', false);
+};//end of resetFroms function
 
 app.setBoats = () => {
 // ask player what square they would like to set their boat in
@@ -26,19 +37,17 @@ app.setBoats = () => {
   app.inputH3Element = $('.input h3').show();
   app.setFormElements = $('form[name="setCarrierForm"]').show();
   
-  let startingPosition = '';
-  let direction = '';
-  let vertical = true;
+
+  
   let player = '.player1';
 
   app.setCarrierButton = $('#submitCarrier').on('click', function() {
     // when the user clicks on the submit button: 
-    //    hide the submitCarrier form
-    
-  
-    
     //    set the carrier
     const CarrierPosition = app.setCarrier();
+
+    console.log (CarrierPosition);
+
     app.placeOnBoard(CarrierPosition, player);
 
     // hide form for Carrier and show form for Battleship
@@ -46,21 +55,52 @@ app.setBoats = () => {
     app.setFormElements = $('form[name="setCarrierForm"]').hide();
 
     app.setFormElements = $('form[name="setBattleshipForm"]').show();
+  }); 
+
+  app.setBattleshipButton = $('#submitBattleship').on('click', function (){
+    // when the user clicks on the submit button: 
+    //    set the Battleship
+    const battleshipPosition = app.setBattleship();
+
+    app.placeOnBoard(battleshipPosition, player);
+
+    app.setFormElements = $('form[name="setBattleshipForm"]').hide();
+
+    app.setFormElements = $('form[name="setCruiserForm"]').show();
   });
 
-  app.setBattleshipButton = () => {
+  app.setCruiserButton = $('#setCruiser').on('click', function (){
+    const cruiserPosition = app.setCruiser();
 
- };   
+    app.placeOnBoard(cruiserPosition, player);
 
-    
+    app.setFormElements = $('form[name="setCruiserForm"]').hide();
 
+    app.setFormElements = $('form[name="setSubmarineForm"]').show();
+  });
 
+  app.setSubmarineButton = $('#setSubmarine').on('click', function (){
+    const submarinePosition = app.setSubmarine();
 
+    app.placeOnBoard(submarinePosition, player);
 
-  
+    app.setFormElements = $('form[name="setSubmarineForm"]').hide();
+
+    app.setFormElements = $('form[name="setDestroyerForm"]').show();
+  });
+
+  app.setDestroyerButton = $('#setDestroyer').on('click', function (){
+    const destroyerPosition = setDestroyer();
+
+    app.placeOnBoard(destroyerPosition, player);
+
+    app.setFormElements = $('form[name="setDestroyerForm"]').hide();
+  });
+
+  //commented code below is for using prompt to get user input for setting boats
+  //prompt box blocked the game board though so wasn't ideal
   // for (let i = 0; i < app.boats.length; i++){
-    
-      
+  
   //   startingPosition = prompt(`Where would you like to set your ${app.boats[i].name} (${app.boats[i].length} tiles)? Select the starting square (eg. F4)`);
     
   //   startingPosition = startingPosition.toLowerCase();
@@ -78,26 +118,22 @@ app.setBoats = () => {
   //   };
 
   //   console.log(startingPosition, direction, vertical)
-
   //   app.placeOnBoard(startingPosition, boatLength, vertical, player);
-
-    
   //   app.inputDiv = $('.input').append(`<p>${app.boats[i].name}  - Placed</p>`);
-    
-    
-
   // };
 
-};
+}; // end of app.setBpats function
 
 app.setCarrier = () => {
     //    assign the text field to variable startingPosition
     //    asssign variable vertical true or false depending on the radio button value
 
-    startingPosition = $('.setCarrier').val();
+    let vertical = true;
+
+    let startingPosition = $('#setCarrier').val();
     startingPosition = '.' + startingPosition.toLowerCase();
     
-    direction = $('input[type="radio"]:checked').val();
+    const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
 
     if (direction === 'carrierVertical'){
       vertical = true;
@@ -109,18 +145,20 @@ app.setCarrier = () => {
 
     console.log(startingPosition, direction, vertical)
 
+    return [startingPosition, vertical, boatLength];
+}; //end of app.setCarrier function
 
-    return [startingPosition, vertical, boatlength];
-};
 
 app.setBattleship = () => {
   //    assign the text field to variable startingPosition
   //    asssign variable vertical true or false depending on the radio button value
 
-  startingPosition = $('.setBattleship').val();
+  let vertical = true;
+
+  let startingPosition = $('#setBattleship').val();
   startingPosition = '.' + startingPosition.toLowerCase();
   
-  direction = $('input[type="radio"]:checked').val();
+  const direction = $('input[name="battleshipDirection"][type="radio"]:checked').val();
 
   if (direction === 'battleshipVertical'){
     vertical = true;
@@ -133,17 +171,19 @@ app.setBattleship = () => {
   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatlength];
-};
+  return [startingPosition, vertical, boatLength];
+}; //end of setBattleship function
 
 app.setCruiser = () => {
   //    assign the text field to variable startingPosition
   //    asssign variable vertical true or false depending on the radio button value
 
-  startingPosition = $('.setCruiser').val();
+  let vertical = true;
+
+  let startingPosition = $('#setCruiser').val();
   startingPosition = '.' + startingPosition.toLowerCase();
   
-  direction = $('input[type="radio"]:checked').val();
+  const direction = $('input[name="cruiserDirection"][type="radio"]:checked').val();
 
   if (direction === 'cruiserVertical'){
     vertical = true;
@@ -156,17 +196,19 @@ app.setCruiser = () => {
   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatlength];
-};
+  return [startingPosition, vertical, boatLength];
+}; //end of setCruiser function
 
 app.setSubmarine = () => {
   //    assign the text field to variable startingPosition
   //    asssign variable vertical true or false depending on the radio button value
 
-  startingPosition = $('.setSubmarine').val();
+  let vertical = true;
+
+  let startingPosition = $('#setSubmarine').val();
   startingPosition = '.' + startingPosition.toLowerCase();
   
-  direction = $('input[type="radio"]:checked').val();
+  const direction = $('input[name="submarineDirection"][type="radio"]:checked').val();
 
   if (direction === 'submarineVertical'){
     vertical = true;
@@ -179,17 +221,19 @@ app.setSubmarine = () => {
   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatlength];
-};
+  return [startingPosition, vertical, boatLength];
+}; //end of setSubmarine function
 
 app.setDestroyer = () => {
   //    assign the text field to variable startingPosition
   //    asssign variable vertical true or false depending on the radio button value
 
-  startingPosition = $('.setDestroyer').val();
+  let vertical = true;
+
+  let startingPosition = $('#setDestroyer').val();
   startingPosition = '.' + startingPosition.toLowerCase();
   
-  direction = $('input[type="radio"]:checked').val();
+  const direction = $('input[name="destroyerDirection"][type="radio"]:checked').val();
 
   if (direction === 'destroyerVertical'){
     vertical = true;
@@ -202,19 +246,24 @@ app.setDestroyer = () => {
   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatlength];
-};
+  return [startingPosition, vertical, boatLength];
+}; // end of setDestroyer function
 
 app.placeOnBoard = (shipArray, player) => {
-  // takes 1 parameter player (player1 or player2)
+  // takes 2 parameters, shipArray[startingPosition, vertical, boatLength] & player (player1 or player2)
   //find the div that matches startingPosition and add class occuppied
   // separate string of startingPosition into row (number) and column (letter)
   // starting from startingPosition, and based on vertical true/false, make sure the boat will fit inside gameboard using boatlength
 
-  const positionArray = shipArray.startingPosition.split();
+  
+  const startingPosition = shipArray[0];
+  let position = shipArray[0];
+  const positionArray = position.split('');
   let column = positionArray[1];
   let convertedRow = 1;
   
+  console.log( `${startingPosition} is a ${typeof startingPosition}, ${position} is a ${typeof position}, ${positionArray} is a ${typeof positionArray},  ${column} is a ${typeof column}`);
+
   if (positionArray.length === 3){
     convertedRow = parseInt(positionArray[2]);
   }else {
@@ -227,22 +276,31 @@ app.placeOnBoard = (shipArray, player) => {
 
   const columnArray = ["a","b","c","d","e","f","g","h","i","j"];
 
-  const convertedColumn = columnArray.indexOf(column);
+  const convertedColumn = columnArray.indexOf(column) + 1;
 
   console.log(column, convertedColumn, convertedRow);
 
  //check that the length of the boat won't put it outside of the playing area
  //change class of squares to occuppied 
-  
-  if (shipArray.vertical && (convertedRow + shipArray.boatLength) <=10){
-    $(`${player}${shipArray.startingPosition}`).addClass('occuppied');
-    for (let i = 1; i < shipArray.boatLength; i++){
+ const vertical = shipArray[1]; 
+ const boatLength = shipArray[2];
+
+  if (vertical && (convertedRow + boatLength) <=10){
+    console.log('assigning occupied to boat in row');
+
+    $(`${player}${startingPosition}`).addClass('occuppied');
+    for (let i = 1; i < boatLength; i++){
      $(`${player}.${column}${convertedRow + i}`).addClass('occuppied');
     };
-  }else if (!shipArray.vertical && (convertedColumn + shipArray.boatLength + 1) <= 10){
-    $(`${player}${shipArray.startingPosition}`).addClass('occuppied');
-    for (let j = 1; j < shipArray.boatLength; j++){
+  }else if (!vertical && (convertedColumn + boatLength) <= 10){
+    console.log('assigning occupied to boat in column');
+    
+    $(`${player}${startingPosition}`).addClass('occuppied');
+    for (let j = 0; j < boatLength -1; j++){
       column = columnArray[convertedColumn + j];
+
+      console.log(`${player}.${column}${convertedRow}`);
+
       $(`${player}.${column}${convertedRow}`).addClass('occuppied');
      }; 
   }else {
@@ -250,9 +308,7 @@ app.placeOnBoard = (shipArray, player) => {
     alert('The boat does not fit inside the board in that direction. Please try again')
     app.tryAgain = true;
   };
-
-
-};
+};// end of placeOnBoard function
 
 app.init = () => {
   // Hide h3 and forms for setting boats
@@ -265,8 +321,12 @@ app.init = () => {
     // location.reload();
     //this isn't working. Need to find a different way to reset page but still prompt for user name
 
-    //get player's name
-    app.getPlayerName();
+    //reset forms for boat input
+    app.resetForms();
+
+    //get player's name and display it on their board
+    app.userName = prompt("What is your name?");
+    app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
 
     //set the player's boats
     app.setBoats();
