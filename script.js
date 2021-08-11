@@ -41,60 +41,79 @@ app.setBoats = () => {
   
   let player = '.player1';
 
-  app.setCarrierButton = $('#submitCarrier').on('click', function() {
+  app.setCarrierButton = $('#submitCarrier').on('click', function(e) {
+
+    e.preventDefault();
+
     // when the user clicks on the submit button: 
     //    set the carrier
-    const CarrierPosition = app.setCarrier();
+    const carrierPosition = app.setCarrier();
 
-    console.log (CarrierPosition);
+    console.log (carrierPosition);
 
-    app.placeOnBoard(CarrierPosition, player);
+    app.placeOnBoard(carrierPosition, player);
 
-    // hide form for Carrier and show form for Battleship
+    // disable  setCarrier button and show form for Battleship
 
-    app.setFormElements = $('form[name="setCarrierForm"]').hide();
+    app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
 
     app.setFormElements = $('form[name="setBattleshipForm"]').show();
   }); 
 
-  app.setBattleshipButton = $('#submitBattleship').on('click', function (){
+  app.setBattleshipButton = $('#submitBattleship').on('click', function (e){
+
+    e.preventDefault();
+
     // when the user clicks on the submit button: 
     //    set the Battleship
     const battleshipPosition = app.setBattleship();
 
     app.placeOnBoard(battleshipPosition, player);
 
-    app.setFormElements = $('form[name="setBattleshipForm"]').hide();
+    app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
 
     app.setFormElements = $('form[name="setCruiserForm"]').show();
   });
 
-  app.setCruiserButton = $('#setCruiser').on('click', function (){
+  app.setCruiserButton = $('#submitCruiser').on('click', function (e){
+
+    e.preventDefault();
+
+    console.log('submitCruiserButton pressed');
+
     const cruiserPosition = app.setCruiser();
 
     app.placeOnBoard(cruiserPosition, player);
 
-    app.setFormElements = $('form[name="setCruiserForm"]').hide();
+    console.log('placeOnBoard for cruiser called');
+
+    app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
 
     app.setFormElements = $('form[name="setSubmarineForm"]').show();
   });
 
-  app.setSubmarineButton = $('#setSubmarine').on('click', function (){
+  app.setSubmarineButton = $('#submitSubmarine').on('click', function (e){
+
+    e.preventDefault();
+
     const submarinePosition = app.setSubmarine();
 
     app.placeOnBoard(submarinePosition, player);
 
-    app.setFormElements = $('form[name="setSubmarineForm"]').hide();
+    app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
 
     app.setFormElements = $('form[name="setDestroyerForm"]').show();
   });
 
-  app.setDestroyerButton = $('#setDestroyer').on('click', function (){
+  app.setDestroyerButton = $('#submitDestroyer').on('click', function (e){
+
+    e.preventDefault();
+
     const destroyerPosition = setDestroyer();
 
     app.placeOnBoard(destroyerPosition, player);
 
-    app.setFormElements = $('form[name="setDestroyerForm"]').hide();
+    app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
   });
 
   //commented code below is for using prompt to get user input for setting boats
@@ -177,6 +196,8 @@ app.setBattleship = () => {
 app.setCruiser = () => {
   //    assign the text field to variable startingPosition
   //    asssign variable vertical true or false depending on the radio button value
+
+  console.log('setcruiser app called');
 
   let vertical = true;
 
@@ -286,15 +307,15 @@ app.placeOnBoard = (shipArray, player) => {
  const boatLength = shipArray[2];
 
   if (vertical && (convertedRow + boatLength) <=10){
-    console.log('assigning occupied to boat in row');
+    console.log('assigning occupied to boat in column');
 
     $(`${player}${startingPosition}`).addClass('occuppied');
     for (let i = 1; i < boatLength; i++){
      $(`${player}.${column}${convertedRow + i}`).addClass('occuppied');
     };
   }else if (!vertical && (convertedColumn + boatLength) <= 10){
-    console.log('assigning occupied to boat in column');
-    
+    console.log('assigning occupied to boat in row');
+
     $(`${player}${startingPosition}`).addClass('occuppied');
     for (let j = 0; j < boatLength -1; j++){
       column = columnArray[convertedColumn + j];
@@ -313,14 +334,17 @@ app.placeOnBoard = (shipArray, player) => {
 app.init = () => {
   // Hide h3 and forms for setting boats
   app.inputH3Element = $('.input h3').hide();
-  app.setFormElements = $('.setForm').hide();
+  // app.setFormElements = $('.setForm').hide();
+  
+  app.newGameButton = $('#newGame').on('click', function (e) {
 
-  app.newGameButton = $('#newGame').on('click', function () {
+    e.preventDefault();
+
     // when newGame button clicked, reset page, then ask user input for their name and for placing ships
-
+    
     // location.reload();
     //this isn't working. Need to find a different way to reset page but still prompt for user name
-
+    
     //reset forms for boat input
     app.resetForms();
 

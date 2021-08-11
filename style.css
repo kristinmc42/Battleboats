@@ -141,7 +141,7 @@ h3 {
 
 
 
-.player1 .occuppied {
+.player1.occuppied {
   background-color: black;
 }
 
