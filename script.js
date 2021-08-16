@@ -19,7 +19,7 @@ app.resetForms = () => {
   app.setSubmarineInput = $('#setSubmarine').val('');
   app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
 
-  app.setDestroyerInput = $('setDestroyer').val('');
+  app.setDestroyerInput = $('#setDestroyer').val('');
   app.setDestroyerRadioButttons = $('input[name="destroyerDirection"]').prop('checked', false);
 };//end of resetFroms function
 
@@ -109,7 +109,7 @@ app.setBoats = () => {
 
     e.preventDefault();
 
-    const destroyerPosition = setDestroyer();
+    const destroyerPosition = app.setDestroyer();
 
     app.placeOnBoard(destroyerPosition, player);
 
@@ -214,7 +214,7 @@ app.setCruiser = () => {
   
   const boatLength = 3;
 
-  console.log(startingPosition, direction, vertical)
+  console.log(startingPosition, direction, vertical);
 
 
   return [startingPosition, vertical, boatLength];
