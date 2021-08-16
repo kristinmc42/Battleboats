@@ -303,14 +303,23 @@ app.placeOnBoard = (shipArray, player) => {
 
   console.log(column, convertedColumn, convertedRow);
 
- //check that the length of the boat won't put it outside of the playing area
- //change class of squares to occuppied 
- const vertical = shipArray[1]; 
- const boatLength = shipArray[2];
+  //check that the length of the boat won't put it outside of the playing area
+  //change class of squares to occuppied 
+  const vertical = shipArray[1]; 
+  const boatLength = shipArray[2];
 
   if (vertical && (convertedRow + boatLength) <=10){
     console.log('assigning occupied to boat in column');
 
+    // checks if any of the squares already have class 'occuppied'
+    // if yes, returns false and quits function
+    for (let a = 0; a < boatLength; a++){
+      if ((`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
+        alert('Oops! That boat overlaps another. Please try again.');
+        return false;
+      };
+    };
+    // adds class 'occuppied' to each of the squares
     $(`${player}${startingPosition}`).addClass('occuppied');
     for (let i = 1; i < boatLength; i++){
      $(`${player}.${column}${convertedRow + i}`).addClass('occuppied');
@@ -318,6 +327,16 @@ app.placeOnBoard = (shipArray, player) => {
   }else if (!vertical && (convertedColumn + boatLength) <= 10){
     console.log('assigning occupied to boat in row');
 
+     // checks if any of the squares already have class 'occuppied'
+    // if yes, returns false and quits function
+    for (let a = 0; a < boatLength; a++){
+      if ((`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
+        alert('Oops! That boat overlaps another. Please try again.');
+        return false;
+      };
+    };
+
+    // adds class 'occuppied' to each of the squares
     $(`${player}${startingPosition}`).addClass('occuppied');
     for (let j = 0; j < boatLength -1; j++){
       column = columnArray[convertedColumn + j];
@@ -329,7 +348,7 @@ app.placeOnBoard = (shipArray, player) => {
   }else {
     // condition for when boat length will be outside of the board dimensions
     alert('The boat does not fit inside the board in that direction. Please try again')
-    app.tryAgain = true;
+    return false;
   };
 };// end of placeOnBoard function
 
