@@ -90,6 +90,8 @@ app.setBoats = () => {
     app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
 
     app.setFormElements = $('form[name="setSubmarineForm"]').show();
+
+    return false;
   });
 
   app.setSubmarineButton = $('#submitSubmarine').on('click', function (e){
@@ -340,11 +342,7 @@ app.init = () => {
 
     e.preventDefault();
 
-    // when newGame button clicked, reset page, then ask user input for their name and for placing ships
-    
-    // location.reload();
-    //this isn't working. Need to find a different way to reset page but still prompt for user name
-    
+    // when newGame button clicked, 
     //reset forms for boat input
     app.resetForms();
 
