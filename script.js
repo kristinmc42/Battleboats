@@ -47,11 +47,21 @@ app.setBoats = () => {
 
     // when the user clicks on the submit button: 
     //    set the carrier
-    const carrierPosition = app.setCarrier();
+    let carrierPosition = app.setCarrier();
 
     console.log (carrierPosition);
 
-    app.placeOnBoard(carrierPosition, player);
+    let continueGame = app.placeOnBoard(carrierPosition, player);
+
+    while (!continueGame) {
+      // reset carrier form and prompt for input again
+      app.setCarrierInput = $('#setCarrier').val('');
+      app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+    
+      carrierPosition = app.setCarrier();
+
+      continueGame = app.placeOnBoard(carrierPosition, player);
+    };
 
     // disable  setCarrier button and show form for Battleship
 
@@ -66,9 +76,19 @@ app.setBoats = () => {
 
     // when the user clicks on the submit button: 
     //    set the Battleship
-    const battleshipPosition = app.setBattleship();
+    let battleshipPosition = app.setBattleship();
 
-    app.placeOnBoard(battleshipPosition, player);
+    let continueGame = app.placeOnBoard(battleshipPosition, player);
+
+    while (!continueGame) {
+      // reset form and prompt for input again
+      app.setBattleshipInput = $('#setBattleship').val('');
+      app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
+
+      battleshipPosition = app.setBattleship();
+
+      continueGame = app.placeOnBoard(battleshipPosition, player);
+    };
 
     app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
 
@@ -79,13 +99,20 @@ app.setBoats = () => {
 
     e.preventDefault();
 
-    console.log('submitCruiserButton pressed');
+    let cruiserPosition = app.setCruiser();
 
-    const cruiserPosition = app.setCruiser();
+    let continueGame = app.placeOnBoard(cruiserPosition, player);
 
-    app.placeOnBoard(cruiserPosition, player);
+    while (!continueGame){
+      // reset form and prompt for input again
+      app.setCruiserInput = $('#setCruiser').val('');
+      app.setCruiserRadioButtons = $('input[name="cruiserDirection"]').prop('checked', false);
 
-    console.log('placeOnBoard for cruiser called');
+      cruiserPosition = app.setCruiser();
+
+      continueGame = app.placeOnBoard(cruiserPosition, player);
+    };
+   
 
     app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
 
@@ -98,9 +125,19 @@ app.setBoats = () => {
 
     e.preventDefault();
 
-    const submarinePosition = app.setSubmarine();
+    let submarinePosition = app.setSubmarine();
 
-    app.placeOnBoard(submarinePosition, player);
+    let continueGame = app.placeOnBoard(submarinePosition, player);
+
+    while (!continueGame){
+      // reset form and prompt for input again
+      app.setSubmarineInput = $('#setSubmarine').val('');
+      app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
+
+      submarinePosition = app.setSubmarine();
+
+      continueGame = app.placeOnBoard(submarinePosition, player);
+    };
 
     app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
 
@@ -111,9 +148,19 @@ app.setBoats = () => {
 
     e.preventDefault();
 
-    const destroyerPosition = app.setDestroyer();
+    let destroyerPosition = app.setDestroyer();
 
-    app.placeOnBoard(destroyerPosition, player);
+    let continueGame = app.placeOnBoard(destroyerPosition, player);
+
+    while (!continueGame){
+      // reset form and prompt for input again
+      app.setDestroyerInput = $('#setDestroyer').val('');
+      app.setDestroyerRadioButtons = $('input[name="destroyerDirection"]').prop('checked', false);
+
+      destroyerPosition = app.setDestroyer();
+
+      continueGame = app.placeOnBoard(destroyerPosition, player);
+    };
 
     app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
   });
@@ -314,7 +361,7 @@ app.placeOnBoard = (shipArray, player) => {
     // checks if any of the squares already have class 'occuppied'
     // if yes, returns false and quits function
     for (let a = 0; a < boatLength; a++){
-      if ((`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
+      if ($(`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
         alert('Oops! That boat overlaps another. Please try again.');
         return false;
       };
@@ -324,13 +371,14 @@ app.placeOnBoard = (shipArray, player) => {
     for (let i = 1; i < boatLength; i++){
      $(`${player}.${column}${convertedRow + i}`).addClass('occuppied');
     };
+    return true;
   }else if (!vertical && (convertedColumn + boatLength) <= 10){
     console.log('assigning occupied to boat in row');
 
      // checks if any of the squares already have class 'occuppied'
     // if yes, returns false and quits function
     for (let a = 0; a < boatLength; a++){
-      if ((`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
+      if ($(`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
         alert('Oops! That boat overlaps another. Please try again.');
         return false;
       };
@@ -344,7 +392,8 @@ app.placeOnBoard = (shipArray, player) => {
       console.log(`${player}.${column}${convertedRow}`);
 
       $(`${player}.${column}${convertedRow}`).addClass('occuppied');
-     }; 
+    }; 
+    return true;
   }else {
     // condition for when boat length will be outside of the board dimensions
     alert('The boat does not fit inside the board in that direction. Please try again')
