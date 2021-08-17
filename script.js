@@ -23,7 +23,7 @@ app.resetForms = () => {
   app.setDestroyerRadioButttons = $('input[name="destroyerDirection"]').prop('checked', false);
 };//end of resetFroms function
 
-app.setBoats = () => {
+app.setBoats = (player) => {
 // ask player what square they would like to set their boat in
 // ask if they want the boat set vertically or horizontal
 //check if square is already occuppied
@@ -37,10 +37,6 @@ app.setBoats = () => {
   app.inputH3Element = $('.input h3').show();
   app.setFormElements = $('form[name="setCarrierForm"]').show();
   
-
-  
-  let player = '.player1';
-
   app.setCarrierButton = $('#submitCarrier').on('click', function(e) {
 
     e.preventDefault();
@@ -404,7 +400,7 @@ app.placeOnBoard = (shipArray, player) => {
 app.init = () => {
   // Hide h3 and forms for setting boats
   app.inputH3Element = $('.input h3').hide();
-  // app.setFormElements = $('.setForm').hide();
+  app.setFormElements = $('.setForm').hide();
   
   app.newGameButton = $('#newGame').on('click', function (e) {
 
@@ -419,7 +415,10 @@ app.init = () => {
     app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
 
     //set the player's boats
-    app.setBoats();
+    app.setBoats('.player1');
+
+    //set the computer's boats
+
 
   });
 };
