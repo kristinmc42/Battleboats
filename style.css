@@ -34,7 +34,8 @@ ul {
 
 #newGame, 
 #saveGame,
-#next {
+#next,
+#startGame {
   color: white;
   background-color: blue;
   border-radius: 15px;
@@ -143,6 +144,11 @@ h3 {
 
 .player1.occuppied {
   background-color: black;
+}
+
+/* temp for testing purposes */
+.player2.occuppied {
+  background-color: white;
 }
 
 .hit {
