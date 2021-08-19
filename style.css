@@ -149,7 +149,7 @@ h3 {
 
 /* temp for testing purposes */
 .player2.occuppied {
-  background-color: white;
+  background-color: green;
 }
 
 .hit {
@@ -157,5 +157,5 @@ h3 {
 }
 
 .miss {
-  background-color: green;
+  background-color: white;
 }

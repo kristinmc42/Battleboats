@@ -1,10 +1,24 @@
 const app = {
   // boats: [{name:'carrier', length: 5}, {name: 'battleship', length: 4}, {name: 'cruiser', length: 3}, {name: 'submarine', length: 3}, {name: 'destroyer', length: 2}],
-  
-
 };
 
 app.columnArray = ["a","b","c","d","e","f","g","h","i","j"];
+
+
+app.player1Boats = {
+  carrier = [5, 0],
+  battleship = [4, 0],
+  cruiser = [3, 0],
+  submarine = [3, 0],
+  destroyer = [2, 0]
+}
+app.player2Boats = {
+  carrier = [5, 0],
+  battleship = [4, 0],
+  cruiser = [3, 0],
+  submarine = [3, 0],
+  destroyer = [2, 0]
+}
 
 
 app.resetForms = () => {
@@ -487,19 +501,132 @@ app.gamePlay = () => {
   // hide startGame div
   app.startGameDiv = $('.startGame').hide();
 
-  // add form and button 'Attack! Which square do you choose?'
-  app.gamePlayDiv = $()
-  
+  // show form and button 'Choose a square. Attack! '
   // ask for player's guess
+  app.gamePlayDiv = $('.gamePlay').show();
+  
+  app.attackButton = $('#attack').on('click', function(e){
+    e.preventDefault();
+    // when user submits guess, assign value of input to variable
+    let playersGuess = $('#playersGuess').val();
+    playersGuess = playersGuess.toLowerCase();
+    
+    // check if the square is occuppied
+    app.checkGuess(playersGuess, '.player2');
+   
 
+  });
 
-  // check if the square is occuppied
-  // if occuppied, change colour of square, keep track of how many hits the boat has taken 
-  // if not occuppied, change colour of square to show miss
   // computer's turn
   // repeat steps above
 
 
+};//end of app.gamePlay
+
+app.checkGuess = (playersGuess, player) => {
+  // if square is occuppied, change colour of square, keep track of how many hits the boat has taken 
+  // if not occuppied, change colour of square to show miss
+  if ($(`.${playersGuess}${player}`).hasClass("occuppied")){
+    $(`.${playersGuess}${player}`).addClass('hit');
+
+    if (player === '.player1'){
+      if($(`.${playersGuess}${player}`).hasClass('carrier')){
+        app.player2Boats.carrier[1] += 1;
+        console.log(app.player2Boats.carrier[1]);
+
+        if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
+          alert('You sunk their carrier!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('battleship')){
+        app.player2Boats.battleship[1] += 1;
+        console.log(app.player2Boats.battleship[1]);
+
+        if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
+          alert('You sunk their battleship!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('cruiser')){
+        app.player2Boats.cruiser[1] += 1;
+        console.log(app.player2Boats.cruiser[1]);
+
+        if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
+          alert('You sunk their cruiser!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('submarine')){
+        app.player2Boats.submarine[1] += 1;
+        console.log(app.player2Boats.submarine[1]);
+
+        if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
+          alert('You sunk their submarine!');
+        };
+      }else {
+        app.player2Boats.destroyer[1] += 1;
+        console.log(app.player2Boats.destroyer[1]);
+
+        if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
+          alert('You sunk their destroyer!');
+        };
+      };
+
+    } else {
+      if($(`.${playersGuess}${player}`).hasClass('carrier')){
+        app.player1Boats.carrier[1] += 1;
+        console.log(app.player1Boats.carrier[1]);
+
+        if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
+          alert('They sunk your carrier!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('battleship')){
+        app.player1Boats.battleship[1] += 1;
+        console.log(app.player1Boats.battleship[1]);
+
+        if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
+          alert('They sunk your battleship!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('cruiser')){
+        app.player1Boats.cruiser[1] += 1;
+        console.log(app.player1Boats.cruiser[1]);
+
+        if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
+          alert('They sunk your cruiser!');
+        };
+      }else if ($(`.${playersGuess}${player}`).hasClass('submarine')){
+        app.player1Boats.submarine[1] += 1;
+        console.log(app.player1Boats.submarine[1]);
+
+        if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
+          alert('They sunk your submarine!');
+        };
+      }else {
+        app.player1Boats.destroyer[1] += 1;
+        console.log(app.player1Boats.destroyer[1]);
+
+        if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
+          alert('They sunk your destroyer!');
+        };
+      };
+    }
+  }else {
+    $(`.${playersGuess}${player}`).addClass('miss');
+  }
+
+
+};// end of app.checkGuess
+
+app.checkAllBoatsSunk = (player) => {
+  //check if all player's boats are sunk
+  if (player === '.player1'){
+    if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
+      return true
+    }else {
+      return false
+    };
+  }else {
+    if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
+      return true
+    }else {
+      return false
+    };
+  };
 };
 
 
@@ -508,6 +635,7 @@ app.init = () => {
   app.inputH3Element = $('.input h3').hide();
   app.setFormElements = $('.setForm').hide();
   app.startGameButton = $('#startGame').hide();
+  app.gamePlayDiv = $('.gamePlay').hide();
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {
