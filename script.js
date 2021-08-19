@@ -50,7 +50,7 @@ app.setBoats = (player) => {
 
     console.log (carrierPosition);
 
-    let continueGame = app.placeOnBoard(carrierPosition, player);
+    let continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
 
     while (!continueGame) {
       // reset carrier form and prompt for input again
@@ -59,7 +59,7 @@ app.setBoats = (player) => {
     
       carrierPosition = app.setCarrier();
 
-      continueGame = app.placeOnBoard(carrierPosition, player);
+      continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
     };
 
     // disable  setCarrier button and show form for Battleship
@@ -77,7 +77,7 @@ app.setBoats = (player) => {
     //    set the Battleship
     let battleshipPosition = app.setBattleship();
 
-    let continueGame = app.placeOnBoard(battleshipPosition, player);
+    let continueGame = app.placeOnBoard(battleshipPosition, player, 'battleship');
 
     while (!continueGame) {
       // reset form and prompt for input again
@@ -86,7 +86,7 @@ app.setBoats = (player) => {
 
       battleshipPosition = app.setBattleship();
 
-      continueGame = app.placeOnBoard(battleshipPosition, player);
+      continueGame = app.placeOnBoard(battleshipPosition, player, 'battleship');
     };
 
     app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
@@ -100,7 +100,7 @@ app.setBoats = (player) => {
 
     let cruiserPosition = app.setCruiser();
 
-    let continueGame = app.placeOnBoard(cruiserPosition, player);
+    let continueGame = app.placeOnBoard(cruiserPosition, player, 'cruiser');
 
     while (!continueGame){
       // reset form and prompt for input again
@@ -109,7 +109,7 @@ app.setBoats = (player) => {
 
       cruiserPosition = app.setCruiser();
 
-      continueGame = app.placeOnBoard(cruiserPosition, player);
+      continueGame = app.placeOnBoard(cruiserPosition, player, 'cruiser');
     };
    
 
@@ -126,7 +126,7 @@ app.setBoats = (player) => {
 
     let submarinePosition = app.setSubmarine();
 
-    let continueGame = app.placeOnBoard(submarinePosition, player);
+    let continueGame = app.placeOnBoard(submarinePosition, player, 'submarine');
 
     while (!continueGame){
       // reset form and prompt for input again
@@ -135,7 +135,7 @@ app.setBoats = (player) => {
 
       submarinePosition = app.setSubmarine();
 
-      continueGame = app.placeOnBoard(submarinePosition, player);
+      continueGame = app.placeOnBoard(submarinePosition, player, 'submarine');
     };
 
     app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
@@ -149,7 +149,7 @@ app.setBoats = (player) => {
 
     let destroyerPosition = app.setDestroyer();
 
-    let continueGame = app.placeOnBoard(destroyerPosition, player);
+    let continueGame = app.placeOnBoard(destroyerPosition, player, 'destroyer');
 
     while (!continueGame){
       // reset form and prompt for input again
@@ -158,7 +158,7 @@ app.setBoats = (player) => {
 
       destroyerPosition = app.setDestroyer();
 
-      continueGame = app.placeOnBoard(destroyerPosition, player);
+      continueGame = app.placeOnBoard(destroyerPosition, player, 'destroyer');
     };
 
     app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
@@ -332,7 +332,7 @@ app.setDestroyer = () => {
   return [startingPosition, vertical, boatLength];
 }; // end of setDestroyer function
 
-app.placeOnBoard = (shipArray, player) => {
+app.placeOnBoard = (shipArray, player, boatName) => {
   // takes 2 parameters, shipArray[startingPosition, vertical, boatLength] & player (player1 or player2)
   //find the div that matches startingPosition and add class occuppied
   // separate string of startingPosition into row (number) and column (letter)
@@ -378,9 +378,9 @@ app.placeOnBoard = (shipArray, player) => {
       };
     };
     // adds class 'occuppied' to each of the squares
-    $(`${player}${startingPosition}`).addClass('occuppied');
+    $(`${player}${startingPosition}`).addClass(`occuppied ${boatName}`);
     for (let i = 1; i < boatLength; i++){
-     $(`${player}.${column}${convertedRow + i}`).addClass('occuppied');
+     $(`${player}.${column}${convertedRow + i}`).addClass(`occuppied ${boatName}`);
     };
     return true;
   }else if (!vertical && (convertedColumn + boatLength) <= 10){
@@ -398,11 +398,11 @@ app.placeOnBoard = (shipArray, player) => {
     };
 
     // adds class 'occuppied' to each of the squares
-    $(`${player}${startingPosition}`).addClass('occuppied');
+    $(`${player}${startingPosition}`).addClass(`occuppied ${boatName}`);
     for (let j = 0; j < boatLength -1; j++){
       column = app.columnArray[convertedColumn + j];
 
-      $(`${player}.${column}${convertedRow}`).addClass('occuppied');
+      $(`${player}.${column}${convertedRow}`).addClass(`occuppied ${boatName}`);
     }; 
     return true;
   }else {
@@ -416,7 +416,7 @@ app.placeOnBoard = (shipArray, player) => {
 app.setComputersBoats =  () => {
   //set the computer's boats
   // get boatlength from array
-  const boatArray = [5, 4, 3, 3, 2];
+  const boatArray = [['carrier', 5], ['battleship', 4], ['cruiser', 3], ['submarine', 3], ['destroyere', 2]];
 
   for (let a = 0; a < 5; a++){
     // generate a starting position
@@ -431,7 +431,7 @@ app.setComputersBoats =  () => {
     // repeat for each boat in array
     // if there is an overlap in placeOnBoard get new starting position and try again until no overlap
 
-    let continueGame = app.placeOnComputersBoard(column, row, vertical, boatArray[a]);
+    let continueGame = app.placeOnComputersBoard(column, row, vertical, boatArray[a][1], boatArray[a][0]);
 
     while (!continueGame) {
       // generate new column and row and vertical and try again until boat can be set on board
@@ -447,7 +447,7 @@ app.setComputersBoats =  () => {
   };
 }; // end of app.setComputersBoats
 
-app.placeOnComputersBoard = (column, row, vertical, boatLength) => {
+app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
   // convert letter of column to number
   const convertedColumn = app.columnArray.indexOf(column) + 1;
 
@@ -462,7 +462,7 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength) => {
     };
     // adds class 'occuppied' to each of the squares
     for (let i = 0; i < boatLength; i++){
-      $(`.player2.${column}${row + i}`).addClass('occuppied');
+      $(`.player2.${column}${row + i}`).addClass(`occuppied ${boatName}`);
       console.log(column, row +i, boatLength)
     };
     return true;
@@ -482,7 +482,7 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength) => {
       for (let j = 0; j < boatLength; j++){
         column = app.columnArray[convertedColumn + j];
 
-        $(`.player2.${column}${row}`).addClass('occuppied');
+        $(`.player2.${column}${row}`).addClass(`occuppied ${boatName}`);
         console.log(column, row, boatLength)
       }; 
       return true;
