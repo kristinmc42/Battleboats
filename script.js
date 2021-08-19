@@ -344,9 +344,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
   const positionArray = position.split('');
   let column = positionArray[1];
   let convertedRow = 1;
-  
-  console.log( `${startingPosition} is a ${typeof startingPosition}, ${position} is a ${typeof position}, ${positionArray} is a ${typeof positionArray},  ${column} is a ${typeof column}`);
-
+ 
   if (positionArray.length === 3){
     convertedRow = parseInt(positionArray[2]);
   }else {
@@ -358,8 +356,6 @@ app.placeOnBoard = (shipArray, player, boatName) => {
   // loop through 1-10 checking against alphabet
 
   const convertedColumn = app.columnArray.indexOf(column) + 1;
-
-  console.log(column, convertedColumn, convertedRow);
 
   //check that the length of the boat won't put it outside of the playing area
   //change class of squares to occuppied 
@@ -442,7 +438,7 @@ app.setComputersBoats =  () => {
       // generate true/false for vertical
       let vertical = Math.random() < 0.5;
     
-      continueGame = app.placeOnComputersBoard(column, row, vertical, boatArray[a]);
+      continueGame = app.placeOnComputersBoard(column, row, vertical, boatArray[a][1], boatArray[a][0]);
     };
   };
 }; // end of app.setComputersBoats
@@ -483,7 +479,6 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
         column = app.columnArray[convertedColumn + j];
 
         $(`.player2.${column}${row}`).addClass(`occuppied ${boatName}`);
-        console.log(column, row, boatLength)
       }; 
       return true;
   }else {
