@@ -163,20 +163,15 @@ app.setBoats = (player) => {
 
     app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
 
-    // add text and button to start game
-    app.inputDiv = $('.input').append(`<h3>Let's go!</h3>`);
-    app.inputDiv = $('.input').append(`<button id="startGame">Start Game</button>`);
-  });
-
-   // event listener for start game button
-   app.startGameButton = $('#startGame').on('click', function(e){
-    e.preventDefault();
-
-    console.log('start Game button pressed');
     //hide player1's forms for setting boats
     app.setFormElements = $('.setForm').hide();
-    app.inputH3Element = $('.input > h3:first').hide();
-   });
+    app.inputH3Element = $('.input h3').hide();
+
+    // add text and button to start game div
+    app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
+    app.startGameButton = $('#startGame').show();
+
+  });
 
   //commented code below is for using prompt to get user input for setting boats
   //prompt box blocked the game board though so wasn't ideal
@@ -485,12 +480,34 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
      // condition for when boat length will be outside of the board dimensions
      return false;
   };
+}; //end of app.placeOnComputersBoard
+
+
+app.gamePlay = () => {
+  // hide startGame div
+  app.startGameDiv = $('.startGame').hide();
+
+  // add form and button 'Attack! Which square do you choose?'
+  app.gamePlayDiv = $()
+  
+  // ask for player's guess
+
+
+  // check if the square is occuppied
+  // if occuppied, change colour of square, keep track of how many hits the boat has taken 
+  // if not occuppied, change colour of square to show miss
+  // computer's turn
+  // repeat steps above
+
+
 };
+
 
 app.init = () => {
   // Hide h3 and forms for setting boats
   app.inputH3Element = $('.input h3').hide();
   app.setFormElements = $('.setForm').hide();
+  app.startGameButton = $('#startGame').hide();
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {
@@ -510,14 +527,15 @@ app.init = () => {
     });
     
     // // event listener for start game button
-    // app.startGameButton = $('#startGame').on('click', function(e){
-    //   e.preventDefault();
+    app.startGameButton = $('#startGame').on('click', function(e){
+      e.preventDefault();
 
-    //   console.log('start Game button pressed');
-    //   //hide player1's forms for setting boats
-    //   app.setFormElements = $('.setForm').hide();
-    //   app.inputH3Element = $('.input > h3:first').hide();
-    // });
+      console.log('start Game button pressed');
+
+      //start playing game
+      app.gamePlay();
+      
+    });
   });
 }; // end of app.init
 
