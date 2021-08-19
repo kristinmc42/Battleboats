@@ -6,18 +6,23 @@ app.columnArray = ["a","b","c","d","e","f","g","h","i","j"];
 
 
 app.player1Boats = {
-  carrier = [5, 0],
-  battleship = [4, 0],
-  cruiser = [3, 0],
-  submarine = [3, 0],
-  destroyer = [2, 0]
+  carrier: [5, 0],
+  battleship: [4, 0],
+  cruiser: [3, 0],
+  submarine: [3, 0],
+  destroyer: [2, 0]
 }
 app.player2Boats = {
-  carrier = [5, 0],
-  battleship = [4, 0],
-  cruiser = [3, 0],
-  submarine = [3, 0],
-  destroyer = [2, 0]
+  carrier: [5, 0],
+  battleship: [4, 0],
+  cruiser: [3, 0],
+  submarine: [3, 0],
+  destroyer: [2, 0]
+}
+
+app.gameOver = {
+  finished: false,
+  winner: ''
 }
 
 
@@ -498,12 +503,6 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
 
 
 app.gamePlay = () => {
-  // hide startGame div
-  app.startGameDiv = $('.startGame').hide();
-
-  // show form and button 'Choose a square. Attack! '
-  // ask for player's guess
-  app.gamePlayDiv = $('.gamePlay').show();
   
   app.attackButton = $('#attack').on('click', function(e){
     e.preventDefault();
@@ -512,20 +511,32 @@ app.gamePlay = () => {
     playersGuess = playersGuess.toLowerCase();
     
     // check if the square is occuppied
-    app.checkGuess(playersGuess, '.player2');
-   
+    app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
+    app.gameOver.winner = '.player1';
+    
+    if (!app.gameOver.finished){
+      playersGuess = $('#playersGuess').val('');
+      alert("It's the computer's turn.");
 
+      // computer's turn
+      // repeat steps above
+      // generate a random row and column for computer
+      const column = app.columnArray[Math.floor(Math.random() * 10)];
+      const row = Math.floor(Math.random() * 10) + 1;
+
+      const computersGuess = `${column}${row}`; 
+
+      app.gameOver.finished = app.checkGuess(computersGuess, '.player1');
+      app.gameOver.winner = '.player2';
+    };
   });
-
-  // computer's turn
-  // repeat steps above
-
-
 };//end of app.gamePlay
 
 app.checkGuess = (playersGuess, player) => {
   // if square is occuppied, change colour of square, keep track of how many hits the boat has taken 
   // if not occuppied, change colour of square to show miss
+  let continueGame = true;
+
   if ($(`.${playersGuess}${player}`).hasClass("occuppied")){
     $(`.${playersGuess}${player}`).addClass('hit');
 
@@ -536,6 +547,7 @@ app.checkGuess = (playersGuess, player) => {
 
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           alert('You sunk their carrier!');
+
         };
       }else if ($(`.${playersGuess}${player}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
@@ -566,8 +578,7 @@ app.checkGuess = (playersGuess, player) => {
           alert('You sunk their destroyer!');
         };
       };
-
-    } else {
+    }else {
       if($(`.${playersGuess}${player}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(app.player1Boats.carrier[1]);
@@ -604,24 +615,30 @@ app.checkGuess = (playersGuess, player) => {
           alert('They sunk your destroyer!');
         };
       };
-    }
+    };
+    continueGame = app.checkAllBoatsSunk(player);
   }else {
     $(`.${playersGuess}${player}`).addClass('miss');
-  }
-
-
+  };
+  if (continueGame){
+    return false;
+  }else{
+    return true;
+  };
 };// end of app.checkGuess
 
 app.checkAllBoatsSunk = (player) => {
   //check if all player's boats are sunk
   if (player === '.player1'){
     if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
+      alert('Game over!!!!!!');
       return true
     }else {
       return false
     };
   }else {
     if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
+      alert('Game over!!!!!!');
       return true
     }else {
       return false
@@ -661,7 +678,19 @@ app.init = () => {
       console.log('start Game button pressed');
 
       //start playing game
-      app.gamePlay();
+      // hide startGame div
+      app.startGameDiv = $('.startGame').hide();
+
+      // show form and button 'Choose a square. Attack! '
+      // ask for player's guess
+      app.gamePlayDiv = $('.gamePlay').show();
+
+      while(!app.gameOver.finished){
+        app.gamePlay();
+      };
+
+      alert(`The winner is ${app.gameOver.winner}`);
+
       
     });
   });
