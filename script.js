@@ -43,9 +43,11 @@ app.resetForms = () => {
 
   app.setDestroyerInput = $('#setDestroyer').val('');
   app.setDestroyerRadioButttons = $('input[name="destroyerDirection"]').prop('checked', false);
+
+  app.gamePlayForm = $('input[name="playersGuess"]').val('');
 };//end of resetFroms function
 
-app.setBoats = (player) => {
+app.setBoats = (player, callback) => {
 // ask player what square they would like to set their boat in
 // ask if they want the boat set vertically or horizontal
 //check if square is already occuppied
@@ -190,6 +192,7 @@ app.setBoats = (player) => {
     app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
     app.startGameButton = $('#startGame').show();
 
+    callback();
   });
 
   //commented code below is for using prompt to get user input for setting boats
@@ -376,7 +379,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
   const vertical = shipArray[1]; 
   const boatLength = shipArray[2];
 
-  if (vertical && (convertedRow + boatLength) <=10){
+  if (vertical && (convertedRow + (boatLength -1)) <=10){
     console.log('assigning occupied to boat in column');
 
     // checks if any of the squares already have class 'occuppied'
@@ -393,7 +396,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
      $(`${player}.${column}${convertedRow + i}`).addClass(`occuppied ${boatName}`);
     };
     return true;
-  }else if (!vertical && (convertedColumn + boatLength) <= 10){
+  }else if (!vertical && (convertedColumn + (boatLength - 1)) <= 10){
     // assigning occupied to boat in row
 
      // checks if any of the squares already have class 'occuppied'
@@ -426,7 +429,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
 app.setComputersBoats =  () => {
   //set the computer's boats
   // get boatlength from array
-  const boatArray = [['carrier', 5], ['battleship', 4], ['cruiser', 3], ['submarine', 3], ['destroyere', 2]];
+  const boatArray = [['carrier', 5], ['battleship', 4], ['cruiser', 3], ['submarine', 3], ['destroyer', 2]];
 
   for (let a = 0; a < 5; a++){
     // generate a starting position
@@ -504,8 +507,8 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
 
 app.gamePlay = () => {
   
-  app.attackButton = $('#attack').on('click', function(e){
-    e.preventDefault();
+  // app.attackButton = $('#attack').on('click', function(e){
+  //   e.preventDefault();
     // when user submits guess, assign value of input to variable
     let playersGuess = $('#playersGuess').val();
     playersGuess = playersGuess.toLowerCase();
@@ -526,99 +529,105 @@ app.gamePlay = () => {
 
       const computersGuess = `${column}${row}`; 
 
+      console.log(`${computersGuess} is the computer's guess`);
+
       app.gameOver.finished = app.checkGuess(computersGuess, '.player1');
       app.gameOver.winner = '.player2';
     };
-  });
+  // });
 };//end of app.gamePlay
 
-app.checkGuess = (playersGuess, player) => {
+app.checkGuess = (playersGuess, playerBeingAttacked) => {
   // if square is occuppied, change colour of square, keep track of how many hits the boat has taken 
   // if not occuppied, change colour of square to show miss
   let continueGame = true;
 
-  if ($(`.${playersGuess}${player}`).hasClass("occuppied")){
-    $(`.${playersGuess}${player}`).addClass('hit');
+  if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass("occuppied")){
+    $(`.${playersGuess}${playerBeingAttacked}`).addClass('hit');
+    $(`.${playersGuess}${playerBeingAttacked}`).prepend('<i class="fas fa-bomb"></i>')
 
-    if (player === '.player1'){
-      if($(`.${playersGuess}${player}`).hasClass('carrier')){
+    console.log (`.${playersGuess}${playerBeingAttacked} is a hit`);
+
+    if (playerBeingAttacked === '.player1'){
+      if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player2Boats.carrier[1] += 1;
-        console.log(app.player2Boats.carrier[1]);
+        console.log("player2's carrier", app.player2Boats.carrier[1]);
 
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           alert('You sunk their carrier!');
 
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('battleship')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
-        console.log(app.player2Boats.battleship[1]);
+        console.log("player2's battleship",app.player2Boats.battleship[1]);
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
           alert('You sunk their battleship!');
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('cruiser')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player2Boats.cruiser[1] += 1;
-        console.log(app.player2Boats.cruiser[1]);
+        console.log("player2's cruiser",app.player2Boats.cruiser[1]);
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           alert('You sunk their cruiser!');
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('submarine')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player2Boats.submarine[1] += 1;
-        console.log(app.player2Boats.submarine[1]);
+        console.log("player2's submarine",app.player2Boats.submarine[1]);
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           alert('You sunk their submarine!');
         };
       }else {
         app.player2Boats.destroyer[1] += 1;
-        console.log(app.player2Boats.destroyer[1]);
+        console.log("player2's destroyer",app.player2Boats.destroyer[1]);
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           alert('You sunk their destroyer!');
         };
       };
     }else {
-      if($(`.${playersGuess}${player}`).hasClass('carrier')){
+      if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
-        console.log(app.player1Boats.carrier[1]);
+        console.log("player1's carrier",app.player1Boats.carrier[1]);
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           alert('They sunk your carrier!');
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('battleship')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
-        console.log(app.player1Boats.battleship[1]);
+        console.log("player1's battleship",app.player1Boats.battleship[1]);
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           alert('They sunk your battleship!');
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('cruiser')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
-        console.log(app.player1Boats.cruiser[1]);
+        console.log("player1's cruiser",app.player1Boats.cruiser[1]);
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           alert('They sunk your cruiser!');
         };
-      }else if ($(`.${playersGuess}${player}`).hasClass('submarine')){
+      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
-        console.log(app.player1Boats.submarine[1]);
+        console.log("player1's submarine",app.player1Boats.submarine[1]);
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           alert('They sunk your submarine!');
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
-        console.log(app.player1Boats.destroyer[1]);
+        console.log("player1's destroyer",app.player1Boats.destroyer[1]);
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           alert('They sunk your destroyer!');
         };
       };
     };
-    continueGame = app.checkAllBoatsSunk(player);
+    continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
   }else {
-    $(`.${playersGuess}${player}`).addClass('miss');
+    $(`.${playersGuess}${playerBeingAttacked}`).addClass('miss');
+    console.log(`.${playersGuess}${playerBeingAttacked} is a miss`)
   };
   if (continueGame){
     return false;
@@ -667,9 +676,9 @@ app.init = () => {
 
     //set the player's and computer's boats
 
-    $.when(app.setBoats('.player1')).done(function() {
-      app.setComputersBoats();
-    });
+    // $.when(app.setBoats('.player1')).done(function() {
+      app.setBoats('.player1', app.setComputersBoats);
+    // });
     
     // // event listener for start game button
     app.startGameButton = $('#startGame').on('click', function(e){
@@ -685,11 +694,12 @@ app.init = () => {
       // ask for player's guess
       app.gamePlayDiv = $('.gamePlay').show();
 
-      while(!app.gameOver.finished){
+      app.attackButton = $('#attack').on('click', function(e){
+        e.preventDefault();
         app.gamePlay();
-      };
+      });  
 
-      alert(`The winner is ${app.gameOver.winner}`);
+      // alert(`The winner is ${app.gameOver.winner}`);
 
       
     });
