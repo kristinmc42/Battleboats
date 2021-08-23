@@ -548,10 +548,10 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
     console.log (`.${playersGuess}${playerBeingAttacked} is a hit`);
 
-    if (playerBeingAttacked === '.player1'){
+    if (playerBeingAttacked === '.player2'){
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player2Boats.carrier[1] += 1;
-        console.log("player2's carrier", app.player2Boats.carrier[1]);
+        console.log(`player2's carrier has ${app.player2Boats.carrier[1]} hits`);
 
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           alert('You sunk their carrier!');
@@ -559,28 +559,28 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
-        console.log("player2's battleship",app.player2Boats.battleship[1]);
+        console.log(`player2's battleship has ${app.player2Boats.battleship[1]} hits`);
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
           alert('You sunk their battleship!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player2Boats.cruiser[1] += 1;
-        console.log("player2's cruiser",app.player2Boats.cruiser[1]);
+        console.log(`player2's cruiser has ${app.player2Boats.cruiser[1]} hits`);
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           alert('You sunk their cruiser!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player2Boats.submarine[1] += 1;
-        console.log("player2's submarine",app.player2Boats.submarine[1]);
+        console.log(`player2's submarine has ${app.player2Boats.submarine[1]} hits`);
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           alert('You sunk their submarine!');
         };
       }else {
         app.player2Boats.destroyer[1] += 1;
-        console.log("player2's destroyer",app.player2Boats.destroyer[1]);
+        console.log(`player2's destroyer has ${app.player2Boats.destroyer[1]} hits`);
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           alert('You sunk their destroyer!');
@@ -589,35 +589,35 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     }else {
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
-        console.log("player1's carrier",app.player1Boats.carrier[1]);
+        console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           alert('They sunk your carrier!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
-        console.log("player1's battleship",app.player1Boats.battleship[1]);
+        console.log(`player1's battleship has ${app.player1Boats.battleship[1]} hits`);
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           alert('They sunk your battleship!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
-        console.log("player1's cruiser",app.player1Boats.cruiser[1]);
+        console.log(`player1's cruiser has ${app.player1Boats.cruiser[1]} hits`);
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           alert('They sunk your cruiser!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
-        console.log("player1's submarine",app.player1Boats.submarine[1]);
+        console.log(`player1's submarine has ${app.player1Boats.submarine[1]} hits`);
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           alert('They sunk your submarine!');
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
-        console.log("player1's destroyer",app.player1Boats.destroyer[1]);
+        console.log(`player1's destroyer has ${app.player1Boats.destroyer[1]} hits`);
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           alert('They sunk your destroyer!');
@@ -625,6 +625,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
       };
     };
     continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
+
+    console.log(`the game will continue ${continueGame}`)
   }else {
     $(`.${playersGuess}${playerBeingAttacked}`).addClass('miss');
     console.log(`.${playersGuess}${playerBeingAttacked} is a miss`)
@@ -641,16 +643,16 @@ app.checkAllBoatsSunk = (player) => {
   if (player === '.player1'){
     if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
       alert('Game over!!!!!!');
-      return true
-    }else {
       return false
+    }else {
+      return true
     };
   }else {
     if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
       alert('Game over!!!!!!');
-      return true
-    }else {
       return false
+    }else {
+      return true
     };
   };
 };
