@@ -545,12 +545,12 @@ app.gamePlay = () => {
 
         // assign column, row and position with values of previous hit
         column = app.computerHit.guess[0];
-        row = app.computerHit.guess[1];
+        row = pareseInt(app.computerHit.guess[1]);
         position = app.columnArray.indexOf(column);
 
         // check which direction to guess next
         if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
-          //if no guesses
+          //if no guesses, this is first hit
           //check square above
           if (row > 1){
             //make sure won't go off the board
@@ -572,30 +572,72 @@ app.gamePlay = () => {
             // can't check square above
             app.computerHit.up = true;
             // square below was already a hit
-            app.computerHit.down = true;
-            //need to check below previous it
-          }
+            //need to check below previous hit
+            // reverse array so can check last entry first
+            const reversedPreviousHitArray = app.previousHitArray.reverse();
+
+            // check each element of the reversed array until it has no true statements 
+            for(let m = 0; m < reversedPreviousHitArray.length; m++){
+              if (!reversedPreviousHitArray[m].up){
+                //assign app.computerHit the value of this element
+                app.computerHit = reversedPreviousHitArray[m];
+                // assign true to up and down so it will check down next time
+                app.computerHit.up = true;
+                app.computerHit.down = true;
+                //assign row the value of the next row down to check
+                row = parseInt(reversedPreviousHitArray[m].guess[1]);
+                if (row < 10){
+                  row += 1;
+                };
+                break;
+              };
+            };
+          };
+         
+            
+          //   // check square to left
+          //   if (column === 'a'){
+          //     // can't check square to the left
+          //     app.computerHit.left = true;
+          //     // check square to the right
+          //     column = app.columnArray[position + 1];
+          //     app.computerHit.right = true;
+          //   }else {
+          //     column = app.columnArray[position - 1];
+          //     app.computerHit.left = true;
+          //   };
+          // }
+        }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
+          // last hit found by checking down
           // check square below
           if (row < 10){
             row += 1;
             app.computerHit.down = true;
           }else {
-            // square above already checked and there is no square below
-            app.computerHit.down = true;
-            
-            // check square to left
-            if (column === 'a'){
-              // can't check square to the left
-              app.computerHit.left = true;
-              // check square to the right
-              column = app.columnArray[position + 1];
-              app.computerHit.right = true;
-            }else {
-              column = app.columnArray[position - 1];
-              app.computerHit.left = true;
+            // square above was a hit
+            //need to check above previous hit
+            // reverse array so can check last entry first
+            const reversedPreviousHitArray = app.previousHitArray.reverse();
+
+            // check each element of the reversed array until it has no true statements 
+            for(let m = 0; m < reversedPreviousHitArray.length; m++){
+              if (!reversedPreviousHitArray[m].up){
+                //assign app.computerHit the value of this element
+                app.computerHit = reversedPreviousHitArray[m];
+                // assign true to up and false to down so it will check up next time
+                app.computerHit.up = true;
+                app.computerHit.down = false;
+                //assign row the value of the next row up to check
+                row = parseInt(reversedPreviousHitArray[m].guess[1]);
+                if (row > 1){
+                  row -= 1;
+                };
+                break;
+              };
             };
-          }
-        }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
+
+            
+
           //check square to the left
 
           if (column === 'a'){
@@ -620,7 +662,7 @@ app.gamePlay = () => {
           };
         };
       }else {
-        // if no hit, generate a random row and column for computer
+        // if no previous hit, generate a random row and column for computer
         column = app.columnArray[Math.floor(Math.random() * 10)];
         row = Math.floor(Math.random() * 10) + 1;
       };
@@ -701,7 +743,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
       
 
       // NOTE: need to remove divs with class hit and boatname from the previousHitArray when that boat is sunk
-      
+
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
