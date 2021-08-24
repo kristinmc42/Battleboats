@@ -11,19 +11,28 @@ app.player1Boats = {
   cruiser: [3, 0],
   submarine: [3, 0],
   destroyer: [2, 0]
-}
+};
 app.player2Boats = {
   carrier: [5, 0],
   battleship: [4, 0],
   cruiser: [3, 0],
   submarine: [3, 0],
   destroyer: [2, 0]
-}
+};
 
 app.gameOver = {
   finished: false,
   winner: ''
-}
+};
+
+app.computerHit = {
+  hit: false,
+  guess: '',
+  left: false,
+  right: false,
+  up: false,
+  down: false
+};
 
 
 app.resetForms = () => {
@@ -518,16 +527,89 @@ app.gamePlay = () => {
     app.gameOver.winner = '.player1';
     
     if (!app.gameOver.finished){
+      // computer's turn
+      // clear previous value of the user's text entry
       playersGuess = $('#playersGuess').val('');
       alert("It's the computer's turn.");
 
-      // computer's turn
-      // repeat steps above
-      // generate a random row and column for computer
-      const column = app.columnArray[Math.floor(Math.random() * 10)];
-      const row = Math.floor(Math.random() * 10) + 1;
+      let column = '';
+      let row = 0;
+      let computersGuess = '';
+      
+      // check if the computer had a hit with the last guess
+      if (app.computerHit.hit){
+        column = app.computerHit.guess[0];
+        row = app.computerHit.guess[1];
+        let position = app.columnArray.indexOf(column);
 
-      const computersGuess = `${column}${row}`; 
+        // check which direction to guess next
+        if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
+          //if no guesses
+          //check square above
+          if (row > 1){
+            //make sure won't go off the board
+            row -= 1;
+            app.computerHit.up = true;
+          } else {
+            // can't check square above
+            app.computerHit.up = true;
+            // check square below
+            row += 1;
+            app.computerHit.down = true;
+          };
+        }else if (app.computerHit.up && !app.computerHit.down){
+          // check square below
+          if (row < 10){
+            row += 1;
+            app.computerHit.down = true;
+          }else {
+            // square above already checked and there is no square below
+            app.computerHit.down = true;
+            
+            // check square to left
+            if (column === 'a'){
+              // can't check square to the left
+              app.computerHit.left = true;
+              // check square to the right
+              column = app.columnArray[position + 1];
+              app.computerHit.right = true;
+            }else {
+              column = app.columnArray[position - 1];
+              app.computerHit.left = true;
+            };
+          }
+        }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
+          //check square to the left
+
+          if (column === 'a'){
+            // can't check square to the left
+            app.computerHit.left = true;
+            // check square to the right
+            column = app.columnArray[position + 1];
+            app.computerHit.right = true;
+          }else {
+            column = app.columnArray[position - 1];
+            app.computerHit.left = true;
+          };
+        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
+          // check square to right
+          let position = app.columnArray.indexOf(column);
+
+          if (column !== 'j'){
+            column = app.columnArray[position + 1];
+            app.computerHit.right = true;
+          }else {
+            app.computerHit.right = true;
+          };
+        };
+      }else {
+        // if no hit, generate a random row and column for computer
+        column = app.columnArray[Math.floor(Math.random() * 10)];
+        row = Math.floor(Math.random() * 10) + 1;
+      };
+
+        computersGuess = `${column}${row}`; 
+      
 
       console.log(`${computersGuess} is the computer's guess`);
 
@@ -538,7 +620,7 @@ app.gamePlay = () => {
 };//end of app.gamePlay
 
 app.checkGuess = (playersGuess, playerBeingAttacked) => {
-  // if square is occuppied, change colour of square, keep track of how many hits the boat has taken 
+  // if square is occuppied, change colour of square (NOTE: color is not changing; need to check CSS) and add bomb image; also, keep track of how many hits the boat has taken 
   // if not occuppied, change colour of square to show miss
   let continueGame = true;
 
@@ -587,6 +669,10 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         };
       };
     }else {
+      // track the space that was hit by the computer
+      app.computerHit.hit = true;
+      app.computerHit.guess = playersGuess;
+
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
