@@ -525,22 +525,28 @@ app.gamePlay = () => {
     // check if the square is occuppied
     app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
     app.gameOver.winner = '.player1';
+
+    // computer's turn
+    let column = '';
+    let row = 0;
+    let position = 0;
+    let computersGuess = '';
     
     if (!app.gameOver.finished){
-      // computer's turn
       // clear previous value of the user's text entry
       playersGuess = $('#playersGuess').val('');
       alert("It's the computer's turn.");
-
-      let column = '';
-      let row = 0;
-      let computersGuess = '';
       
       // check if the computer had a hit with the last guess
       if (app.computerHit.hit){
+        //if the previous guess was a hit create a new object and save it in an array
+        app.previousHit = Object.create(app.computerHit);
+        app.previousHitArray.push(app.previousHit)
+
+        // assign column, row and position with values of previous hit
         column = app.computerHit.guess[0];
         row = app.computerHit.guess[1];
-        let position = app.columnArray.indexOf(column);
+        position = app.columnArray.indexOf(column);
 
         // check which direction to guess next
         if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
@@ -558,6 +564,17 @@ app.gamePlay = () => {
             app.computerHit.down = true;
           };
         }else if (app.computerHit.up && !app.computerHit.down){
+          // last hit found by checking up, so check up again
+          if (row > 1){
+            row -= 1;
+            app.computerHit.up = true;
+          }else {
+            // can't check square above
+            app.computerHit.up = true;
+            // square below was already a hit
+            app.computerHit.down = true;
+            //need to check below previous it
+          }
           // check square below
           if (row < 10){
             row += 1;
@@ -608,12 +625,16 @@ app.gamePlay = () => {
         row = Math.floor(Math.random() * 10) + 1;
       };
 
-        computersGuess = `${column}${row}`; 
+      //assign column and row to variable
+      computersGuess = `${column}${row}`; 
       
-
       console.log(`${computersGuess} is the computer's guess`);
 
+      // pass the computersGuess to function
       app.gameOver.finished = app.checkGuess(computersGuess, '.player1');
+
+      // change winner to player2
+      //NOTE : change name of winner to player ***
       app.gameOver.winner = '.player2';
     };
   // });
@@ -631,6 +652,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     console.log (`.${playersGuess}${playerBeingAttacked} is a hit`);
 
     if (playerBeingAttacked === '.player2'){
+      //user attacking the computer
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player2Boats.carrier[1] += 1;
         console.log(`player2's carrier has ${app.player2Boats.carrier[1]} hits`);
@@ -669,10 +691,17 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         };
       };
     }else {
+      //computer attacking user
       // track the space that was hit by the computer
+      
+
       app.computerHit.hit = true;
       app.computerHit.guess = playersGuess;
+      
+      
 
+      // NOTE: need to remove divs with class hit and boatname from the previousHitArray when that boat is sunk
+      
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
