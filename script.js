@@ -540,8 +540,10 @@ app.gamePlay = () => {
       // check if the computer had a hit with the last guess
       if (app.computerHit.hit){
         //if the previous guess was a hit create a new object and save it in an array
-        app.previousHit = Object.create(app.computerHit);
-        app.previousHitArray.push(app.previousHit)
+        if (app.computerHit.guess === computersGuess){
+          app.previousHit = Object.create(app.computerHit);
+          app.previousHitArray.push(app.previousHit)
+        }
 
         // assign column, row and position with values of previous hit
         column = app.computerHit.guess[0];
@@ -550,7 +552,7 @@ app.gamePlay = () => {
 
         // check which direction to guess next
         if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
-          //if no guesses, this is first hit
+          //if no guesses, it was the first hit
           //check square above
           if (row > 1){
             //make sure won't go off the board
@@ -564,13 +566,23 @@ app.gamePlay = () => {
             app.computerHit.down = true;
           };
         }else if (app.computerHit.up && !app.computerHit.down){
-          // last hit found by checking up, so check up again
+          // check square above 
+          
           if (row > 1){
             row -= 1;
+            // check if square above is in previousHitArray
+            
+            if (app.previousHitArray.includes(`${column}${row}`)){
+              if (row > 1){
+                row -= 1;
+                // check again
+                
+              }
+            }
           }else {
             // can't check square above
             // square below was already a hit
-            //need to check below previous hit
+            // need to check below previous hit
             // reverse array so can check last entry first
             const reversedPreviousHitArray = app.previousHitArray.reverse();
 
@@ -592,8 +604,8 @@ app.gamePlay = () => {
             };
           };
         }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
-          // last hit found by checking down
           // check square below
+          // check if square below is in previousHitArray
           if (row < 10){
             row += 1;
           }else {
@@ -620,7 +632,6 @@ app.gamePlay = () => {
             };
           };
         }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
-          //last hit was found by checking left
           //check square to the left
           if (column !== 'a'){
             column = app.columnArray[position - 1];
@@ -769,6 +780,15 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
   }else {
     $(`.${playersGuess}${playerBeingAttacked}`).addClass('miss');
     console.log(`.${playersGuess}${playerBeingAttacked} is a miss`)
+    if (app.computerHit.hit){
+      if (!app.computerHit.down){
+        app.computerHit.down = true;
+      }else if (!app.computerHit.left){
+        app.computerHit.left = true;
+      }else if (!app.computerHit.right){
+        app.computerHit.right = true;
+      }
+    }
   };
   if (continueGame){
     return false;
