@@ -567,10 +567,8 @@ app.gamePlay = () => {
           // last hit found by checking up, so check up again
           if (row > 1){
             row -= 1;
-            app.computerHit.up = true;
           }else {
             // can't check square above
-            app.computerHit.up = true;
             // square below was already a hit
             //need to check below previous hit
             // reverse array so can check last entry first
@@ -593,26 +591,11 @@ app.gamePlay = () => {
               };
             };
           };
-         
-            
-          //   // check square to left
-          //   if (column === 'a'){
-          //     // can't check square to the left
-          //     app.computerHit.left = true;
-          //     // check square to the right
-          //     column = app.columnArray[position + 1];
-          //     app.computerHit.right = true;
-          //   }else {
-          //     column = app.columnArray[position - 1];
-          //     app.computerHit.left = true;
-          //   };
-          // }
         }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
           // last hit found by checking down
           // check square below
           if (row < 10){
             row += 1;
-            app.computerHit.down = true;
           }else {
             // square above was a hit
             //need to check above previous hit
@@ -624,7 +607,7 @@ app.gamePlay = () => {
               if (!reversedPreviousHitArray[m].up){
                 //assign app.computerHit the value of this element
                 app.computerHit = reversedPreviousHitArray[m];
-                // assign true to up and false to down so it will check up next time
+                // assign true to up & down & and false to down so it will check up next time
                 app.computerHit.up = true;
                 app.computerHit.down = false;
                 //assign row the value of the next row up to check
@@ -635,22 +618,21 @@ app.gamePlay = () => {
                 break;
               };
             };
-
-            
-
+          };
+        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
+          //last hit was found by checking left
           //check square to the left
-
-          if (column === 'a'){
-            // can't check square to the left
+          if (column !== 'a'){
+            column = app.columnArray[position - 1];
             app.computerHit.left = true;
+          }else {
+            // can't check square to the left
+            
             // check square to the right
             column = app.columnArray[position + 1];
             app.computerHit.right = true;
-          }else {
-            column = app.columnArray[position - 1];
-            app.computerHit.left = true;
           };
-        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
+
           // check square to right
           let position = app.columnArray.indexOf(column);
 
