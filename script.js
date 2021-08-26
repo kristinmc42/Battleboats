@@ -22,7 +22,7 @@ app.player2Boats = {
 
 app.gameOver = {
   finished: false,
-  winner: ''
+  player: ''
 };
 
 app.computerHit = {
@@ -524,7 +524,7 @@ app.gamePlay = () => {
     
     // check if the square is occuppied
     app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
-    app.gameOver.winner = '.player1';
+    app.gameOver.player = '.player1';
 
     // computer's turn
     let column = '';
@@ -545,7 +545,7 @@ app.gamePlay = () => {
         if (app.computerHit.guess === computersGuess){
           app.previousHit = Object.create(app.computerHit);
           app.previousHitArray.push(app.previousHit)
-        }
+        };
 
         // assign column, row and position with values of previous hit
         column = app.computerHit.guess[0];
@@ -572,67 +572,30 @@ app.gamePlay = () => {
           };
         }else if (app.computerHit.up && !app.computerHit.down){
           // check square above 
-          
           if (row > 1){
             row -= 1;
-            // check if square above is in previousHitArray
-            
-            if (app.previousHitArray.includes(`${column}${row}`)){
-              if (row > 1){
-                row -= 1;
-                // check again
-                
-              }
-            }
           }else {
             // can't check square above
-            // square below was already a hit
-            // need to check below previous hit
-            // reverse array so can check last entry first
-            const reversedPreviousHitArray = app.previousHitArray.reverse();
-
-            // check each element of the reversed array until it has no true statements 
-            for(let m = 0; m < reversedPreviousHitArray.length; m++){
-              if (!reversedPreviousHitArray[m].up){
-                //assign app.computerHit the value of this element
-                app.computerHit = reversedPreviousHitArray[m];
-                // assign true to up and down so it will check down next time
-                app.computerHit.up = true;
+            // need to check squares below until square is not in prevousHitArray
+            for (let g = 1; g <= app.previousHitArray.length; g++){
+              // if square below is not a previous guess, select that square
+              if (!app.previousHitArray.guess.includes(`${app.column}${row + g}`)){
+                row += g;
                 app.computerHit.down = true;
-                //assign row the value of the next row down to check
-                row = parseInt(reversedPreviousHitArray[m].guess[1]);
-                if (row < 10){
-                  row += 1;
-                };
-                break;
               };
             };
           };
         }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
           // check square below
-          // check if square below is in previousHitArray
           if (row < 10){
             row += 1;
           }else {
-            // square above was a hit
-            //need to check above previous hit
-            // reverse array so can check last entry first
-            const reversedPreviousHitArray = app.previousHitArray.reverse();
-
-            // check each element of the reversed array until it has no true statements 
-            for(let m = 0; m < reversedPreviousHitArray.length; m++){
-              if (!reversedPreviousHitArray[m].up){
-                //assign app.computerHit the value of this element
-                app.computerHit = reversedPreviousHitArray[m];
-                // assign true to up & down & and false to down so it will check up next time
-                app.computerHit.up = true;
-                app.computerHit.down = false;
-                //assign row the value of the next row up to check
-                row = parseInt(reversedPreviousHitArray[m].guess[1]);
-                if (row > 1){
-                  row -= 1;
-                };
-                break;
+            // need to check squares above until square is not in prevousHitArray
+            for (let h = 1; h <= app.previousHitArray.length; h++){
+              // if square above is not a previous guess, select that square
+              if (!app.previousHitArray.guess.includes(`${app.column}${row - h}`)){
+                row -= h;
+                app.computerHit.down = true;
               };
             };
           };
@@ -640,23 +603,30 @@ app.gamePlay = () => {
           //check square to the left
           if (column !== 'a'){
             column = app.columnArray[position - 1];
-            app.computerHit.left = true;
           }else {
             // can't check square to the left
-            
-            // check square to the right
-            column = app.columnArray[position + 1];
-            app.computerHit.right = true;
+            // need to check squares to the right until square is not in prevousHitArray
+            for (let j = 1; j <= app.previousHitArray.length; j++){
+              // if square to right not a previous guess, select that square
+              if (!app.previousHitArray.guess.includes(`${app.columnArray[position + j]}${row}`)){
+                column = app.columnArray[position + j];
+                app.computerHit.right = true;
+              };
+            };
           };
-
+        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
           // check square to right
-          let position = app.columnArray.indexOf(column);
-
           if (column !== 'j'){
             column = app.columnArray[position + 1];
-            app.computerHit.right = true;
           }else {
-            app.computerHit.right = true;
+            // need to check squares to the left until square is not in prevousHitArray
+            for (let k = 1; k <= app.previousHitArray.length; k++){
+              // if square to right not a previous guess, select that square
+              if (!app.previousHitArray.guess.includes(`${app.columnArray[position - k]}${row}`)){
+                column = app.columnArray[position - k];
+                app.computerHit.left = true;
+              };
+            };
           };
         };
       }else {
@@ -673,9 +643,8 @@ app.gamePlay = () => {
       // pass the computersGuess to function
       app.gameOver.finished = app.checkGuess(computersGuess, '.player1');
 
-      // change winner to player2
-      //NOTE : change name of winner to player ***
-      app.gameOver.winner = '.player2';
+      // change player to player2
+      app.gameOver.player = '.player2';
     };
   // });
 };//end of app.gamePlay
@@ -735,9 +704,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
       // track the space that was hit by the computer
       app.computerHit.hit = true;
       app.computerHit.guess = playersGuess;
-      
-      // NOTE: need to remove divs with class hit and boatname from the previousHitArray when that boat is sunk
 
+      // check which type of boat was hit and track the number of hits
+      // check if the boat was sunk
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
@@ -748,7 +717,12 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           app.previousHitArray.forEach(element => {
             if ($(`.${element.guess}`).hasClass('carrier')){
               app.previousHitArray.splice(element);
+
+              console.log(`${element.guess} was removed from previousHitArray.`);
             };
+
+            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
             //check if there are still any previous hits
             // if no previous hits, change value of app.computerHit to false and empty
             app.resetComputerHitObject(); 
@@ -764,7 +738,12 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           app.previousHitArray.forEach(element => {
             if ($(`.${element.guess}`).hasClass('battleship')){
               app.previousHitArray.splice(element);
+
+              console.log(`${element.guess} was removed from previousHitArray.`);
             };
+
+            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
             //check if there are still any previous hits
             // if no previous hits, change value of app.computerHit to false and empty
             app.resetComputerHitObject(); 
@@ -780,7 +759,12 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           app.previousHitArray.forEach(element => {
             if ($(`.${element.guess}`).hasClass('cruiser')){
               app.previousHitArray.splice(element);
+
+              console.log(`${element.guess} was removed from previousHitArray.`);
             };
+
+            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
             //check if there are still any previous hits
             // if no previous hits, change value of app.computerHit to false and empty
             app.resetComputerHitObject(); 
@@ -796,7 +780,11 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           app.previousHitArray.forEach(element => {
             if ($(`.${element.guess}`).hasClass('submarine')){
               app.previousHitArray.splice(element);
+
+              console.log(`${element.guess} was removed from previousHitArray.`);
             };
+            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
             //check if there are still any previous hits
             // if no previous hits, change value of app.computerHit to false and empty
             app.resetComputerHitObject(); 
@@ -812,7 +800,12 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           app.previousHitArray.forEach(element => {
             if ($(`.${element.guess}`).hasClass('destroyer')){
               app.previousHitArray.splice(element);
+
+              console.log(`${element.guess} was removed from previousHitArray.`);
             };
+
+            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
             //check if there are still any previous hits
             // if no previous hits, change value of app.computerHit to false and empty
             app.resetComputerHitObject(); 
@@ -925,7 +918,7 @@ app.init = () => {
         app.gamePlay();
       });  
 
-      // alert(`The winner is ${app.gameOver.winner}`);
+      // alert(`The winner is ${app.gameOver.player}`);
 
       
     });
