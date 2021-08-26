@@ -540,6 +540,8 @@ app.gamePlay = () => {
       // check if the computer had a hit with the last guess
       if (app.computerHit.hit){
         //if the previous guess was a hit create a new object and save it in an array
+        console.log(`There was a previous hit by the computer`);
+
         if (app.computerHit.guess === computersGuess){
           app.previousHit = Object.create(app.computerHit);
           app.previousHitArray.push(app.previousHit)
@@ -547,7 +549,10 @@ app.gamePlay = () => {
 
         // assign column, row and position with values of previous hit
         column = app.computerHit.guess[0];
-        row = pareseInt(app.computerHit.guess[1]);
+        row = app.computerHit.guess[1];
+        console.log(`${column}${row} was the previous guess by the computer` );
+
+        // row = pareseInt(row);
         position = app.columnArray.indexOf(column);
 
         // check which direction to guess next
@@ -682,7 +687,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
   if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass("occuppied")){
     $(`.${playersGuess}${playerBeingAttacked}`).addClass('hit');
-    $(`.${playersGuess}${playerBeingAttacked}`).prepend('<i class="fas fa-bomb"></i>')
+    $(`.${playersGuess}${playerBeingAttacked}`).prepend('<i class="fas fa-bomb"></i>');
 
     console.log (`.${playersGuess}${playerBeingAttacked} is a hit`);
 
@@ -728,13 +733,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     }else {
       //computer attacking user
       // track the space that was hit by the computer
-      
-
       app.computerHit.hit = true;
       app.computerHit.guess = playersGuess;
       
-      
-
       // NOTE: need to remove divs with class hit and boatname from the previousHitArray when that boat is sunk
 
       if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
@@ -743,6 +744,15 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           alert('They sunk your carrier!');
+          // remove any previous hits with class carrier
+          app.previousHitArray.forEach(element => {
+            if ($(`.${element.guess}`).hasClass('carrier')){
+              app.previousHitArray.splice(element);
+            };
+            //check if there are still any previous hits
+            // if no previous hits, change value of app.computerHit to false and empty
+            app.resetComputerHitObject(); 
+          });
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
@@ -750,6 +760,15 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           alert('They sunk your battleship!');
+          // remove any previous hits with class battleship
+          app.previousHitArray.forEach(element => {
+            if ($(`.${element.guess}`).hasClass('battleship')){
+              app.previousHitArray.splice(element);
+            };
+            //check if there are still any previous hits
+            // if no previous hits, change value of app.computerHit to false and empty
+            app.resetComputerHitObject(); 
+          });
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
@@ -757,6 +776,15 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           alert('They sunk your cruiser!');
+          // remove any previous hits with class cruiser
+          app.previousHitArray.forEach(element => {
+            if ($(`.${element.guess}`).hasClass('cruiser')){
+              app.previousHitArray.splice(element);
+            };
+            //check if there are still any previous hits
+            // if no previous hits, change value of app.computerHit to false and empty
+            app.resetComputerHitObject(); 
+          });
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
@@ -764,6 +792,15 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           alert('They sunk your submarine!');
+          // remove any previous hits with class submarine
+          app.previousHitArray.forEach(element => {
+            if ($(`.${element.guess}`).hasClass('submarine')){
+              app.previousHitArray.splice(element);
+            };
+            //check if there are still any previous hits
+            // if no previous hits, change value of app.computerHit to false and empty
+            app.resetComputerHitObject(); 
+          });
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
@@ -771,15 +808,30 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           alert('They sunk your destroyer!');
+          // remove any previous hits with class destroyer
+          app.previousHitArray.forEach(element => {
+            if ($(`.${element.guess}`).hasClass('destroyer')){
+              app.previousHitArray.splice(element);
+            };
+            //check if there are still any previous hits
+            // if no previous hits, change value of app.computerHit to false and empty
+            app.resetComputerHitObject(); 
+          });
         };
       };
     };
+    // check if game should continue 
     continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
 
-    console.log(`the game will continue ${continueGame}`)
+    console.log(`the game will continue ${continueGame}`);
   }else {
+    // the guess was a miss
+    // add class miss to the square
     $(`.${playersGuess}${playerBeingAttacked}`).addClass('miss');
-    console.log(`.${playersGuess}${playerBeingAttacked} is a miss`)
+
+    console.log(`.${playersGuess} on ${playerBeingAttacked}'s board is a miss`);
+
+    // if there is a hit but this guess was a miss, change the value on the next direction to check
     if (app.computerHit.hit){
       if (!app.computerHit.down){
         app.computerHit.down = true;
@@ -796,6 +848,19 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     return true;
   };
 };// end of app.checkGuess
+
+app.resetComputerHitObject = () => {
+  // resets app.computerHit if there are no hits 
+  if (app.previousHitArray.length === 0){
+    app.computerHit.hit = false;
+    app.computerHit.guess = '';
+    app.computerHit.up = false;
+    app.computerHit.down = false;
+    app.computerHit.left = false;
+    app.computerHit.right = false;
+  };
+};
+
 
 app.checkAllBoatsSunk = (player) => {
   //check if all player's boats are sunk
