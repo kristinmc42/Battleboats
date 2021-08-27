@@ -43,6 +43,10 @@ app.computerHit = {
 
 app.previousHitArray = [];
 
+app.player1Guesses = [];
+
+app.player2Guesses = [];
+
 
 app.resetForms = () => {
   //reset all forms for setting boats
@@ -531,14 +535,21 @@ app.gamePlay = () => {
     let playersGuess = $('#playersGuess').val();
     playersGuess = playersGuess.toLowerCase();
     
+    //check if the square was already guessed
+    if (app.player1Guesses.includes(playersGuess)){
+      app.playersGuessInput = $('#playersGuess').val('');
+      alert('That square was already guessed. Please try again.');
+      return; 
+    }else {
+      // add guess to player1Guesses array
+      app.player1Guesses.push(playersGuess);
+    };
     // check if the square is occuppied
     app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
     app.gameOver.player = '.player1';
 
+
     // computer's turn
-  
-   
-    
     if (!app.gameOver.finished){
       // clear previous value of the user's text entry
       playersGuess = $('#playersGuess').val('');
@@ -584,38 +595,72 @@ app.gamePlay = () => {
 
           //if no guesses, it was the first hit
           //check square above
-          if (app.computersGuess.row > 1){
-            //make sure won't go off the board
+          if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
+            //if not first row and not a previous guess
             app.computersGuess.row -= 1;
             app.computerHit.up = true;
           } else {
             // can't check square above
             app.computerHit.up = true;
             // check square below
-            app.computersGuess.row += 1;
-            app.computerHit.down = true;
+            if (!app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`)){
+              // make sure not already guessed
+              app.computersGuess.row += 1;
+              app.computerHit.down = true;
+            }else{
+              // check left
+              if (!app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`)){
+                // check not already guessed
+                // check is not first column
+                if (app.computersGuess.column !== 'a'){
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
+                }else {
+                  // can't check square to the left
+                  app.computerHit.left = true;
+                  // need to check squares to the right 
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+                  app.computerHit.right = true;
+                };
+              };
+            };
           };
         }else if (app.computerHit.up && !app.computerHit.down){
           console.log(`computerHit.up is true down is false. Check square above`);
-          // check square above 
-          if (app.computersGuess.row > 1){
+          // check square above was not already guessed
+          if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
             app.computersGuess.row -= 1;
           }else {
             // can't check square above
-            if (app.previousHitArray.length > 0){
-              // need to check squares below until square is not in prevousHitArray
-              for (let g = 0; g <= app.previousHitArray.length; g++){
-                // if square below is not a previous guess, select that square
-                if (!app.previousHitArray[g].guess.includes(`${app.computersGuess.column}${app.computersGuess.row + (g + 1)}`)){
-                  app.computersGuess.row += (g + 1);
-                  app.computerHit.down = true;
+            if (app.computersGuess.row !== 10){
+              // if it is not the last row check if square below was already guessed
+              if ($(!app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`))){
+                // check square to the left
+                if (app.computersGuess.column !== 'a' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`)){
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
+                }else {
+                  // can't check square to the left
+                  app.computerHit.left = true;
+                  // need to check squares to the right 
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+                  app.computerHit.right = true;
                 };
+              }else {
+                if (app.previousHitArray.length > 0){
+                  // need to check squares below until square is not in prevousHitArray
+                  for (let g = 0; g <= app.previousHitArray.length; g++){
+                    // if square below is not a previous guess, select that square
+                    if (!app.previousHitArray[g].guess.includes(`${app.computersGuess.column}${app.computersGuess.row + (g + 1)}`)){
+                      app.computersGuess.row += (g + 1);
+                      app.computerHit.down = true;
+                    };
+                  };
+                };  
               };
             }else {
               // if in first row, and no previousHit, check square below
               app.computersGuess.row += 1;
               app.computerHit.down = true;
-            }
+            };
           };
         }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
           console.log(`computerHit.up and down are true, left is false. Check square below`);
@@ -637,12 +682,12 @@ app.gamePlay = () => {
               // if square is in last row and square above is a miss
               //check square to the left
               if (app.computersGuess.column !== 'a'){
-                app.computersGuess.column = app.columnArray[position - 1];
+                app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
               }else {
                 // can't check square to the left
                 app.computerHit.left = true;
                 // need to check squares to the right 
-                app.computersGuess.column = app.columnArray[position + 1];
+                app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
                 app.computerHit.right = true;
               };
             };
@@ -651,15 +696,15 @@ app.gamePlay = () => {
           console.log(`computerHit.up, down and left are true, right is false. Check square to left`);
           //check square to the left
           if (app.computersGuess.column !== 'a'){
-            app.computersGuess.column = app.columnArray[position - 1];
+            app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
           }else {
             // can't check square to the left
             // need to check squares to the right until square is not in prevousHitArray
             if (app.previousHitArray.length > 0){
               for (let j = 1; j <= app.previousHitArray.length; j++){
                 // if square to right not a previous guess, select that square
-                if (!app.previousHitArray[j].guess.includes(`${app.columnArray[position + j]}${app.computersGuess.row}`)){
-                  app.computersGuess.column = app.columnArray[position + j];
+                if (!app.previousHitArray[j].guess.includes(`${app.columnArray[app.computersGuess.position + j]}${app.computersGuess.row}`)){
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + j];
                   app.computerHit.right = true;
                 };
               };
@@ -674,14 +719,14 @@ app.gamePlay = () => {
           console.log(`computerHit.up,down, left and right are true. Check square to right`);
           // check square to right
           if (app.computersGuess.column !== 'j'){
-            app.computersGuess.column = app.columnArray[position + 1];
+            app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
           }else {
             // need to check squares to the left until square is not in prevousHitArray
             if (app.previousHitArray.length > 0){
               for (let k = 1; k <= app.previousHitArray.length; k++){
                 // if square to right not a previous guess, select that square
-                if (!app.previousHitArray[k].guess.includes(`${app.columnArray[position - k]}${app.computersGuess.row}`)){
-                  app.computersGuess.column = app.columnArray[position - k];
+                if (!app.previousHitArray[k].guess.includes(`${app.columnArray[app.computersGuess.position - k]}${app.computersGuess.row}`)){
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position - k];
                   app.computerHit.left = true;
                 };
               };
@@ -692,12 +737,22 @@ app.gamePlay = () => {
         // if no previous hit, generate a random row and column for computer
         app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
         app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
+        // check if this was already guessed
+        while (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row}`)){
+          app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
+          app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
+        };
       };
 
       //assign column and row to variable
       app.computersGuess.guess = `${app.computersGuess.column}${app.computersGuess.row}`; 
       
       console.log(`${app.computersGuess.guess} is the computer's guess`);
+
+      // add the guess to the player2Guesses array
+      app.player2Guesses.push(app.computersGuess.guess);
+
+      console.log(`The computer's guesses array contains: ${app.player2Guesses}`);
 
       // pass the computersGuess to function
       app.gameOver.finished = app.checkGuess(app.computersGuess.guess, '.player1');
