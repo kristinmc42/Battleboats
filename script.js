@@ -795,13 +795,11 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
               console.log(`${element.guess} was removed from previousHitArray.`);
             };
-
-            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
-
           });
+          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
           //check if there are still any previous hits
-          // if no previous hits, change value of app.computerHit to false and empty
-          app.resetComputerHitObject(); 
+          app.checkRemainingPreviousHitArray();
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
@@ -816,13 +814,11 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
               console.log(`${element.guess} was removed from previousHitArray.`);
             };
-
-            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
-
-            //check if there are still any previous hits
-            // if no previous hits, change value of app.computerHit to false and empty
-            app.resetComputerHitObject(); 
           });
+          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
+          //check if there are still any previous hits
+          app.checkRemainingPreviousHitArray();
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
@@ -855,12 +851,11 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
               console.log(`${element.guess} was removed from previousHitArray.`);
             };
-            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
-
-            //check if there are still any previous hits
-            // if no previous hits, change value of app.computerHit to false and empty
-            app.resetComputerHitObject(); 
           });
+          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
+          //check if there are still any previous hits
+          app.checkRemainingPreviousHitArray();
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
@@ -876,12 +871,11 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
               console.log(`${element.guess} was removed from previousHitArray.`);
             };
 
-            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
-
-            //check if there are still any previous hits
-            // if no previous hits, change value of app.computerHit to false and empty
-            app.resetComputerHitObject(); 
           });
+          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+
+          //check if there are still any previous hits
+          app.checkRemainingPreviousHitArray();
         };
       };
     };
@@ -924,14 +918,13 @@ app.checkRemainingPreviousHitArray = () => {
     app.computerHit = app.previousHitArray[app.previousHitArray.length - 1];
   }else {
     // if no previous hits, change value of app.computerHit to false and empty
-    if (app.previousHitArray.length === 0){
-      app.computerHit.hit = false;
-      app.computerHit.guess = '';
-      app.computerHit.up = false;
-      app.computerHit.down = false;
-      app.computerHit.left = false;
-      app.computerHit.right = false;
-    };
+    app.computerHit.hit = false;
+    app.computerHit.guess = '';
+    app.computerHit.up = false;
+    app.computerHit.down = false;
+    app.computerHit.left = false;
+    app.computerHit.right = false;
+    console.log('ComputerHit is now false');
   };
 };
 
