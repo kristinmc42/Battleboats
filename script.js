@@ -798,10 +798,10 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
             console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
 
-            //check if there are still any previous hits
-            // if no previous hits, change value of app.computerHit to false and empty
-            app.resetComputerHitObject(); 
           });
+          //check if there are still any previous hits
+          // if no previous hits, change value of app.computerHit to false and empty
+          app.resetComputerHitObject(); 
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
@@ -837,13 +837,10 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
               console.log(`${element.guess} was removed from previousHitArray.`);
             };
-
-            console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
-
-            //check if there are still any previous hits
-            // if no previous hits, change value of app.computerHit to false and empty
-            app.resetComputerHitObject(); 
           });
+          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray`);
+          //check if there are still any previous hits
+          app.checkRemainingPreviousHitArray();
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
@@ -920,18 +917,23 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
   };
 };// end of app.checkGuess
 
-app.resetComputerHitObject = () => {
-  // resets app.computerHit if there are no hits 
-  if (app.previousHitArray.length === 0){
-    app.computerHit.hit = false;
-    app.computerHit.guess = '';
-    app.computerHit.up = false;
-    app.computerHit.down = false;
-    app.computerHit.left = false;
-    app.computerHit.right = false;
+app.checkRemainingPreviousHitArray = () => {
+  // checks if there are any elements left in previousHitArray
+  if (app.previousHitArray.length > 0){
+    // change computerHit to last element in array
+    app.computerHit = app.previousHitArray[app.previousHitArray.length - 1];
+  }else {
+    // if no previous hits, change value of app.computerHit to false and empty
+    if (app.previousHitArray.length === 0){
+      app.computerHit.hit = false;
+      app.computerHit.guess = '';
+      app.computerHit.up = false;
+      app.computerHit.down = false;
+      app.computerHit.left = false;
+      app.computerHit.right = false;
+    };
   };
 };
-
 
 app.checkAllBoatsSunk = (player) => {
   //check if all player's boats are sunk
