@@ -88,8 +88,33 @@ app.setBoats = (player, callback) => {
     e.preventDefault();
 
     // when the user clicks on the submit button: 
-    //    set the carrier
-    let carrierPosition = app.setCarrier();
+    // assign value to a variable
+    let startingPosition = $('#setCarrier').val();
+    // check that the variable is a valid entry
+    let carrierPositionValid = app.checkEntryIsValid(startingPosition);
+  
+    while (!carrierPositionValid[0]){
+      // if not a valid entry
+      // reset carrier form and prompt for input again
+      app.setCarrierInput = $('#setCarrier').val('');
+      app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+
+      app.setCarrierButton = $('#submitCarrier').on('click', function(e) {
+
+      startingPosition = $('#setCarrier').val();
+
+      carrierPositionValid = app.checkEntryIsValid(startingPosition);
+      });
+    };
+
+    // check if direction is vertical or horizontal
+    // will default to horizontal if no button selected
+    let carrierDirection = $('input[name="carrierDirection"][type="radio"]:checked').val();
+    let carrierVertical = app.checkBoatDirection(carrierDirection);
+
+    // set the carrier
+    // startingPosition, vertical, boatLength
+    let carrierPosition = [startingPosition, carrierVertical, 5];
 
     console.log (carrierPosition);
 
@@ -100,7 +125,28 @@ app.setBoats = (player, callback) => {
       app.setCarrierInput = $('#setCarrier').val('');
       app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
     
-      carrierPosition = app.setCarrier();
+      startingPosition = $('#setCarrier').val();
+      // check that the variable is a valid entry
+      startingPosition = app.checkEntryIsValid(startingPosition);
+    
+      while (!startingPosition){
+        // if not a valid entry
+        // reset carrier form and prompt for input again
+        app.setCarrierInput = $('#setCarrier').val('');
+        app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+        startingPosition = $('#setCarrier').val();
+        // check that the variable is a valid entry
+        startingPosition = app.checkEntryIsValid(startingPosition);
+      };
+
+      // check if direction is vertical or horizontal
+      // will default to horizontal if no button selected
+      carrierDirection = $('input[name="carrierDirection"][type="radio"]:checked').val();
+      carrierVertical = app.checkBoatDirection(carrierDirection);
+
+      // set the carrier
+      // startingPosition, vertical, boatLength
+      let carrierPosition = [startingPosition, carrierVertical, 5];
 
       continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
     };
@@ -115,6 +161,7 @@ app.setBoats = (player, callback) => {
   app.setBattleshipButton = $('#submitBattleship').on('click', function (e){
 
     e.preventDefault();
+    
 
     // when the user clicks on the submit button: 
     //    set the Battleship
@@ -245,27 +292,32 @@ app.setBoats = (player, callback) => {
 }; // end of app.setBoats function
 
 app.setCarrier = () => {
-    //    assign the text field to variable startingPosition
-    //    asssign variable vertical true or false depending on the radio button value
+  //    assign the text field to variable startingPosition
+  //    asssign variable vertical true or false depending on the radio button value
 
-    let vertical = true;
+  let vertical = true;
 
-    let startingPosition = $('#setCarrier').val();
-    startingPosition = '.' + startingPosition.toLowerCase();
-    
-    const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
+  let startingPosition = $('#setCarrier').val();
+  
+  startingPosition = app.checkEntryIsValid(startingPosition);
+  
+  if (!startingPosition){
+    app.setCarrierInput = $('#setCarrier').val('');
+  }
+  
+  const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
 
-    if (direction === 'carrierVertical'){
-      vertical = true;
-    } else {
-      vertical = false;
-    }
-    
-    const boatLength = 5;
+  if (direction === 'carrierVertical'){
+    vertical = true;
+  } else {
+    vertical = false;
+  }
+  
+  const boatLength = 5;
 
-    console.log(startingPosition, direction, vertical)
+  console.log(startingPosition, direction, vertical)
 
-    return [startingPosition, vertical, boatLength];
+  return [startingPosition, vertical, boatLength];
 }; //end of app.setCarrier function
 
 
@@ -370,6 +422,39 @@ app.setDestroyer = () => {
 
   return [startingPosition, vertical, boatLength];
 }; // end of setDestroyer function
+
+app.checkEntryIsValid = (startingPosition) => {
+  // check that the value entered is a valid square (a-j and 1-10)
+
+  startingPosition = startingPosition.toLowerCase();
+
+  let row = startingPosition[1];
+  if (startingPosition.length === 3){
+    row = startingPosition[1].concat(startingPosition[2]);
+  };
+  // check that row is a number
+  const validRow = !isNaN(row);
+
+  if (!app.columnArray.includes(startingPosition[0]) || !validRow || row < 1 || row > 10 || startingPosition.length > 3 || startingPosition.length < 2){
+    alert('Sorry. That is not a valid square. Please try again.');
+    return [false, startingPosition];
+  } else {
+    startingPosition = '.' + startingPosition;
+    return [true, startingPosition];
+  };
+}; // end of app.checkEntryIsValid
+
+app.checkBoatDirection = (direction) => {
+  // checks if direction is vertical or horizontal
+  let vertical = true;
+
+  if (direction === 'vertical'){
+    vertical = true;
+  } else {
+    vertical = false;
+  };
+  return vertical;
+};
 
 app.placeOnBoard = (shipArray, player, boatName) => {
   // takes 2 parameters, shipArray[startingPosition, vertical, boatLength] & player (player1 or player2)
