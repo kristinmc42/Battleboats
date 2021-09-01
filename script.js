@@ -133,7 +133,7 @@ app.setBoats = (player, callback) => {
   }); // end of setCarrier event listener
 
   // event listener for setting battleship
-  app.setBattleshipButton = $('#submitBattleship').on('click', function (e){
+  app.setBattleshipButton = $('form[name="setBattleshipForm"]').on('submit', function (e){
     // when the user clicks on the submit button: 
     // assign value to a variable
     let startingPosition = $('#setBattleship').val();
@@ -183,7 +183,7 @@ app.setBoats = (player, callback) => {
   }); // end of setBattleship event listener
     
   // event listener for setting cruiser  
-  app.setCruiserButton = $('#submitCruiser').on('click', function (e){
+  app.setCruiserButton = $('form[name="setCruiserForm"]').on('submit', function (e){
     // when the user clicks on the submit button: 
     // assign value to a variable
     let startingPosition = $('#setCruiser').val();
@@ -233,7 +233,7 @@ app.setBoats = (player, callback) => {
   }); // end of setCruiser event listener
 
   // event listener for setting submarine
-  app.setSubmarineButton = $('#submitSubmarine').on('click', function (e){
+  app.setSubmarineButton = $('form[name="setSubmarineForm"]').on('submit', function (e){
     // when the user clicks on the submit button: 
     // assign value to a variable
     let startingPosition = $('#setSubmarine').val();
@@ -284,7 +284,7 @@ app.setBoats = (player, callback) => {
   }); // end of setSubmarine event listener
 
   // event listener for setting destroyer
-  app.setDestroyerButton = $('#submitDestroyer').on('click', function (e){
+  app.setDestroyerButton = $('form[name="setDestroyerForm"]').on('submit', function (e){
     // when the user clicks on the submit button: 
     // assign value to a variable
     let startingPosition = $('#setDestroyer').val();
