@@ -83,80 +83,54 @@ app.setBoats = (player, callback) => {
   app.inputH3Element = $('.input h3').show();
   app.setFormElements = $('form[name="setCarrierForm"]').show();
   
-  app.setCarrierButton = $('#submitCarrier').on('click', function(e) {
-
-    e.preventDefault();
-
+  app.setCarrierForm = $('form[name="setCarrierForm"]').on('submit', function(e) {
     // when the user clicks on the submit button: 
     // assign value to a variable
     let startingPosition = $('#setCarrier').val();
     // check that the variable is a valid entry
     let carrierPositionValid = app.checkEntryIsValid(startingPosition);
-  
-    while (!carrierPositionValid[0]){
+    
+    if (!carrierPositionValid[0]){
       // if not a valid entry
       // reset carrier form and prompt for input again
       app.setCarrierInput = $('#setCarrier').val('');
       app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+      
+      e.preventDefault();
 
-      app.setCarrierButton = $('#submitCarrier').on('click', function(e) {
-
-      startingPosition = $('#setCarrier').val();
-
-      carrierPositionValid = app.checkEntryIsValid(startingPosition);
-      });
-    };
-
-    // check if direction is vertical or horizontal
-    // will default to horizontal if no button selected
-    let carrierDirection = $('input[name="carrierDirection"][type="radio"]:checked').val();
-    let carrierVertical = app.checkBoatDirection(carrierDirection);
-
-    // set the carrier
-    // startingPosition, vertical, boatLength
-    let carrierPosition = [startingPosition, carrierVertical, 5];
-
-    console.log (carrierPosition);
-
-    let continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
-
-    while (!continueGame) {
-      // reset carrier form and prompt for input again
-      app.setCarrierInput = $('#setCarrier').val('');
-      app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
-    
-      startingPosition = $('#setCarrier').val();
-      // check that the variable is a valid entry
-      startingPosition = app.checkEntryIsValid(startingPosition);
-    
-      while (!startingPosition){
-        // if not a valid entry
-        // reset carrier form and prompt for input again
-        app.setCarrierInput = $('#setCarrier').val('');
-        app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
-        startingPosition = $('#setCarrier').val();
-        // check that the variable is a valid entry
-        startingPosition = app.checkEntryIsValid(startingPosition);
-      };
-
+    } else {
+      // startingPosition is valid
       // check if direction is vertical or horizontal
       // will default to horizontal if no button selected
-      carrierDirection = $('input[name="carrierDirection"][type="radio"]:checked').val();
-      carrierVertical = app.checkBoatDirection(carrierDirection);
-
+      startingPosition = carrierPositionValid[1];
+      let carrierDirection = $('input[name="carrierDirection"][type="radio"]:checked').val();
+      let carrierVertical = app.checkBoatDirection(carrierDirection);
+  
       // set the carrier
       // startingPosition, vertical, boatLength
       let carrierPosition = [startingPosition, carrierVertical, 5];
-
-      continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
+  
+      console.log (carrierPosition);
+  
+      let continueGame = app.placeOnBoard(carrierPosition, player, 'carrier');
+  
+      if (!continueGame) {
+        // reset carrier form and prompt for input again
+        app.setCarrierInput = $('#setCarrier').val('');
+        app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+        
+        e.preventDefault();
+        
+      } else {
+        // Carrier successfully placed
+        // disable  setCarrier button and show form for Battleship
+        
+        app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
+        
+        app.setFormElements = $('form[name="setBattleshipForm"]').show();
+      };
     };
-
-    // disable  setCarrier button and show form for Battleship
-
-    app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
-
-    app.setFormElements = $('form[name="setBattleshipForm"]').show();
-  }); 
+  });
 
   app.setBattleshipButton = $('#submitBattleship').on('click', function (e){
 
