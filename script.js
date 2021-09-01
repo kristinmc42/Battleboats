@@ -128,6 +128,7 @@ app.setBoats = (player, callback) => {
         app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
         
         app.setFormElements = $('form[name="setBattleshipForm"]').show();
+        e.preventDefault();
       };
     };
   }); // end of setCarrier event listener
@@ -178,6 +179,8 @@ app.setBoats = (player, callback) => {
         app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
         
         app.setFormElements = $('form[name="setCruiserForm"]').show();
+
+        e.preventDefault();
       };
     }; 
   }); // end of setBattleship event listener
@@ -228,6 +231,7 @@ app.setBoats = (player, callback) => {
         app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
         
         app.setFormElements = $('form[name="setSubmarineForm"]').show();
+        e.preventDefault();
       };
     };
   }); // end of setCruiser event listener
@@ -278,6 +282,7 @@ app.setBoats = (player, callback) => {
         app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
         
         app.setFormElements = $('form[name="setDestroyerForm"]').show();
+        e.preventDefault();
       };
     };
     
@@ -327,6 +332,8 @@ app.setBoats = (player, callback) => {
         // disable  setDestroyer button
         
         app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
+
+        e.preventDefault();
         
         
         //hide player1's forms for setting boats
@@ -340,7 +347,7 @@ app.setBoats = (player, callback) => {
         callback();
       };
     };
-  });
+  });// end of setDestroyer event listener
 }; // end of app.setBoats function
 
   //commented code below is for using prompt to get user input for setting boats
@@ -854,8 +861,19 @@ app.gamePlay = () => {
         }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
           console.log(`computerHit.up,down, left and right are true. Check square to right`);
           // check square to right
-          // right already true
+          // check if already guessed
+          if(app.computersGuess.column !== 'j' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`)){
+            // square not already guessed
+            // right already true
             app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+          }else {
+            //square already guessed, check to right until not previously guessed
+            let index = 1;
+            while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + index]}${app.computersGuess.row}`)){
+              app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+              index++;
+            };
+          };
         };
       }else {
         // if no previous hit, generate a random row and column for computer
