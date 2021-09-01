@@ -72,17 +72,17 @@ app.resetForms = () => {
 app.setBoats = (player, callback) => {
 // ask player what square they would like to set their boat in
 // ask if they want the boat set vertically or horizontal
-//check if square is already occuppied
+// check if square is already occuppied
 // if not, change class to occuppied
-//repeat for each boat
+// repeat for each boat
 
   app.inputDiv = $('.input').prepend(`<h3>${app.userName}. Let's set your boats</h3>`);
-
 
   // show h3 and first of the boat forms
   app.inputH3Element = $('.input h3').show();
   app.setFormElements = $('form[name="setCarrierForm"]').show();
   
+  // event listener for setting carrier
   app.setCarrierForm = $('form[name="setCarrierForm"]').on('submit', function(e) {
     // when the user clicks on the submit button: 
     // assign value to a variable
@@ -130,112 +130,216 @@ app.setBoats = (player, callback) => {
         app.setFormElements = $('form[name="setBattleshipForm"]').show();
       };
     };
-  });
+  }); // end of setCarrier event listener
 
+  // event listener for setting battleship
   app.setBattleshipButton = $('#submitBattleship').on('click', function (e){
-
-    e.preventDefault();
-    
-
     // when the user clicks on the submit button: 
-    //    set the Battleship
-    let battleshipPosition = app.setBattleship();
-
-    let continueGame = app.placeOnBoard(battleshipPosition, player, 'battleship');
-
-    while (!continueGame) {
-      // reset form and prompt for input again
+    // assign value to a variable
+    let startingPosition = $('#setBattleship').val();
+    // check that the variable is a valid entry
+    let battleshipPositionValid = app.checkEntryIsValid(startingPosition);
+    
+    if (!battleshipPositionValid[0]){
+      // if not a valid entry
+      // reset battleship form and prompt for input again
       app.setBattleshipInput = $('#setBattleship').val('');
       app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
+      
+      e.preventDefault();
 
-      battleshipPosition = app.setBattleship();
-
-      continueGame = app.placeOnBoard(battleshipPosition, player, 'battleship');
-    };
-
-    app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
-
-    app.setFormElements = $('form[name="setCruiserForm"]').show();
-  });
-
+    } else {
+      // startingPosition is valid
+      // check if direction is vertical or horizontal
+      // will default to horizontal if no button selected
+      startingPosition = battleshipPositionValid[1];
+      let battleshipDirection = $('input[name="battleshipDirection"][type="radio"]:checked').val();
+      let battleshipVertical = app.checkBoatDirection(battleshipDirection);
+  
+      // set the battleship
+      // startingPosition, vertical, boatLength
+      let battleshipPosition = [startingPosition, battleshipVertical, 4];
+  
+      console.log (battleshipPosition);
+  
+      let continueGame = app.placeOnBoard(battleshipPosition, player, 'battleship');
+  
+      if (!continueGame) {
+        // reset battleship form and prompt for input again
+        app.setBattleshipInput = $('#setBattleship').val('');
+        app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
+        
+        e.preventDefault();
+        
+      } else {
+        // Battleship successfully placed
+        // disable  setBattleship button and show form for Cruiser
+        
+        app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
+        
+        app.setFormElements = $('form[name="setCruiserForm"]').show();
+      };
+    }; 
+  }); // end of setBattleship event listener
+    
+  // event listener for setting cruiser  
   app.setCruiserButton = $('#submitCruiser').on('click', function (e){
-
-    e.preventDefault();
-
-    let cruiserPosition = app.setCruiser();
-
-    let continueGame = app.placeOnBoard(cruiserPosition, player, 'cruiser');
-
-    while (!continueGame){
-      // reset form and prompt for input again
+    // when the user clicks on the submit button: 
+    // assign value to a variable
+    let startingPosition = $('#setCruiser').val();
+    // check that the variable is a valid entry
+    let cruiserPositionValid = app.checkEntryIsValid(startingPosition);
+    
+    if (!cruiserPositionValid[0]){
+      // if not a valid entry
+      // reset cruiser form and prompt for input again
       app.setCruiserInput = $('#setCruiser').val('');
       app.setCruiserRadioButtons = $('input[name="cruiserDirection"]').prop('checked', false);
+      
+      e.preventDefault();
 
-      cruiserPosition = app.setCruiser();
-
-      continueGame = app.placeOnBoard(cruiserPosition, player, 'cruiser');
+    } else {
+      // startingPosition is valid
+      // check if direction is vertical or horizontal
+      // will default to horizontal if no button selected
+      startingPosition = cruiserPositionValid[1];
+      let cruiserDirection = $('input[name="cruiserDirection"][type="radio"]:checked').val();
+      let cruiserVertical = app.checkBoatDirection(cruiserDirection);
+  
+      // set the cruiser
+      // startingPosition, vertical, boatLength
+      let cruiserPosition = [startingPosition, cruiserVertical, 3];
+  
+      console.log (cruiserPosition);
+  
+      let continueGame = app.placeOnBoard(cruiserPosition, player, 'cruiser');
+  
+      if (!continueGame) {
+        // reset cruiser form and prompt for input again
+        app.setCruiserInput = $('#setCruiser').val('');
+        app.setCruiserRadioButtons = $('input[name="cruiserDirection"]').prop('checked', false);
+        
+        e.preventDefault();
+        
+      } else {
+        // Cruiser successfully placed
+        // disable  setCruiser button and show form for Submarine
+        
+        app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
+        
+        app.setFormElements = $('form[name="setSubmarineForm"]').show();
+      };
     };
-   
+  }); // end of setCruiser event listener
 
-    app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
-
-    app.setFormElements = $('form[name="setSubmarineForm"]').show();
-
-    return false;
-  });
-
+  // event listener for setting submarine
   app.setSubmarineButton = $('#submitSubmarine').on('click', function (e){
-
-    e.preventDefault();
-
-    let submarinePosition = app.setSubmarine();
-
-    let continueGame = app.placeOnBoard(submarinePosition, player, 'submarine');
-
-    while (!continueGame){
-      // reset form and prompt for input again
+    // when the user clicks on the submit button: 
+    // assign value to a variable
+    let startingPosition = $('#setSubmarine').val();
+    // check that the variable is a valid entry
+    let submarinePositionValid = app.checkEntryIsValid(startingPosition);
+    
+    if (!submarinePositionValid[0]){
+      // if not a valid entry
+      // reset submarine form and prompt for input again
       app.setSubmarineInput = $('#setSubmarine').val('');
       app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
+      
+      e.preventDefault();
 
-      submarinePosition = app.setSubmarine();
-
-      continueGame = app.placeOnBoard(submarinePosition, player, 'submarine');
+    } else {
+      // startingPosition is valid
+      // check if direction is vertical or horizontal
+      // will default to horizontal if no button selected
+      startingPosition = submarinePositionValid[1];
+      let submarineDirection = $('input[name="submarineDirection"][type="radio"]:checked').val();
+      let submarineVertical = app.checkBoatDirection(submarineDirection);
+  
+      // set the submarine
+      // startingPosition, vertical, boatLength
+      let submarinePosition = [startingPosition, submarineVertical, 3];
+  
+      console.log (submarinePosition);
+  
+      let continueGame = app.placeOnBoard(submarinePosition, player, 'submarine');
+  
+      if (!continueGame) {
+        // reset submarine form and prompt for input again
+        app.setSubmarineInput = $('#setSubmarine').val('');
+        app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
+        
+        e.preventDefault();
+        
+      } else {
+        // Submarine successfully placed
+        // disable  setSubmarine button and show form for Destroyer
+        
+        app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
+        
+        app.setFormElements = $('form[name="setDestroyerForm"]').show();
+      };
     };
+    
+  }); // end of setSubmarine event listener
 
-    app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
-
-    app.setFormElements = $('form[name="setDestroyerForm"]').show();
-  });
-
+  // event listener for setting destroyer
   app.setDestroyerButton = $('#submitDestroyer').on('click', function (e){
-
-    e.preventDefault();
-
-    let destroyerPosition = app.setDestroyer();
-
-    let continueGame = app.placeOnBoard(destroyerPosition, player, 'destroyer');
-
-    while (!continueGame){
-      // reset form and prompt for input again
+    // when the user clicks on the submit button: 
+    // assign value to a variable
+    let startingPosition = $('#setDestroyer').val();
+    // check that the variable is a valid entry
+    let destroyerPositionValid = app.checkEntryIsValid(startingPosition);
+    
+    if (!destroyerPositionValid[0]){
+      // if not a valid entry
+      // reset destroyer form and prompt for input again
       app.setDestroyerInput = $('#setDestroyer').val('');
       app.setDestroyerRadioButtons = $('input[name="destroyerDirection"]').prop('checked', false);
+      
+      e.preventDefault();
 
-      destroyerPosition = app.setDestroyer();
-
-      continueGame = app.placeOnBoard(destroyerPosition, player, 'destroyer');
+    } else {
+      // startingPosition is valid
+      // check if direction is vertical or horizontal
+      // will default to horizontal if no button selected
+      startingPosition = destroyerPositionValid[1];
+      let destroyerDirection = $('input[name="destroyerDirection"][type="radio"]:checked').val();
+      let destroyerVertical = app.checkBoatDirection(destroyerDirection);
+  
+      // set the destroyer
+      // startingPosition, vertical, boatLength
+      let destroyerPosition = [startingPosition, destroyerVertical, 2];
+  
+      console.log (destroyerPosition);
+  
+      let continueGame = app.placeOnBoard(destroyerPosition, player, 'destroyer');
+  
+      if (!continueGame) {
+        // reset submarine form and prompt for input again
+        app.setDestroyerInput = $('#setDestroyer').val('');
+        app.setDestroyerRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
+        
+        e.preventDefault();
+        
+      } else {
+        // Destroyer successfully placed
+        // disable  setDestroyer button
+        
+        app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
+        
+        
+        //hide player1's forms for setting boats
+        app.setFormElements = $('.setForm').hide();
+        app.inputH3Element = $('.input h3').hide();
+    
+        // add text and button to start game div
+        app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
+        app.startGameButton = $('#startGame').show();
+    
+        callback();
+      };
     };
-
-    app.setDestroyerButton = $('#submitDestroyer').attr('disabled', true);
-
-    //hide player1's forms for setting boats
-    app.setFormElements = $('.setForm').hide();
-    app.inputH3Element = $('.input h3').hide();
-
-    // add text and button to start game div
-    app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
-    app.startGameButton = $('#startGame').show();
-
-    callback();
   });
 
   //commented code below is for using prompt to get user input for setting boats
