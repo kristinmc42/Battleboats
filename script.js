@@ -341,6 +341,7 @@ app.setBoats = (player, callback) => {
       };
     };
   });
+}; // end of app.setBoats function
 
   //commented code below is for using prompt to get user input for setting boats
   //prompt box blocked the game board though so wasn't ideal
@@ -367,7 +368,6 @@ app.setBoats = (player, callback) => {
   //   app.inputDiv = $('.input').append(`<p>${app.boats[i].name}  - Placed</p>`);
   // };
 
-}; // end of app.setBoats function
 
 // app.setCarrier = () => {
 //   //    assign the text field to variable startingPosition
@@ -535,22 +535,21 @@ app.checkBoatDirection = (direction) => {
 };
 
 app.placeOnBoard = (shipArray, player, boatName) => {
-  // takes 2 parameters, shipArray[startingPosition, vertical, boatLength] & player (player1 or player2)
+  // takes 3 parameters, shipArray[startingPosition, vertical, boatLength], player (player1 or player2) and boatname
   //find the div that matches startingPosition and add class occuppied
   // separate string of startingPosition into row (number) and column (letter)
   // starting from startingPosition, and based on vertical true/false, make sure the boat will fit inside gameboard using boatlength
 
-  
   const startingPosition = shipArray[0];
   let position = shipArray[0];
   const positionArray = position.split('');
   let column = positionArray[1];
   let convertedRow = 1;
  
-  if (positionArray.length === 3){
+  if (positionArray.length === 2){
     convertedRow = parseInt(positionArray[2]);
   }else {
-    const row = positionArray[2] + positionArray[3]
+    const row = positionArray[2].concat(positionArray[3]); 
     convertedRow = parseInt(row);
   }
 
@@ -575,16 +574,16 @@ app.placeOnBoard = (shipArray, player, boatName) => {
         return false;
       };
     };
-    // adds class 'occuppied' to each of the squares
+    // adds class 'occuppied' to the startingPosition square
     $(`${player}${startingPosition}`).addClass(`occuppied ${boatName}`);
+    // adds class 'occuppied' to the rest of the boat squares
     for (let i = 1; i < boatLength; i++){
      $(`${player}.${column}${convertedRow + i}`).addClass(`occuppied ${boatName}`);
     };
     return true;
   }else if (!vertical && (convertedColumn + (boatLength - 1)) <= 10){
     // assigning occupied to boat in row
-
-     // checks if any of the squares already have class 'occuppied'
+    // checks if any of the squares already have class 'occuppied'
     // if yes, returns false and quits function
     for (let b = 0; b < boatLength -1; b++){
       column = app.columnArray[convertedColumn + b];
@@ -595,8 +594,9 @@ app.placeOnBoard = (shipArray, player, boatName) => {
       };
     };
 
-    // adds class 'occuppied' to each of the squares
+    // adds class 'occuppied' to the startingPosition square
     $(`${player}${startingPosition}`).addClass(`occuppied ${boatName}`);
+    // adds class 'occuppied' to the rest of the boat squares
     for (let j = 0; j < boatLength -1; j++){
       column = app.columnArray[convertedColumn + j];
 
