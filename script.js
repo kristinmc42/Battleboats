@@ -369,137 +369,137 @@ app.setBoats = (player, callback) => {
 
 }; // end of app.setBoats function
 
-app.setCarrier = () => {
-  //    assign the text field to variable startingPosition
-  //    asssign variable vertical true or false depending on the radio button value
+// app.setCarrier = () => {
+//   //    assign the text field to variable startingPosition
+//   //    asssign variable vertical true or false depending on the radio button value
 
-  let vertical = true;
+//   let vertical = true;
 
-  let startingPosition = $('#setCarrier').val();
+//   let startingPosition = $('#setCarrier').val();
   
-  startingPosition = app.checkEntryIsValid(startingPosition);
+//   startingPosition = app.checkEntryIsValid(startingPosition);
   
-  if (!startingPosition){
-    app.setCarrierInput = $('#setCarrier').val('');
-  }
+//   if (!startingPosition){
+//     app.setCarrierInput = $('#setCarrier').val('');
+//   }
   
-  const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
+//   const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
 
-  if (direction === 'carrierVertical'){
-    vertical = true;
-  } else {
-    vertical = false;
-  }
+//   if (direction === 'carrierVertical'){
+//     vertical = true;
+//   } else {
+//     vertical = false;
+//   }
   
-  const boatLength = 5;
+//   const boatLength = 5;
 
-  console.log(startingPosition, direction, vertical)
+//   console.log(startingPosition, direction, vertical)
 
-  return [startingPosition, vertical, boatLength];
-}; //end of app.setCarrier function
+//   return [startingPosition, vertical, boatLength];
+// }; //end of app.setCarrier function
 
 
-app.setBattleship = () => {
-  //    assign the text field to variable startingPosition
-  //    asssign variable vertical true or false depending on the radio button value
+// app.setBattleship = () => {
+//   //    assign the text field to variable startingPosition
+//   //    asssign variable vertical true or false depending on the radio button value
 
-  let vertical = true;
+//   let vertical = true;
 
-  let startingPosition = $('#setBattleship').val();
-  startingPosition = '.' + startingPosition.toLowerCase();
+//   let startingPosition = $('#setBattleship').val();
+//   startingPosition = '.' + startingPosition.toLowerCase();
   
-  const direction = $('input[name="battleshipDirection"][type="radio"]:checked').val();
+//   const direction = $('input[name="battleshipDirection"][type="radio"]:checked').val();
 
-  if (direction === 'battleshipVertical'){
-    vertical = true;
-  } else {
-    vertical = false;
-  }
+//   if (direction === 'battleshipVertical'){
+//     vertical = true;
+//   } else {
+//     vertical = false;
+//   }
   
-  const boatLength = 4;
+//   const boatLength = 4;
 
-  console.log(startingPosition, direction, vertical)
+//   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatLength];
-}; //end of setBattleship function
+//   return [startingPosition, vertical, boatLength];
+// }; //end of setBattleship function
 
-app.setCruiser = () => {
-  //    assign the text field to variable startingPosition
-  //    asssign variable vertical true or false depending on the radio button value
+// app.setCruiser = () => {
+//   //    assign the text field to variable startingPosition
+//   //    asssign variable vertical true or false depending on the radio button value
 
-  console.log('setcruiser app called');
+//   console.log('setcruiser app called');
 
-  let vertical = true;
+//   let vertical = true;
 
-  let startingPosition = $('#setCruiser').val();
-  startingPosition = '.' + startingPosition.toLowerCase();
+//   let startingPosition = $('#setCruiser').val();
+//   startingPosition = '.' + startingPosition.toLowerCase();
   
-  const direction = $('input[name="cruiserDirection"][type="radio"]:checked').val();
+//   const direction = $('input[name="cruiserDirection"][type="radio"]:checked').val();
 
-  if (direction === 'cruiserVertical'){
-    vertical = true;
-  } else {
-    vertical = false;
-  }
+//   if (direction === 'cruiserVertical'){
+//     vertical = true;
+//   } else {
+//     vertical = false;
+//   }
   
-  const boatLength = 3;
+//   const boatLength = 3;
 
-  console.log(startingPosition, direction, vertical);
+//   console.log(startingPosition, direction, vertical);
 
 
-  return [startingPosition, vertical, boatLength];
-}; //end of setCruiser function
+//   return [startingPosition, vertical, boatLength];
+// }; //end of setCruiser function
 
-app.setSubmarine = () => {
-  //    assign the text field to variable startingPosition
-  //    asssign variable vertical true or false depending on the radio button value
+// app.setSubmarine = () => {
+//   //    assign the text field to variable startingPosition
+//   //    asssign variable vertical true or false depending on the radio button value
 
-  let vertical = true;
+//   let vertical = true;
 
-  let startingPosition = $('#setSubmarine').val();
-  startingPosition = '.' + startingPosition.toLowerCase();
+//   let startingPosition = $('#setSubmarine').val();
+//   startingPosition = '.' + startingPosition.toLowerCase();
   
-  const direction = $('input[name="submarineDirection"][type="radio"]:checked').val();
+//   const direction = $('input[name="submarineDirection"][type="radio"]:checked').val();
 
-  if (direction === 'submarineVertical'){
-    vertical = true;
-  } else {
-    vertical = false;
-  }
+//   if (direction === 'submarineVertical'){
+//     vertical = true;
+//   } else {
+//     vertical = false;
+//   }
   
-  const boatLength = 3;
+//   const boatLength = 3;
 
-  console.log(startingPosition, direction, vertical)
+//   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatLength];
-}; //end of setSubmarine function
+//   return [startingPosition, vertical, boatLength];
+// }; //end of setSubmarine function
 
-app.setDestroyer = () => {
-  //    assign the text field to variable startingPosition
-  //    asssign variable vertical true or false depending on the radio button value
+// app.setDestroyer = () => {
+//   //    assign the text field to variable startingPosition
+//   //    asssign variable vertical true or false depending on the radio button value
 
-  let vertical = true;
+//   let vertical = true;
 
-  let startingPosition = $('#setDestroyer').val();
-  startingPosition = '.' + startingPosition.toLowerCase();
+//   let startingPosition = $('#setDestroyer').val();
+//   startingPosition = '.' + startingPosition.toLowerCase();
   
-  const direction = $('input[name="destroyerDirection"][type="radio"]:checked').val();
+//   const direction = $('input[name="destroyerDirection"][type="radio"]:checked').val();
 
-  if (direction === 'destroyerVertical'){
-    vertical = true;
-  } else {
-    vertical = false;
-  }
+//   if (direction === 'destroyerVertical'){
+//     vertical = true;
+//   } else {
+//     vertical = false;
+//   }
   
-  const boatLength = 2;
+//   const boatLength = 2;
 
-  console.log(startingPosition, direction, vertical)
+//   console.log(startingPosition, direction, vertical)
 
 
-  return [startingPosition, vertical, boatLength];
-}; // end of setDestroyer function
+//   return [startingPosition, vertical, boatLength];
+// }; // end of setDestroyer function
 
 app.checkEntryIsValid = (startingPosition) => {
   // check that the value entered is a valid square (a-j and 1-10)
