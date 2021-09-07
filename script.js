@@ -739,11 +739,24 @@ app.gamePlay = () => {
         //if the previous guess was a hit create a new object and save it in an array
         console.log(`There was a previous hit by the computer`);
 
-        if (app.computerHit.guess === app.computersGuess.guess){
-          app.previousHit = Object.create(app.computerHit);
-          app.previousHitArray.push(app.previousHit);
-          console.log(`${app.computersGuess.guess} pushed to previousHitArray`);
+        if (app.computerHit.guess === app.computersGuess.guess && !app.previousHitArray.includes(app.computerHit)){
+
+          const previousHit = JSON.parse(JSON.stringify(app.computerHit));
+
+          app.previousHitArray.push(previousHit);
+
+          console.log(`${previousHit.guess} pushed to previousHitArray`);
+          console.log(`previousHitArray has: ${app.previousHitArray.length} elements`);
+          
+          for (let index = app.previousHitArray.length - 1; index >= 0; index -=1){
+            if (index % 2 === 0){
+              console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is even`);
+            }else {
+              console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is odd`);
+            };
+          };
         };
+
 
         // assign column, row and position with values of previous hit
         if (app.computerHit.guess.length === 2){
@@ -831,8 +844,21 @@ app.gamePlay = () => {
                 // can't check square to the left
                 app.computerHit.left = true;
                 // need to check squares to the right 
-                app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
-                app.computerHit.right = true;
+                if(app.computersGuess.column !== 'j' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`)){
+                  //square not previously guessed
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+                  app.computerHit.right = true; 
+    
+                }else {
+                  //square already guessed, check to right until not previously guessed
+                  let index = 1;
+                  while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + index]}${app.computersGuess.row}`)){
+                    app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+                    index++;
+                  };
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+                  app.computerHit.right = true;
+                };
               };
             };
           };
@@ -855,8 +881,20 @@ app.gamePlay = () => {
               // can't check square to the left
               app.computerHit.left = true;
               // need to check square to the right 
-              app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
-              app.computerHit.right = true;
+              if(app.computersGuess.column !== 'j' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`)){
+                //square not previously guessed
+                app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+                app.computerHit.right = true; 
+              }else {
+                //square already guessed, check to right until not previously guessed
+                let index = 1;
+                while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + index]}${app.computersGuess.row}`)){
+                  app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+                  index++;
+                };
+                app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+                app.computerHit.right = true;
+              };
             };
           };
         }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
@@ -869,8 +907,22 @@ app.gamePlay = () => {
           }else {
             // can't check square to the left
             // check square to right
-            app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+            if(app.computersGuess.column !== 'j' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`)){
+              //square not previously guessed
+              app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
               app.computerHit.right = true; 
+
+            }else {
+              //square already guessed, check to right until not previously guessed
+              let index = 1;
+              while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + index]}${app.computersGuess.row}`)){
+                app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+                index++;
+              };
+              app.computersGuess.column = app.columnArray[app.computersGuess.position + index];
+
+              app.computerHit.right = true;
+            };
           };
         }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
           console.log(`computerHit.up,down, left and right are true. Check square to right`);
@@ -992,8 +1044,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           alert('They sunk your carrier!');
           // remove any previous hits with class carrier
           app.removeHitsWithBoatClass('carrier');
-
-          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray. ${app.previousHitArray}`);
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
@@ -1003,8 +1053,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           alert('They sunk your battleship!');
           // remove any previous hits with class battleship
           app.removeHitsWithBoatClass('battleship');
-
-          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray. ${app.previousHitArray}`);
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
@@ -1014,8 +1062,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           alert('They sunk your cruiser!');
           // remove any previous hits with class cruiser
           app.removeHitsWithBoatClass('cruiser');
-
-          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray. ${app.previousHitArray}`);
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
@@ -1025,8 +1071,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           alert('They sunk your submarine!');
           // remove any previous hits with class submarine
           app.removeHitsWithBoatClass('submarine');
-
-          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray. ${app.previousHitArray}`);
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
@@ -1036,8 +1080,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           alert('They sunk your destroyer!');
           // remove any previous hits with class destroyer
           app.removeHitsWithBoatClass('destroyer');
-
-          console.log(`There are now ${app.previousHitArray.length} hits in previousHitArray. ${app.previousHitArray}`);
         };
       };
     };
@@ -1073,38 +1115,47 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
   };
 };// end of app.checkGuess
 
-app.resetComputerHit = () => {
-    // if no previous hits, change value of app.computerHit to false and empty
+app.resetComputerHit = (remainingHits) => {
+  if (remainingHits.length >= 1){
+    // reset computerHit to last item in previousHitsArray
+    const newGuess = remainingHits[remainingHits.length - 1];
+    app.computerHit = newGuess;
+
+    console.log(`newGuess is: ${newGuess.guess}  computerHit is: ${app.computerHit.guess}`)
+    
+  }else {
+    // reset computerHit to false and empty
     app.computerHit.hit = false;
     app.computerHit.guess = '';
     app.computerHit.up = false;
     app.computerHit.down = false;
     app.computerHit.left = false;
     app.computerHit.right = false;
-    console.log('ComputerHit is now false');
+    console.log('computerHit is now false');
+  };
 };
 
 app.removeHitsWithBoatClass = (boatClass) => {
-  let newArray = [];
-  if (app.player1Boats[boatClass][0] === app.previousHitArray.length){
-    //delete all of the previousHitArray and set computerHit to false
-    app.previousHitArray = [];
-    console.log(`previousHitArray is empty. ${app.previousHitArray.length}`);
-    app.resetComputerHit();
-  }else {
-    // push elements without boatClass to a new array
-    app.previousHitArray.forEach(element => {
-      if (!$(`.${element.guess}.player1`).hasClass(boatClass) ){
-        newArray.push(element);
-        console.log(`${element.guess} is added to the new array`)
-      };
-    });
-    app.previousHitArray = newArray.slice();
-    // set computerHit to last element in array
-    app.computerHit = app.previousHitArray[app.previousHitArray.length - 1];
+  // checks for squares with the matching boatClass
+  // removes them from the previousHitArray
 
-    console.log(`previousHitArray has ${app.previousHitArray} hits. `);
+  let remainingHits = [];
+
+  for (let index = app.previousHitArray.length - 1; index >=0; index -=1){
+    if ($(`.${app.previousHitArray[index].guess}.player1`).hasClass(`${boatClass}`)){
+    // if element in previousHit has the boatClass remove it from the previousHitArray
+    console.log(`${app.previousHitArray[index].guess} was removed from previousHits`)
+      app.previousHitArray.splice(index, 1);
+    }else {
+      remainingHits.push(app.previousHitArray[index]);
+      console.log(`${app.previousHitArray[index].guess} was added to remianing hits`);
+    };
   };
+
+  console.log(`previousHitArray:${app.previousHitArray}
+  remainingHits: ${remainingHits}`);
+
+  app.resetComputerHit(remainingHits);
 };
 
 app.checkAllBoatsSunk = (player) => {
