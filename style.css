@@ -6,6 +6,21 @@ h1, h2, h3, p, a, div, button {
   padding: 0;
 }
 
+/* wrapper */
+.wrapper {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+
+}
+
+/* body */
+body {
+  background-image: url("./assets/blue-water-9.jpg");
+  background-color: blue;
+  
+}
+
 /* header */
 header {
   background-color: lightgray;
@@ -17,33 +32,36 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2rem;
 }
+
+/* nav div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 
 h1 {
   font-size: 3rem;
   color: blue;
+  text-transform: uppercase;
+  border: 6px double darkblue;
+  padding: 0 2rem;
 }
+
+#headerImage {
+  width: 130px;
+  height: auto;
+}
+
 
 ul {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
   list-style: none;
-  width: 50%;
-}
-
-#newGame, 
-#saveGame,
-#next,
-#startGame {
-  color: white;
-  background-color: blue;
-  border-radius: 15px;
-  text-align: center;
-
-  width: 130px;
-  height: 50px;
-  padding: 10px;
+  /* width: 50%; */
+  
 }
 
 a {
@@ -52,45 +70,90 @@ a {
   text-decoration: none;
 }
 
-/* section */
+button {
+  color: white;
+  background-color: blue;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#newGame, 
+#saveGame,
+#next,
+#startGame {
+  width: 130px;
+  height: 50px;
+  padding: 10px;
+}
+
+
+
+/* section - gameboards */
 section{
   display: flex;
   justify-content: space-evenly;
   flex-wrap: none ;
+  padding-top: .7rem;
+  width: 100vw;
+ 
 }
 
 /* legend */
 .legend {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  background-color: linen;
-  border: 2px solid darkblue;
+  background-color: white;
+  border: 6px double darkblue;
+  padding: .7rem;
+  margin-right: 5rem;
 }
 
 .ship {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: darkblue;
   text-align: center;
 }
 .text {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: mediumslateblue;
   text-align: center;
+  margin-bottom: .5rem;
+  border-bottom: 2px dashed mediumslateblue;
 }
 
+.ships:last-of-type p {
+  border: none;
+  margin: 0;
+}
+ 
+#carrierImage,
+#battleshipImage,
+#cruiserImage,
+#submarineImage,
+#destroyerImage {
+  height:auto;
+  width: 70px;
+  margin-left: 20%;
+  margin-right: auto;
+}
+
+
+
+
 /* game boards */
+
 h2 {
   font-size: 2rem;
-  color: red;
+  color: darkblue;
   text-transform: uppercase; 
   margin-top: 10px;
 }
 
 h3 {
   font-size: 1.4rem;
-  color: red;
+  color: darkblue;
   text-transform: capitalize;
   margin-bottom: 10px;
 }
@@ -115,8 +178,8 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid red;
-  background-color: black;
+  border: 6px double darkblue;
+  background-color: rgb(241, 241, 245);
 }
 
 .columnHeader,
@@ -135,14 +198,7 @@ h3 {
   justify-content: flex-start;
 }
 
-.input h3,
-.startGame h3 {
-  color: blue;
-  margin-top: 20px;
-}
-
-
-
+/* conditions for state of play */
 .player1.occuppied {
   background-color: black;
 }
@@ -154,9 +210,42 @@ h3 {
 
 .hit {
   background-color: red;
-  color: fuchsia;
+  color: rgb(255, 0, 0);
 }
 
 .miss {
   background-color: white;
 }
+
+
+
+/* input div */
+.input {
+  background-color: lightsteelblue;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.input,
+.startGame h3 {
+  color: blue;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.setForm button {
+  width: 120px;
+  height: auto;
+  padding: 5px;
+  
+}
+
+/* NOT WORKING */
+.animate__zoomIn{
+  --animate-duration: 2s;
+  /* --animate-delay: 2s; */
+}
+
+
+
