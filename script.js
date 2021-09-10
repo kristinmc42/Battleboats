@@ -70,18 +70,25 @@ app.resetForms = () => {
 };//end of resetFroms function
 
 app.setBoats = (player, callback) => {
-// ask player what square they would like to set their boat in
-// ask if they want the boat set vertically or horizontal
-// check if square is already occuppied
-// if not, change class to occuppied
-// repeat for each boat
+  // ask player what square they would like to set their boat in
+  // ask if they want the boat set vertically or horizontal
+  // check if square is already occuppied
+  // if not, change class to occuppied
+  // repeat for each boat
 
-  app.inputDiv = $('.input').prepend(`<h3>${app.userName}. Let's set your boats</h3>`);
 
   // show h3 and first of the boat forms
-  app.inputH3Element = $('.input h3').show();
-  app.setFormElements = $('form[name="setCarrierForm"]').show();
+  app.inputElement = $('.input').show();
+
+  app.inputDiv = $('.input').prepend(`<h3 class="animate__zoomIn">${app.userName}. Let's set your boats!</h3>`)
+
+  app.inputDiv = $('.input').append(`<h3>Select the starting square for your boats.</h3>`)
+
+ 
+
+  setTimeout(function(){ app.setFormElements = $('form[name="setCarrierForm"]').show()}, 2000);
   
+
   // event listener for setting carrier
   app.setCarrierForm = $('form[name="setCarrierForm"]').on('submit', function(e) {
     // when the user clicks on the submit button: 
@@ -126,8 +133,11 @@ app.setBoats = (player, callback) => {
         // disable  setCarrier button and show form for Battleship
         
         app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
+
+        app.setFormElements = $('form[name="setCarrierForm"]').hide();
         
         app.setFormElements = $('form[name="setBattleshipForm"]').show();
+
         e.preventDefault();
       };
     };
@@ -177,6 +187,8 @@ app.setBoats = (player, callback) => {
         // disable  setBattleship button and show form for Cruiser
         
         app.setBattleshipButton = $('#submitBattleship').attr('disabled', true);
+
+        app.setFormElements = $('form[name="setBattleshipForm"]').hide();
         
         app.setFormElements = $('form[name="setCruiserForm"]').show();
 
@@ -229,8 +241,11 @@ app.setBoats = (player, callback) => {
         // disable  setCruiser button and show form for Submarine
         
         app.setCruiserButton = $('#submitCruiser').attr('disabled', true);
+
+        app.setFormElements = $('form[name="setCruiserForm"]').hide();
         
         app.setFormElements = $('form[name="setSubmarineForm"]').show();
+
         e.preventDefault();
       };
     };
@@ -280,8 +295,11 @@ app.setBoats = (player, callback) => {
         // disable  setSubmarine button and show form for Destroyer
         
         app.setSubmarineButton = $('#submitSubmarine').attr('disabled', true);
+
+        app.setFormElements = $('form[name="setSubmarineForm"]').hide();
         
         app.setFormElements = $('form[name="setDestroyerForm"]').show();
+
         e.preventDefault();
       };
     };
@@ -338,7 +356,7 @@ app.setBoats = (player, callback) => {
         
         //hide player1's forms for setting boats
         app.setFormElements = $('.setForm').hide();
-        app.inputH3Element = $('.input h3').hide();
+        app.inputElement = $('.input').hide();
     
         // add text and button to start game div
         app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
@@ -1180,7 +1198,7 @@ app.checkAllBoatsSunk = (player) => {
 
 app.init = () => {
   // Hide h3 and forms for setting boats
-  app.inputH3Element = $('.input h3').hide();
+  app.inputElement = $('.input').hide();
   app.setFormElements = $('.setForm').hide();
   app.startGameButton = $('#startGame').hide();
   app.gamePlayDiv = $('.gamePlay').hide();
@@ -1216,7 +1234,7 @@ app.init = () => {
       // ask for player's guess
       app.gamePlayDiv = $('.gamePlay').show();
 
-      app.attackButton = $('#attack').on('click', function(e){
+      app.attackButton = $('#attack').on('submit', function(e){
         e.preventDefault();
         app.gamePlay();
       });  
