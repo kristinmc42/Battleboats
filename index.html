@@ -52,40 +52,60 @@
 
   <!-- gameboards section -->
   <section class="wrapper">
-    <!-- start of legend div -->
-    <div class="legend">
-      <!-- will display all the types of ships -->
-      <div class="ships">
-        <p class="ship carrier">Carrier</p>
-        <img src="./assets/carrier.png" alt="Picture Library Battleship Clipart Aircraft Carrier - Aircraft Carrier Silhouette Transparent@nicepng.com" id="carrierImage">
-        <p class="text">5 tiles long</p>
+    <div>
+      <!-- legend and sunkShip status divs -->
+      <!-- start of legend div -->
+      <div class="legend">
+        <!-- will display all the types of ships -->
+        <div class="ships">
+          <p class="ship carrier">Carrier</p>
+          <img src="./assets/carrier.png" alt="Picture Library Battleship Clipart Aircraft Carrier - Aircraft Carrier Silhouette Transparent@nicepng.com" id="carrierImage">
+          <p class="text">5 tiles long</p>
+        </div>
+        
+        <div class="ships">
+          <p class="ship battleship">Battleship</p>
+          <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage">
+          <p class="text">4 tiles long</p>
+        </div>
+        
+        <div class="ships">
+          <p class="ship cruiser">Cruiser</p>
+          <img src="./assets/cruiser.png" alt="silhouette of cruiser clipart" id="cruiserImage">
+          <p class="text">3 tiles long</p>
+        </div>
+        
+        <div class="ships">
+          <p class="ship submarine">Submarine</p>
+          <img src="./assets/submarine.png" alt="silhouette of submarine clipart" id="submarineImage">
+          <p class="text">3 tiles long</p>
+        </div>
+        
+        <div class="ships">
+          <p class="ship destroyer">Destroyer</p>
+          <img src="./assets/destroyer.png" alt="Destroyer Naval Ship Navy Clip Art - Icon @clipartmax.com" id="destroyerImage">
+          <p class="text">2 tiles long</p>
+        </div>
       </div>
-      
-      <div class="ships">
-        <p class="ship battleship">Battleship</p>
-        <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage">
-        <p class="text">4 tiles long</p>
-      </div>
-      
-      <div class="ships">
-        <p class="ship cruiser">Cruiser</p>
-        <img src="./assets/cruiser.png" alt="silhouette of cruiser clipart" id="cruiserImage">
-        <p class="text">3 tiles long</p>
-      </div>
-      
-      <div class="ships">
-        <p class="ship submarine">Submarine</p>
-        <img src="./assets/submarine.png" alt="silhouette of submarine clipart" id="submarineImage">
-        <p class="text">3 tiles long</p>
-      </div>
-      
-      <div class="ships">
-        <p class="ship destroyer">Destroyer</p>
-        <img src="./assets/destroyer.png" alt="Destroyer Naval Ship Navy Clip Art - Icon @clipartmax.com" id="destroyerImage">
-        <p class="text">2 tiles long</p>
+      <!-- end of legend div -->
+      <div id="sunkShips">
+        <div class="player1Sunk">
+          <p class="carrier"></p>
+          <p class="battleship"></p>
+          <p class="cruiser"></p>
+          <p class="submarine"></p>
+          <p class="destroyer"></p>
+        </div>
+        <div class="player2Sunk">
+          <p class="carrier"></p>
+          <p class="battleship"></p>
+          <p class="cruiser"></p>
+          <p class="submarine"></p>
+          <p class="destroyer"></p>
+        </div>
       </div>
     </div>
-    <!-- end of legend div -->
+    <!-- end of legend and sunkShip divs -->
     
     <!-- start of player1 div -->
     <div class="player1Board">
