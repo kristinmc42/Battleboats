@@ -80,14 +80,14 @@ app.setBoats = (player, callback) => {
   // show h3 and first of the boat forms
   app.inputElement = $('.input').show();
 
+  app.inputDiv = $('.input').prepend(`<p>Select the starting square for your boats.</p>`)
   
-  app.inputDiv = $('.input').prepend(`<h3 class="animate__zoomIn">${app.userName}. Let's set your boats!</h3>`);
+  app.inputDiv = $('.input').prepend(`<p class="bolder animate__zoomIn">${app.userName}. Let's set your boats!</p>`);
   
   
   setTimeout(function(){ 
     app.setFormElements = $('form[name="setCarrierForm"]').show();
     
-    app.inputDiv = $('.input').append(`<h3>Select the starting square for your boats.</h3>`)
 
   }, 1800);
   
