@@ -11,20 +11,18 @@ h1, h2, h3, p, a, div, button {
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
-
+  
 }
 
 /* body */
 body {
-  background-image: url("./assets/blue-water-9.jpg");
-  background-color: blue;
   letter-spacing: .07rem;
   font-family: 'Prompt', sans-serif;
 }
 
 /* header */
 header {
-  background-color: lightgray;
+  background-color: rgb(254, 254, 254);
   border: 3px double grey;
   margin-bottom: 1rem;
 }
@@ -45,9 +43,9 @@ nav {
 h1 {
   font-family: 'Karantina', cursive;
   font-size: 4rem;
-  color: blue;
+  color: darkblue;
   text-transform: uppercase;
-  border: 6px double darkblue;
+  /* border: 1px solid darkblue; */
   padding: 0 3rem;
 }
 
@@ -79,10 +77,15 @@ button {
   text-align: center;
 }
 
+
+
 #newGame, 
 #saveGame,
 #next,
 #startGame {
+  background-color: rgb(254, 254, 254);
+  color: darkblue;
+  border: 2px double darkblue;
   width: 130px;
   height: 50px;
   padding: 10px;
@@ -95,13 +98,41 @@ section{
   display: flex;
   justify-content: space-evenly;
   flex-wrap: none ;
-  padding-top: .7rem;
+  padding: .7rem 0;
   width: 100vw;
+  /* background-image: url("./assets/blue-water-9.jpg");
+  background-color: white; */
+  position: relative;
  
 }
 
+section::after {
+  content: "";
+  background: url("./assets/blue-water-9.jpg");
+  opacity: 0.45;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;  
+}
+/* legendStatus div */
+/* .legendStatus {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  border: 6px double darkblue;
+  margin-right: 1rem;
+  min-width: 200px;
+  width: 50%;
+} */
+
 /* legend */
-.legend {
+.legend,
+.player1Sunk,
+.player2Sunk {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,7 +140,7 @@ section{
   background-color: white;
   border: 6px double darkblue;
   padding: .7rem;
-  margin-right: 5rem;
+  
 }
 
 .ship {
@@ -119,10 +150,10 @@ section{
 }
 .text {
   font-size: 1.2rem;
-  color: mediumslateblue;
+  color: rgb(123, 157, 230);
   text-align: center;
   margin-bottom: .5rem;
-  border-bottom: 2px dashed mediumslateblue;
+  border-bottom: 2px dashed darkblue;
 }
 
 .ships:last-of-type p {
@@ -141,6 +172,35 @@ section{
   margin-right: auto;
 }
 
+/* sunkShips div */
+/* .sunkShips {
+  
+  min-width: 100px;
+  width: 300px;
+  height: auto;
+  padding-left: .6rem;
+} */
+/* .player1Sunk,
+.player2Sunk { */
+  /* display: flex;
+  flex-direction: column; */
+  /* width: 40px;
+  height: 404px;
+  padding: none;
+}
+.player1Sunk p,
+.player2Sunk p {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid mediumblue;
+  width: 50px;
+  height: 60px;
+  font-size: 1.4rem;
+}
+.player1Sunk p:first-child,
+.player2Sunk p:first-child {
+  height: 30px;
+} */
 
 
 
@@ -225,7 +285,8 @@ h3 {
 .input,
 .startGame,
 .gamePlay {
-  background-color: lightsteelblue;
+  /* background-color: #c2d5f3; */
+  border-top: 3px double grey;
   text-align: center;
   padding: 1rem 0;
 }
@@ -233,10 +294,14 @@ h3 {
 .input,
 .startGame h3,
 .gamePlay {
-  color: blue;
+  color: darkblue;
   margin-top: 1rem;
   font-size: 1.2rem;
   text-transform: uppercase;
+}
+
+::placeholder {
+  opacity: .5;
 }
 
 .setForm input,
@@ -249,7 +314,11 @@ h3 {
 .gamePlay button {
   min-width: 120px;
   height: auto;
-  padding: 5px;
+  padding: 8px 5px 6px 5px;
+  text-align: center;
+  background-color: rgb(254, 254, 254);
+  color: darkblue;
+  border: 2px double darkblue;
   
 }
 
@@ -257,6 +326,11 @@ h3 {
 .animate__zoomIn{
   --animate-duration: 2s;
   --animate-delay: 1s;
+}
+
+.bolder {
+  font-weight: bolder;
+  font-size: 1.5rem;
 }
 
 /* start game div */
