@@ -18,7 +18,7 @@ h1, h2, h3, p, a, div, button {
 body {
   background-image: url("./assets/blue-water-9.jpg");
   background-color: blue;
-  
+  letter-spacing: .1rem;
 }
 
 /* header */
