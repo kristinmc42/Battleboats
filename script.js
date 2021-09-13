@@ -86,7 +86,7 @@ app.setBoats = (player, callback) => {
 
  
 
-  setTimeout(function(){ app.setFormElements = $('form[name="setCarrierForm"]').show()}, 2000);
+  setTimeout(function(){ app.setFormElements = $('form[name="setCarrierForm"]').show()}, 1200);
   
 
   // event listener for setting carrier
@@ -358,9 +358,15 @@ app.setBoats = (player, callback) => {
         app.setFormElements = $('.setForm').hide();
         app.inputElement = $('.input').hide();
     
-        // add text and button to start game div
-        app.inputDiv = $('.startGame').prepend(`<h3>Let's go!</h3>`);
-        app.startGameButton = $('#startGame').show();
+        // show, then add text and button to start game div
+        app.inputDiv = $('.startGame').show();
+        
+        app.inputDiv = $('.startGame').prepend(`<h3 class="animate__zoomIn">Let's go!</h3>`);
+
+        // setTimeout(function(){$('.startGame').append(`<button id= 'startGame'>Start Game</button>`);}, 1500);
+        
+
+        // app.startGameButton = $('#startGame').show();
     
         callback();
       };
@@ -1200,7 +1206,7 @@ app.init = () => {
   // Hide h3 and forms for setting boats
   app.inputElement = $('.input').hide();
   app.setFormElements = $('.setForm').hide();
-  app.startGameButton = $('#startGame').hide();
+  app.inputDiv = $('.startGame').hide();
   app.gamePlayDiv = $('.gamePlay').hide();
   
   // event listener for when new game is clicked
@@ -1222,7 +1228,7 @@ app.init = () => {
     
     // // event listener for start game button
     app.startGameButton = $('#startGame').on('click', function(e){
-      e.preventDefault();
+      // e.preventDefault();
 
       console.log('start Game button pressed');
 
@@ -1234,8 +1240,8 @@ app.init = () => {
       // ask for player's guess
       app.gamePlayDiv = $('.gamePlay').show();
 
-      app.attackButton = $('#attack').on('submit', function(e){
-        e.preventDefault();
+      app.attackButton = $('#attack').on('click', function(e){
+        // e.preventDefault();
         app.gamePlay();
       });  
 

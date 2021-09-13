@@ -25,7 +25,7 @@ body {
 header {
   background-color: lightgray;
   border: 3px double grey;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 nav {
@@ -204,9 +204,9 @@ h3 {
 }
 
 /* temp for testing purposes */
-.player2.occuppied {
+/* .player2.occuppied {
   background-color: green;
-}
+} */
 
 .hit {
   background-color: red;
@@ -220,22 +220,32 @@ h3 {
 
 
 /* input div */
-.input {
+.input,
+.startGame,
+.gamePlay {
   background-color: lightsteelblue;
   text-align: center;
   padding: 1rem 0;
 }
 
 .input,
-.startGame h3 {
+.startGame h3,
+.gamePlay {
   color: blue;
-  margin-top: 20px;
+  margin-top: 1rem;
   font-size: 1.2rem;
   text-transform: uppercase;
 }
 
-.setForm button {
-  width: 120px;
+.setForm input,
+.gamePlay input {
+  margin-right: 1rem;
+}
+
+
+.setForm button,
+.gamePlay button {
+  min-width: 120px;
   height: auto;
   padding: 5px;
   
@@ -244,8 +254,28 @@ h3 {
 /* NOT WORKING */
 .animate__zoomIn{
   --animate-duration: 2s;
-  /* --animate-delay: 2s; */
+  --animate-delay: 1s;
 }
+
+/* start game div */
+.startGame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* gamePlay div */
+.gamePlay {
+  display: block;
+  align-items: center;
+}
+
+#attack {
+  text-transform: uppercase;
+}
+
 
 
 
