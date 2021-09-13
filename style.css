@@ -342,6 +342,14 @@ h3 {
   margin-top: 1rem;
 }
 
+.startGame h3{
+  font-size: 2rem;
+}
+
+/* #startGame {
+  font-style: 1.2rem;
+} */
+
 /* gamePlay div */
 .gamePlay {
   display: block;
