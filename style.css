@@ -18,7 +18,8 @@ h1, h2, h3, p, a, div, button {
 body {
   background-image: url("./assets/blue-water-9.jpg");
   background-color: blue;
-  letter-spacing: .1rem;
+  letter-spacing: .07rem;
+  font-family: 'Prompt', sans-serif;
 }
 
 /* header */
@@ -42,11 +43,12 @@ nav {
 } */
 
 h1 {
-  font-size: 3rem;
+  font-family: 'Karantina', cursive;
+  font-size: 4rem;
   color: blue;
   text-transform: uppercase;
   border: 6px double darkblue;
-  padding: 0 2rem;
+  padding: 0 3rem;
 }
 
 #headerImage {
