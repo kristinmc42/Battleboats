@@ -71,10 +71,16 @@ a {
 }
 
 button {
-  color: white;
-  background-color: blue;
+  color: darkblue;
+  background-color: rgb(254, 254, 254);
   border-radius: 15px;
   text-align: center;
+}
+
+button:hover,
+button[type="submit"]:hover {
+  color: rgb(254, 254, 254);
+  background-color: darkblue;
 }
 
 
@@ -83,8 +89,6 @@ button {
 #saveGame,
 #next,
 #startGame {
-  background-color: rgb(254, 254, 254);
-  color: darkblue;
   border: 2px double darkblue;
   width: 130px;
   height: 50px;
