@@ -11,13 +11,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet"> 
 
-  <!-- font awesome kit -->
-  <script src="https://kit.fontawesome.com/7bfd8027d9.js" crossorigin="anonymous"></script>
-
   <!-- animate.css file -->
   <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
 
   <!-- my style sheet -->
   <link rel="stylesheet" href="style.css">
@@ -27,7 +26,7 @@
   <header>
     <nav>
      
-      <img src="./assets/kissclipart-navy-ship-clip-art-clipart-naval-ship-battleship-c-267c119ae6a3b789.jpg" alt="clipart of animated style battleship" id="headerImage">
+      <img src="./assets/shipClipart.png" alt="clipart of animated style battleship" id="headerImage">
       <h1>Battleboats</h1>
   
       <ul>
@@ -51,64 +50,42 @@
   </header>
 
   <!-- gameboards section -->
-  <section class="wrapper">
-    <div class="legendStatus">
-      <!-- legend and sunkShip status divs -->
-      <!-- start of legend div -->
-      <div class="legend">
-        <!-- will display all the types of ships -->
-        <div class="ships">
-          <p class="ship carrier"><span><i class="fas fa-times-circle player1 player1Sunk carrier"></i></span>   Carrier   <span><i class="fas fa-times-circle player2 player2Sunk carrier"></i></span></p>
-          <img src="./assets/carrier.png" alt="Picture Library Battleship Clipart Aircraft Carrier - Aircraft Carrier Silhouette Transparent@nicepng.com" id="carrierImage">
-          <p class="text">5 tiles long</p>
-        </div>
-        
-        <div class="ships">
-          <p class="ship battleship"><span><i class="fas fa-times-circle player1 player1Sunk"></i></span> Battleship <span><i class="fas fa-times-circle player2 player2Sunk"></i></span></p>
-          <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage">
-          <p class="text">4 tiles long</p>
-        </div>
-        
-        <div class="ships">
-          <p class="ship cruiser"><span><i class="fas fa-times-circle player1 player1Sunk cruiser"></i></span>   Cruiser   <span><i class="fas fa-times-circle player2 player2Sunk cruiser"></i></span></p>
-          <img src="./assets/cruiser.png" alt="silhouette of cruiser clipart" id="cruiserImage">
-          <p class="text">3 tiles long</p>
-        </div>
-        
-        <div class="ships">
-          <p class="ship submarine"><span><i class="fas fa-times-circle player1 player1Sunk"></i></span> Submarine <span><i class="fas fa-times-circle player2 player2Sunk"></i></span></p>
-          <img src="./assets/submarine.png" alt="silhouette of submarine clipart" id="submarineImage">
-          <p class="text">3 tiles long</p>
-        </div>
-        
-        <div class="ships">
-          <p class="ship destroyer"><span><i class="fas fa-times-circle player1 player1Sunk destroyer"></i></span>  Destroyer  <span><i class="fas fa-times-circle player2 player2Sunk destroyer"></i></span></p>
-          <img src="./assets/destroyer.png" alt="Destroyer Naval Ship Navy Clip Art - Icon @clipartmax.com" id="destroyerImage">
-          <p class="text">2 tiles long</p>
-        </div>
+  <section class="wrapper"> 
+    <!-- start of legend div -->
+    <div class="legend">
+      <!-- will display all the types of ships -->
+      <div class="ships">
+        <p class="ship carrier"><span><i class="fas fa-times-circle player1 carrier"></i></span>   Carrier   <span><i class="fas fa-times-circle player2 carrier"></i></span></p>
+        <img src="./assets/carrier.png" alt="Picture Library Battleship Clipart Aircraft Carrier - Aircraft Carrier Silhouette Transparent@nicepng.com" id="carrierImage">
+        <p class="text">5 tiles long</p>
       </div>
-      <!-- end of legend div -->
-      <!-- <div id="sunkShips"> -->
-        <!-- <div class="player1Sunk">
-          <p>P 1</p>
-          <p class="carrier">X</p>
-          <p class="battleship">X</p>
-          <p class="cruiser">X</p>
-          <p class="submarine">X</p>
-          <p class="destroyer">X</p>
-        </div>
-        <div class="player2Sunk">
-          <p>P 2</p>
-          <p class="carrier">X</p>
-          <p class="battleship">X</p>
-          <p class="cruiser">X</p>
-          <p class="submarine">X</p>
-          <p class="destroyer">X</p>
-        </div> -->
-      <!-- </div> -->
+      
+      <div class="ships">
+        <p class="ship battleship"><span><i class="fas fa-times-circle player1 battleship"></i></span> Battleship <span><i class="fas fa-times-circle player2 battleship"></i></span></p>
+        <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage">
+        <p class="text">4 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship cruiser"><span><i class="fas fa-times-circle player1 cruiser"></i></span>   Cruiser   <span><i class="fas fa-times-circle player2 cruiser"></i></span></p>
+        <img src="./assets/cruiser.png" alt="silhouette of cruiser clipart" id="cruiserImage">
+        <p class="text">3 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship submarine"><span><i class="fas fa-times-circle player1 submarine"></i></span> Submarine <span><i class="fas fa-times-circle player2 submarine"></i></span></p>
+        <img src="./assets/submarine.png" alt="silhouette of submarine clipart" id="submarineImage">
+        <p class="text">3 tiles long</p>
+      </div>
+      
+      <div class="ships">
+        <p class="ship destroyer"><span><i class="fas fa-times-circle player1 destroyer"></i></span>  Destroyer  <span><i class="fas fa-times-circle player2 destroyer"></i></span></p>
+        <img src="./assets/destroyer.png" alt="Destroyer Naval Ship Navy Clip Art - Icon @clipartmax.com" id="destroyerImage">
+        <p class="text">2 tiles long</p>
+      </div>
     </div>
-    <!-- end of legend and sunkShip divs -->
-    
+    <!-- end of legend div -->
+     
     <!-- start of player1 div -->
     <div class="player1Board">
       <!-- will display board for Player 1 (user) -->
@@ -476,9 +453,16 @@
     <button type="submit" onfocus="this.value=''" id="attack">Attack!</button>
   </div>
 
+
   <!-- footer -->
 
   <!-- end of footer -->
+
+  <!-- font awesome kit -->
+  <script src="https://kit.fontawesome.com/7bfd8027d9.js" crossorigin="anonymous"></script>
+
+  <!-- canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 
   <!-- attach jquery library and js script -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>

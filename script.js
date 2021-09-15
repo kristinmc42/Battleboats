@@ -754,6 +754,14 @@ app.gamePlay = () => {
     app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
     app.gameOver.player = '.player1';
 
+    if (app.gameOver.finished){
+      // game is over
+      console.log(`${app.gameOver.player} is the winner`);
+      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Congratulations ${app.userName}! You won!</h3></div>`);
+      app.launchConfetti();
+      return;
+    };
+    // end of player's turn
 
     // computer's turn
     if (!app.gameOver.finished){
@@ -896,6 +904,14 @@ app.gamePlay = () => {
 
       // change player to player2
       app.gameOver.player = '.player2';
+
+      if (app.gameOver.finished){
+        // game is over
+        console.log(`${app.gameOver.player} is the winner`);
+        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">The computer won this round. 
+        Good battle ${app.userName}! Better luck next time.</h3></div>`);
+        return;
+      };
     };
   };
 };//end of app.gamePlay
@@ -1026,7 +1042,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           alert('You sunk their carrier!');
-
+          app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
@@ -1034,7 +1050,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
           alert('You sunk their battleship!');
-          
+          app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player2Boats.cruiser[1] += 1;
@@ -1042,6 +1058,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           alert('You sunk their cruiser!');
+          app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player2Boats.submarine[1] += 1;
@@ -1049,6 +1066,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           alert('You sunk their submarine!');
+          app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
         };
       }else {
         app.player2Boats.destroyer[1] += 1;
@@ -1056,6 +1074,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           alert('You sunk their destroyer!');
+          app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
         };
       };
     }else {
@@ -1072,6 +1091,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           alert('They sunk your carrier!');
+          app.legendDivI = $('p.carrier i.player1').addClass('player1Sunk');
           // remove any previous hits with class carrier
           app.removeHitsWithBoatClass('carrier');
         };
@@ -1081,6 +1101,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           alert('They sunk your battleship!');
+          app.legendDivI = $('p.battleship i.player1').addClass('player1Sunk');
+         
           // remove any previous hits with class battleship
           app.removeHitsWithBoatClass('battleship');
         };
@@ -1090,6 +1112,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           alert('They sunk your cruiser!');
+          app.legendDivI = $('p.cruiser i.player1').addClass('player1Sunk');
           // remove any previous hits with class cruiser
           app.removeHitsWithBoatClass('cruiser');
         };
@@ -1099,6 +1122,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           alert('They sunk your submarine!');
+          app.legendDivI = $('p.submarine i.player1').addClass('player1Sunk');
           // remove any previous hits with class submarine
           app.removeHitsWithBoatClass('submarine');
         };
@@ -1108,6 +1132,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           alert('They sunk your destroyer!');
+          app.legendDivI = $('p.destroyer i.player1').addClass('player1Sunk');
           // remove any previous hits with class destroyer
           app.removeHitsWithBoatClass('destroyer');
         };
@@ -1116,7 +1141,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     // check if game should continue 
     continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
 
-    console.log(`the game will continue ${continueGame}`);
   }else {
     // the guess was a miss
     // add class miss to the square
@@ -1139,8 +1163,10 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
     }
   };
   if (continueGame){
+    console.log(`The game will continue: ${continueGame}`);
     return false;
   }else{
+    console.log(`The game will continue: ${continueGame}. Game over.`);
     return true;
   };
 };// end of app.checkGuess
@@ -1197,6 +1223,7 @@ app.checkAllBoatsSunk = (player) => {
   if (player === '.player1'){
     if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
       alert('Game over!!!!!!');
+      app.gamePlayDiv = $('.gamePlay').hide();
       return false
     }else {
       return true
@@ -1204,11 +1231,40 @@ app.checkAllBoatsSunk = (player) => {
   }else {
     if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
       alert('Game over!!!!!!');
+      app.gamePlayForm = $('.gamePlay').hide();
       return false
     }else {
       return true
     };
   };
+};
+
+app.launchConfetti = () => {
+  // do this for 5 seconds
+  var duration = 5 * 1000;
+  var end = Date.now() + duration;
+
+  (function frame() {
+    // launch a few confetti from the left edge
+    confetti({
+      particleCount: 7,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 }
+    });
+    // and launch a few from the right edge
+    confetti({
+      particleCount: 7,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 }
+    });
+
+    // keep going until we are out of time
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  }());
 };
 
 
