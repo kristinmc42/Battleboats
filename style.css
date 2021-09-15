@@ -23,7 +23,8 @@ body {
 /* header */
 header {
   background-color: white;
-  border: 3px double grey;
+  /* border: 3px double grey; */
+ 
   margin-bottom: 1rem;
 }
 
@@ -93,10 +94,11 @@ section{
   display: flex;
   justify-content: space-evenly;
   flex-wrap: none ;
-  padding: .7rem 0;
+  padding: 1rem 0;
   width: 100vw;
   position: relative;
-  /* border-bottom: 3px double grey; */
+  border-top: 3px double grey;
+  border-bottom: 3px double grey;
 }
 
 section::after {
@@ -272,7 +274,7 @@ h3 {
 .startGame,
 .gamePlay {
   /* background-color: #c2d5f3; */
-  border-top: 3px double grey;
+  /* border-top: 3px double grey; */
   text-align: center;
   padding: 1rem 0;
 }
@@ -325,6 +327,7 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 0;
   margin-top: 1rem;
 }
 
@@ -338,14 +341,18 @@ h3 {
 .gamePlay,
 .gameOver {
   display: block;
-  align-items: center;
-  margin-top: 3rem;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 #attack {
   text-transform: uppercase;
 }
 
+.gameOver h3 {
+  font-size: 2rem;
+  margin-top: 1.8rem;
+}
 
 
 

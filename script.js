@@ -49,24 +49,11 @@ app.player2Guesses = [];
 
 
 app.resetForms = () => {
-  //reset all forms for setting boats
-  app.setCarrierInput = $("#setCarrier").val('');
-  app.setCarrierRadioButtons = $('input[name="carrierDirection"]').prop('checked', false);
+  //reset all input fields and radio buttons
+  app.formInputFields = $('input [type="text]"').val('');
 
-  app.setBattleshipInpuit = $('#setBattleship').val('');
+  app.radioButtons = $('input [type="radio"]').prop('checked', false);
 
-  app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
-
-  app.setCruiserInput = $('#setCruiser').val('');
-  app.setCruiserRadioButtons = $('input[name="cruiserDirection"]').prop('checked', false);
-
-  app.setSubmarineInput = $('#setSubmarine').val('');
-  app.setSubmarineRadioButtons = $('input[name="submarineDirection"]').prop('checked', false);
-
-  app.setDestroyerInput = $('#setDestroyer').val('');
-  app.setDestroyerRadioButttons = $('input[name="destroyerDirection"]').prop('checked', false);
-
-  app.gamePlayForm = $('input[name="playersGuess"]').val('');
 };//end of resetFroms function
 
 app.setBoats = (player, callback) => {
@@ -976,7 +963,7 @@ app.checkSquareToLeft = () => {
     // square to left was previously guessed
     app.computerHit.left = true;
     // need to check if it was a hit or a miss
-    if ((`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('hit')){
+    if ($(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('hit')){
       // square was a hit
       // check to left until not a hit
       app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];

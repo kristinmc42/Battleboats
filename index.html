@@ -23,7 +23,7 @@
 </head>
 <body>
   <!-- header -->
-  <header>
+  <header class="wrapper">
     <nav>
      
       <img src="./assets/shipClipart.png" alt="clipart of animated style battleship" id="headerImage">
@@ -50,7 +50,7 @@
   </header>
 
   <!-- gameboards section -->
-  <section class="wrapper"> 
+  <section > 
     <!-- start of legend div -->
     <div class="legend">
       <!-- will display all the types of ships -->
@@ -399,7 +399,7 @@
     <!-- form for Carrier -->
     <form action="#" method="#" class="setForm" name="setCarrierForm">
       <label for="setCarrier">Carrier:</label>
-      <input type="text" id="setCarrier" onfocus="this.value=''" name="setCarrier" placeholder="e.g. F4">
+      <input type="text" id="setCarrier" onfocus="this.value=''" name="setCarrier" placeholder="e.g. F4" autocomplete="off">
       <label for="carrierVertical">Vertical <input type="radio" name="carrierDirection" value="vertical" id="carrierVertical"></label>
       <label for="carrierHorizontal">Horizontal <input type="radio" name="carrierDirection"  value="horizontal" id="carrierHorizontal"></label>
       
@@ -408,7 +408,7 @@
 <!-- form for Battleship -->
     <form action="#" method="#" class="setForm" name="setBattleshipForm">
       <label for="setBattleship">Battleship:</label>
-      <input type="text" id="setBattleship" onfocus="this.value=''" name="setBattleship" placeholder="e.g. F4">
+      <input type="text" id="setBattleship" onfocus="this.value=''" name="setBattleship" placeholder="e.g. F4" autocomplete="off">
       <label for="battleshipVertical">Vertical <input type="radio" name="battleshipDirection" value="vertical" id="battleshipVertical"></label>
       <label for="battleshipHorizontal">Horizontal <input type="radio" name="battleshipDirection"  value="horizontal" id="battleshipHorizontal"></label>
       <button type="submit" id="submitBattleship">Set Battleship</button>
@@ -416,7 +416,7 @@
     <!-- form for Cruiser -->
     <form action="#" method="#" class="setForm" name="setCruiserForm">
       <label for="setCruiser">Cruiser:</label>
-      <input type="text" id="setCruiser" onfocus="this.value=''" name="setCruiser" placeholder="e.g. F4">
+      <input type="text" id="setCruiser" onfocus="this.value=''" name="setCruiser" placeholder="e.g. F4" autocomplete="off">
       <label for="cruiserVertical">Vertical <input type="radio" name="cruiserDirection" value="vertical" id="cruiserVertical"></label>
       <label for="cruiserHorizontal">Horizontal <input type="radio" name="cruiserDirection"  value="horizontal" id="cruiserHorizontal"></label>
       <button type="submit" id="submitCruiser">Set Cruiser</button>
@@ -424,7 +424,7 @@
     <!-- Form for Submarine -->
     <form action="#" method="#" class="setForm" name="setSubmarineForm">
       <label for="setSubmarine">Submarine:</label>
-      <input type="text" id="setSubmarine" onfocus="this.value=''" name="setSubmarine" placeholder="e.g. F4">
+      <input type="text" id="setSubmarine" onfocus="this.value=''" name="setSubmarine" placeholder="e.g. F4" autocomplete="off">
       <label for="submarineVertical">Vertical <input type="radio" name="submarineDirection" value="vertical" id="submarineVertical"></label>
       <label for="submarineHorizontal">Horizontal <input type="radio" name="submarineDirection"  value="horizontal" id="submarineHorizontal"></label>
       <button type="submit" id="submitSubmarine">Set Submarine</button>
@@ -432,7 +432,7 @@
     <!-- form for Destroyer -->
     <form action="#" method="#" class="setForm" name="setDestroyerForm">
       <label for="setDestroyer">Destroyer:</label>
-      <input type="text" id="setDestroyer" onfocus="this.value=''" name="setDestroyer" placeholder="e.g. F4">
+      <input type="text" id="setDestroyer" onfocus="this.value=''" name="setDestroyer" placeholder="e.g. F4" autocomplete="off">
       <label for="destroyerVertical">Vertical <input type="radio" name="destroyerDirection" value="vertical" id="destroyerVertical"></label>
       <label for="destroyerHorizontal">Horizontal <input type="radio" name="destroyerDirection"  value="horizontal" id="destroyerHorizontal"></label>
       <button type="submit" id="submitDestroyer">Set Destroyer</button>
@@ -449,7 +449,7 @@
   <div class="gamePlay">
     <form action="#" method="" class="guess" name="playerGuess"></form>
     <label for="playersGuess">Choose a square</label>
-    <input type="text" id ="playersGuess" name="playersGuess" placeholder="e.g. F4">
+    <input type="text" id ="playersGuess" name="playersGuess" placeholder="e.g. F4 " onfocus="this.value=''" autocomplete="off">
     <button type="submit" onfocus="this.value=''" id="attack">Attack!</button>
   </div>
 
