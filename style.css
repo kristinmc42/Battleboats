@@ -134,9 +134,7 @@ section::after {
 } */
 
 /* legend */
-.legend,
-.player1Sunk,
-.player2Sunk {
+.legend {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,6 +150,21 @@ section::after {
   color: darkblue;
   text-align: center;
 }
+
+i.player1,
+h2.player1 {
+  color: forestgreen;
+}
+
+i.player2,
+h2.player2 {
+  color: rebeccapurple;
+}
+
+
+
+
+
 .text {
   font-size: 1.2rem;
   color: rgb(123, 157, 230);
