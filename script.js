@@ -50,9 +50,14 @@ app.player2Guesses = [];
 
 app.resetForms = () => {
   //reset all input fields and radio buttons
-  app.formInputFields = $('input [type="text]"').val('');
+  app.formInputFields = $('input[type="text]').val('');
 
-  app.radioButtons = $('input [type="radio"]').prop('checked', false);
+  app.radioButtons = $('input[type="radio"]').prop('checked', false);
+
+  //clear all divs with classes occuppied, hit, miss
+  app.occuppiedSquareDivs = $('.occuppied').removeClass('occuppied');
+  app.hitSquareDivs = $('.hit').removeClass('hit');
+  app.missSquareDivs = $('.miss').removeClass('miss');
 
 };//end of resetFroms function
 
@@ -1257,6 +1262,7 @@ app.launchConfetti = () => {
 
 app.init = () => {
   // Hide h3 and forms for setting boats
+  app.restartButton = $('#restart').hide();
   app.inputElement = $('.input').hide();
   app.setFormElements = $('.setForm').hide();
   app.inputDiv = $('.startGame').hide();
@@ -1264,10 +1270,15 @@ app.init = () => {
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {
+    
     e.preventDefault();
 
     //reset forms for boat input
     app.resetForms();
+
+    //hide newGame button and show restart button in header
+    app.newGameButton = $('#newGame').hide();
+    app.restartButton = $('#restart').show();
 
     //get player's name and display it on their board
     app.userName = prompt("What is your name?");
@@ -1297,11 +1308,11 @@ app.init = () => {
         // e.preventDefault();
         app.gamePlay();
       });  
-
-      // alert(`The winner is ${app.gameOver.player}`);
-
-      
     });
+  });
+  // event listener for restart button
+  app.restartButton = $('#restart').on('click', function(e){
+    location.reload();
   });
 }; // end of app.init
 

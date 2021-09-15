@@ -78,6 +78,7 @@ button[type="submit"]:hover {
 }
 
 #newGame, 
+#restart,
 #saveGame,
 #next,
 #startGame {
