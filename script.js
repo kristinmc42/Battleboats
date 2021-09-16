@@ -81,7 +81,7 @@ app.setBoats = (player, callback) => {
     app.setFormElements = $('form[name="setCarrierForm"]').show();
     
 
-  }, 1800);
+  }, 1600);
   
 
   // event listener for setting carrier
@@ -720,8 +720,8 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
 app.gamePlay = () => {
 
   // when user submits guess, assign value of input to variable
-  let playersGuess = $('#playersGuess').val();
-
+  const playersInput = $('#playersGuess').val();
+  let  playersGuess = playersInput;
   //check that it is a valid entry
   const playersGuessValid = app.checkEntryIsValid(playersGuess);
   
@@ -757,10 +757,15 @@ app.gamePlay = () => {
 
     // computer's turn
     if (!app.gameOver.finished){
+      if ($(`.${playersGuess}.player2`).hasClass('hit')){
+        alert(`${playersInput.toUpperCase()} was a hit! It's the computer's turn.`);
+      }else {
+        alert(`${playersInput.toUpperCase()} was a miss. It's the computer's turn.`); 
+      };
+      
       // clear previous value of the user's text entry
       playersGuess = $('#playersGuess').val('');
-      alert("It's the computer's turn.");
-      
+
       // check if the computer had a hit with the last guess
       if (app.computerHit.hit){
         //if the previous guess was a hit create a new object and save it in an array
@@ -1033,40 +1038,40 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player2's carrier has ${app.player2Boats.carrier[1]} hits`);
 
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
-          alert('You sunk their carrier!');
           app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
+          alert('You sunk their carrier!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
         console.log(`player2's battleship has ${app.player2Boats.battleship[1]} hits`);
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
-          alert('You sunk their battleship!');
           app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
+          alert('You sunk their battleship!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
         app.player2Boats.cruiser[1] += 1;
         console.log(`player2's cruiser has ${app.player2Boats.cruiser[1]} hits`);
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
-          alert('You sunk their cruiser!');
           app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
+          alert('You sunk their cruiser!');
         };
       }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
         app.player2Boats.submarine[1] += 1;
         console.log(`player2's submarine has ${app.player2Boats.submarine[1]} hits`);
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
-          alert('You sunk their submarine!');
           app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
+          alert('You sunk their submarine!');
         };
       }else {
         app.player2Boats.destroyer[1] += 1;
         console.log(`player2's destroyer has ${app.player2Boats.destroyer[1]} hits`);
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
-          alert('You sunk their destroyer!');
           app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
+          alert('You sunk their destroyer!');
         };
       };
     }else {
@@ -1082,8 +1087,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
-          alert('They sunk your carrier!');
           app.legendDivI = $('p.carrier i.player1').addClass('player1Sunk');
+          alert('They sunk your carrier!');
           // remove any previous hits with class carrier
           app.removeHitsWithBoatClass('carrier');
         };
@@ -1092,8 +1097,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player1's battleship has ${app.player1Boats.battleship[1]} hits`);
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
-          alert('They sunk your battleship!');
           app.legendDivI = $('p.battleship i.player1').addClass('player1Sunk');
+          alert('They sunk your battleship!');
          
           // remove any previous hits with class battleship
           app.removeHitsWithBoatClass('battleship');
@@ -1103,8 +1108,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player1's cruiser has ${app.player1Boats.cruiser[1]} hits`);
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
-          alert('They sunk your cruiser!');
           app.legendDivI = $('p.cruiser i.player1').addClass('player1Sunk');
+          alert('They sunk your cruiser!');
           // remove any previous hits with class cruiser
           app.removeHitsWithBoatClass('cruiser');
         };
@@ -1113,8 +1118,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player1's submarine has ${app.player1Boats.submarine[1]} hits`);
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
-          alert('They sunk your submarine!');
           app.legendDivI = $('p.submarine i.player1').addClass('player1Sunk');
+          alert('They sunk your submarine!');
           // remove any previous hits with class submarine
           app.removeHitsWithBoatClass('submarine');
         };
@@ -1123,8 +1128,8 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         console.log(`player1's destroyer has ${app.player1Boats.destroyer[1]} hits`);
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
-          alert('They sunk your destroyer!');
           app.legendDivI = $('p.destroyer i.player1').addClass('player1Sunk');
+          alert('They sunk your destroyer!');
           // remove any previous hits with class destroyer
           app.removeHitsWithBoatClass('destroyer');
         };
