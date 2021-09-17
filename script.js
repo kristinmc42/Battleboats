@@ -749,7 +749,8 @@ app.gamePlay = () => {
     if (app.gameOver.finished){
       // game is over
       console.log(`${app.gameOver.player} is the winner`);
-      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Congratulations ${app.userName}! You won!</h3></div>`);
+      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over
+      \nCongratulations ${app.userName}! You won!</h3></div>`);
       app.launchConfetti();
       return;
     };
@@ -905,7 +906,8 @@ app.gamePlay = () => {
       if (app.gameOver.finished){
         // game is over
         console.log(`${app.gameOver.player} is the winner`);
-        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">The computer won this round. 
+        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over
+        \nThe computer won this round.\n 
         Good battle ${app.userName}! Better luck next time.</h3></div>`);
         return;
       };
@@ -1219,7 +1221,7 @@ app.checkAllBoatsSunk = (player) => {
   //check if all player's boats are sunk
   if (player === '.player1'){
     if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
-      alert('Game over!!!!!!');
+      console.log('Game over!');
       app.gamePlayDiv = $('.gamePlay').hide();
       return false
     }else {
@@ -1227,7 +1229,7 @@ app.checkAllBoatsSunk = (player) => {
     };
   }else {
     if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
-      alert('Game over!!!!!!');
+      console.log('Game over!');
       app.gamePlayForm = $('.gamePlay').hide();
       return false
     }else {
