@@ -749,8 +749,9 @@ app.gamePlay = () => {
     if (app.gameOver.finished){
       // game is over
       console.log(`${app.gameOver.player} is the winner`);
-      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over
-      \nCongratulations ${app.userName}! You won!</h3></div>`);
+      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
+      </h3></div>`);
+      app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
       app.launchConfetti();
       return;
     };
@@ -906,8 +907,8 @@ app.gamePlay = () => {
       if (app.gameOver.finished){
         // game is over
         console.log(`${app.gameOver.player} is the winner`);
-        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.
-        \n Good battle ${app.userName}! Better luck next time.</h3></div>`);
+        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
+        app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
         return;
       };
     };
