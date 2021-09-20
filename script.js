@@ -906,9 +906,8 @@ app.gamePlay = () => {
       if (app.gameOver.finished){
         // game is over
         console.log(`${app.gameOver.player} is the winner`);
-        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over
-        \nThe computer won this round.\n 
-        Good battle ${app.userName}! Better luck next time.</h3></div>`);
+        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.
+        \n Good battle ${app.userName}! Better luck next time.</h3></div>`);
         return;
       };
     };
@@ -1299,7 +1298,7 @@ app.init = () => {
     
     // // event listener for start game button
     app.startGameButton = $('#startGame').on('click', function(e){
-      // e.preventDefault();
+      e.preventDefault();
 
       console.log('start Game button pressed');
 
@@ -1307,14 +1306,16 @@ app.init = () => {
       // hide startGame div
       app.startGameDiv = $('.startGame').hide();
 
-      // show form and button 'Choose a square. Attack! '
+      // show gamePlay form and button 'Choose a square. Attack! '
       // ask for player's guess
       app.gamePlayDiv = $('.gamePlay').show();
 
-      app.attackButton = $('#attack').on('click', function(e){
-        // e.preventDefault();
+      app.playersGuessForm = $('#guessForm').on('submit', function(e){
+        
+        console.log('guessForm has been submitted');
+       e.preventDefault();
         app.gamePlay();
-      });  
+      }); 
     });
   });
   // event listener for restart button
