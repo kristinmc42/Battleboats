@@ -1274,6 +1274,13 @@ app.init = () => {
   app.setFormElements = $('.setForm').hide();
   app.inputDiv = $('.startGame').hide();
   app.gamePlayDiv = $('.gamePlay').hide();
+
+  // Swal.fire({
+  //   title: 'Error!',
+  //   text: 'Do you want to continue',
+  //   icon: 'error',
+  //   confirmButtonText: 'Cool'
+  // });
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {
@@ -1288,16 +1295,31 @@ app.init = () => {
     app.restartButton = $('#restart').show();
 
     //get player's name and display it on their board
-    app.userName = prompt("What is your name?");
-    app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
+    // app.userName = prompt("What is your name?");
+    // app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
+    (async () => {
+      const { value: text } = await Swal.fire({
+        input: 'textarea',
+        inputLabel: 'Your name:',
+        inputPlaceholder: 'Type your name here...',
+        inputAttributes: {
+          'aria-label': 'Type your name here'
+        },
+        showCancelButton: true
+      })
+      
+      if (text) {
+        Swal.fire(`Welcome ${text}!`)
+        app.userName = text;
+        app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
+        //set the player's and computer's boats
+        app.setBoats('.player1', app.setComputersBoats);
+      }
+    })();
 
-    //set the player's and computer's boats
 
-    // $.when(app.setBoats('.player1')).done(function() {
-      app.setBoats('.player1', app.setComputersBoats);
-    // });
     
-    // // event listener for start game button
+    // event listener for start game button
     app.startGameButton = $('#startGame').on('click', function(e){
       e.preventDefault();
 
