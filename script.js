@@ -1556,8 +1556,8 @@ app.init = () => {
         //set the player's and computer's boats
         app.setBoats('.player1', app.setComputersBoats);
       }else{
-        Swal.fire(`You didn't enter a name. \nI will call you Captain Fantastico!`);
-        app.userName = 'Captain Fantastico';
+        Swal.fire(`You didn't enter a name. \nI will call you Captain Mysterioso!`);
+        app.userName = 'Captain Mysterioso';
         app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
         //set the player's and computer's boats
         app.setBoats('.player1', app.setComputersBoats);
