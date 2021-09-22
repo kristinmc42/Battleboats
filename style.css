@@ -258,23 +258,28 @@ h3 {
   background-color: green;
 } */
 
-.carrier.player1.occuppied {
+.carrier.player1.occuppied,
+.carrier.player2.hit {
   border: 1px solid lightskyblue;
 }
 
-.battleship.player1.occuppied {
+.battleship.player1.occuppied,
+.battleship.player2.hit {
   border: 1px solid lightsalmon;
 }
 
-.cruiser.player1.occuppied {
+.cruiser.player1.occuppied,
+.cruiser.player2.hit {
   border: 1px solid lightseagreen;
 }
 
-.submarine.player1.occuppied {
+.submarine.player1.occuppied,
+.submarine.player2.hit {
   border: 1px solid violet;
 }
 
-.destroyer.player1.occuppied {
+.destroyer.player1.occuppied,
+.destroyer.player2.hit {
   border: 1px solid lightgoldenrodyellow;
 }
 
@@ -287,6 +292,11 @@ h3 {
   background-color: white;
 }
 
+.player1.hit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 
