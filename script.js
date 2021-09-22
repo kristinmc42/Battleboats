@@ -755,7 +755,7 @@ app.playersTurn = (callback) => {
   
         app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
         </h3></div>`);
-        app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
+        app.gameOverDiv = $('div.gameOver').append(`<h3>Congratulations ${app.userName}! You won!</h3>`)
         app.launchConfetti();
         return;
       }else {
@@ -966,7 +966,7 @@ app.computersTurn = () => {
   if (!continueGame){
     // game is over
     console.log(`The computer is the winner`);
-    app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
+    app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3><span class="lost">Game Over!</span> The computer won this round.</h3></div>`);
     app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
     return false;
   } else{
