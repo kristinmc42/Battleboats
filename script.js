@@ -997,12 +997,12 @@ app.checkSquaresBelow = () => {
     app.computerHit.down = true;
   }else {
     // square below is already guessed or is the last row
-    if (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`)){
-      // square below was already guessed
+    if (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`)  && !$(`.${app.computersGuess.column}${app.computersGuess.row + 1}.player1`).hasClass('sunk')){
+      // square below was already guessed but not sunk
       // check if square is a hit or miss
       
       if ($(`.${app.computersGuess.column}${app.computersGuess.row + 1}.player1`).hasClass('hit')){
-        // current square is a hit
+        // current square is a hit and square 
         // check if square below is a hit until not a hit
         app.computersGuess.row += 1;
         let i =1;
@@ -1024,11 +1024,13 @@ app.checkSquaresBelow = () => {
         // square below is a miss
         console.log(`can't check down, checking left`);
         // check square to left of last hit in the previous hit array
+        app.
         app.checkSquareToLeft();
       };
     }else {
-      // square is in last row
+      // square is in last row or square below was sunk
       // check square to left 
+      app.computerHit.down = true;
       app.checkSquareToLeft();
     };  
   };
@@ -1049,8 +1051,8 @@ app.checkSquareToLeft = () => {
     // square to left was previously guessed
     app.computerHit.left = true;
     // need to check if it was a hit or a miss
-    if ($(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('hit')){
-      // square was a hit
+    if ($(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('hit')  && !$(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('sunk')){
+      // square was a hit but not sunk
       // check to left until not a hit
       app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
       let j = 1;
@@ -1064,7 +1066,7 @@ app.checkSquareToLeft = () => {
 
       console.log(`Checking columns to left; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
     }else {
-      // square to left was a miss
+      // square to left was a miss or sunk
       app.computerHit.left = true;
       // check squares to the right
       app.checkSquareToRight();
@@ -1078,8 +1080,8 @@ app.checkSquareToRight = () => {
     app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
     app.computerHit.right = true; 
 
-  }else if (app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`)){
-    //square to right already guessed, check to right until not previously guessed
+  }else if (app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`) && !$(`.${app.columnArray[app.computersGuess.position + 1]}${app.computersGuess.row}`).hasClass('sunk')){
+    //square to right already guessed but not sunk, check to right until not previously guessed
     let k = 1;
     app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
 
@@ -1090,7 +1092,7 @@ app.checkSquareToRight = () => {
     app.computersGuess.column = app.columnArray[app.computersGuess.position + k]
     app.computerHit.right = true;
   }else{
-    // is last column
+    // is last column or was sunk
     // check squares to left
     app.checkSquareToLeft();
   };
@@ -1420,10 +1422,10 @@ app.resetComputerHit = (remainingHits) => {
     computerHit.right is: ${app.computerHit.right}`);
 
     // // reset all directions to false
-    // app.computerHit.up = false;
-    // app.computerHit.down = false;
-    // app.computerHit.left = false;
-    // app.computerHit.right = false;
+    app.computerHit.up = false;
+    app.computerHit.down = false;
+    app.computerHit.left = false;
+    app.computerHit.right = false;
     
   }else {
     // reset computerHit to false and empty
@@ -1458,6 +1460,10 @@ app.removeHitsWithBoatClass = (boatClass) => {
   remainingHits: ${remainingHits}`);
 
   app.resetComputerHit(remainingHits);
+
+  // add class sunk to all squares with the boatClass
+  app.player1Divs = $(`.player1.hit.${boatClass}`).addClass('sunk');
+
 };// end of app.removeHitsWithBoatClass
 
 app.checkAllBoatsSunk = (playerBeingAttacked) => {
