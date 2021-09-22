@@ -258,6 +258,26 @@ h3 {
   background-color: green;
 } */
 
+.carrier.player1.occuppied {
+  border: 1px solid lightskyblue;
+}
+
+.battleship.player1.occuppied {
+  border: 1px solid lightsalmon;
+}
+
+.cruiser.player1.occuppied {
+  border: 1px solid lightseagreen;
+}
+
+.submarine.player1.occuppied {
+  border: 1px solid violet;
+}
+
+.destroyer.player1.occuppied {
+  border: 1px solid lightgoldenrodyellow;
+}
+
 .hit {
   background-color: red;
   color: rgb(255, 0, 0);

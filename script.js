@@ -542,7 +542,8 @@ app.checkEntryIsValid = (startingPosition) => {
   const validRow = !isNaN(row);
 
   if (!app.columnArray.includes(startingPosition[0]) || !validRow || row < 1 || row > 10 || startingPosition.length > 3 || startingPosition.length < 2){
-    alert('Sorry. That is not a valid square. Please try again.');
+    // alert('Sorry. That is not a valid square. Please try again.');
+    Swal.fire('Sorry. \nThat is not a valid square. \nPlease try again.');
     return [false, startingPosition];
   } else {
     return [true, startingPosition];
@@ -597,7 +598,8 @@ app.placeOnBoard = (shipArray, player, boatName) => {
     // if yes, returns false and quits function
     for (let a = 0; a < boatLength; a++){
       if ($(`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
-        alert('Oops! That boat overlaps another. Please try again.');
+        // alert('Oops! That boat overlaps another. Please try again.');
+        Swal.fire('Oops! \nThat boat overlaps another. \nPlease try again.');
         return false;
       };
     };
@@ -616,7 +618,8 @@ app.placeOnBoard = (shipArray, player, boatName) => {
       column = app.columnArray[convertedColumn + b];
 
       if ($(`${player}.${column}${convertedRow}`).hasClass('occuppied')){
-        alert('Oops! That boat overlaps another. Please try again.');
+        // alert('Oops! That boat overlaps another. Please try again.');
+        Swal.fire('Oops! \nThat boat overlaps another. \nPlease try again.');
         return false;
       };
     };
@@ -632,7 +635,8 @@ app.placeOnBoard = (shipArray, player, boatName) => {
     return true;
   }else {
     // condition for when boat length will be outside of the board dimensions
-    alert('The boat does not fit inside the board in that direction. Please try again')
+    // alert('The boat does not fit inside the board in that direction. Please try again')
+    Swal.fire('The boat does not fit inside the board in that direction. \nPlease try again.');
     return false;
   };
 };// end of placeOnBoard function
@@ -716,9 +720,8 @@ app.placeOnComputersBoard = (column, row, vertical, boatLength, boatName) => {
   };
 }; //end of app.placeOnComputersBoard
 
-
-app.gamePlay = () => {
-
+app.playersTurn = (callback) => {
+  // player's turn
   // when user submits guess, assign value of input to variable
   const playersInput = $('#playersGuess').val();
   let  playersGuess = playersInput;
@@ -736,184 +739,255 @@ app.gamePlay = () => {
     //check if the square was already guessed
     if (app.player1Guesses.includes(playersGuess)){
       app.playersGuessInput = $('#playersGuess').val('');
-      alert('That square was already guessed. Please try again.');
+      Swal.fire('That square was already guessed. \nPlease try again.');
       return; 
     }else {
       // add guess to player1Guesses array
       app.player1Guesses.push(playersGuess);
     };
+
     // check if the square is occuppied
-    app.gameOver.finished = app.checkGuess(playersGuess, '.player2');
-    app.gameOver.player = '.player1';
-
-    if (app.gameOver.finished){
-      // game is over
-      console.log(`${app.gameOver.player} is the winner`);
-      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
-      </h3></div>`);
-      app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
-      app.launchConfetti();
-      return;
-    };
-    // end of player's turn
-
-    // computer's turn
-    if (!app.gameOver.finished){
-      if ($(`.${playersGuess}.player2`).hasClass('hit')){
-        alert(`${playersInput.toUpperCase()} was a hit! It's the computer's turn.`);
-      }else {
-        alert(`${playersInput.toUpperCase()} was a miss. It's the computer's turn.`); 
-      };
-      
-      // clear previous value of the user's text entry
-      playersGuess = $('#playersGuess').val('');
-
-      // check if the computer had a hit with the last guess
-      if (app.computerHit.hit){
-        //if the previous guess was a hit create a new object and save it in an array
-        console.log(`There was a previous hit by the computer`);
-
-        if (app.computerHit.guess === app.computersGuess.guess && !app.previousHitArray.includes(app.computerHit)){
-
-          const previousHit = JSON.parse(JSON.stringify(app.computerHit));
-
-          app.previousHitArray.push(previousHit);
-
-          console.log(`${previousHit.guess} pushed to previousHitArray`);
-          console.log(`previousHitArray has: ${app.previousHitArray.length} elements`);
-          
-          // for testing purposes only
-          for (let index = app.previousHitArray.length - 1; index >= 0; index -=1){
-            if (index % 2 === 0){
-              console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is even`);
-            }else {
-              console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is odd`);
-            };
-          };
-
-        };
-
-
-        // assign column, row and position with values of previous hit
-        if (app.computerHit.guess.length === 2){
-          app.computersGuess.column = app.computerHit.guess[0];
-          const row = app.computerHit.guess[1];
-
-          // for testing purposes only
-          console.log(`row is type of ${typeof(row)}`);
-          if (typeof(row) === 'number'){
-            app.computersGuess.row = row;
-          }else {
-            app.computersGuess.row = parseInt(row);
-          };
-          console.log(`column is ${app.computersGuess.column} and row is ${app.computersGuess.row} row is type of ${typeof(app.computersGuess.row)}`);
-
-        }else {
-          app.computersGuess.column = app.computerHit.guess[0];
-          const concatRow = app.computerHit.guess[1].concat(app.computerHit.guess[2]);
-          app.computersGuess.row = parseInt(concatRow);
-
-          // for testing purposes only
-          console.log(`column is ${app.computersGuess.column} and row is ${app.computersGuess.row} row is type of ${typeof(app.computersGuess.row)}`);
-
-        };
-        console.log(`${app.computersGuess.column}${app.computersGuess.row} was the previous guess by the computer` );
-
-        app.computersGuess.position = app.columnArray.indexOf(app.computersGuess.column);
-
-        console.log(app.computerHit.up, app.computerHit.down, app.computerHit.left, app.computerHit.right);
-
-
-        // ** check which direction to guess next
-
-        // first direction condition (no direction)
-        if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
-
-          console.log(`All directions should be false `);
-
-          //if no guesses, it was the first hit
-          //check square above
-          if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
-            //square is not first row and not a previous guess
-            app.computersGuess.row -= 1;
-            app.computerHit.up = true;
-          } else {
-            // can't check square above
-            app.computerHit.up = true;
-            // check square below
-            app.checkSquaresBelow();
-          };
-
-        // second direction condition (up)
-        }else if (app.computerHit.up && !app.computerHit.down){
-          console.log(`computerHit.up is true down is false. Check square above`);
-          // check square above was not already guessed
-          if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
-            //square is not first row and not a previous guess
-            app.computersGuess.row -= 1;
-            app.computerHit.up = true;
-          }else {
-            // can't check square above
-            // need to check squares below until not already guessed
-            app.checkSquaresBelow();
-          };
-
-        // third direction condition (down)
-        }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
-          console.log(`computerHit.up and down are true, left is false. Check square below`);
-          // check square below
-          app.checkSquaresBelow();
-          
-        // fourth direction condition (to left)
-        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
-          console.log(`computerHit.up, down and left are true, right is false. Check square to left`);
-          //check square to the left
-          app.checkSquareToLeft();
-          
-        
-        // fifth direction condition (to right)
-        }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
-          console.log(`computerHit.up,down, left and right are true. Check square to right`);
-          // check square to right
-          app.checkSquareToRight();
-        };
-      }else {
-        // if no previous hit, generate a random row and column for computer
-        app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
-        app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
-        // check if this was already guessed
-        while (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row}`)){
-          app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
-          app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
-        };
-      };
-
-      //assign column and row to variable
-      app.computersGuess.guess = `${app.computersGuess.column}${app.computersGuess.row}`; 
-      
-      console.log(`${app.computersGuess.guess} is the computer's guess`);
-
-      // add the guess to the player2Guesses array
-      app.player2Guesses.push(app.computersGuess.guess);
-
-      console.log(`The computer's guesses array contains: ${app.player2Guesses}`);
-
-      // pass the computersGuess to function
-      app.gameOver.finished = app.checkGuess(app.computersGuess.guess, '.player1');
-
-      // change player to player2
-      app.gameOver.player = '.player2';
-
-      if (app.gameOver.finished){
+    
+      const continueGame = app.checkGuess(playersGuess, 'player2');
+      if (!continueGame){
         // game is over
-        console.log(`${app.gameOver.player} is the winner`);
-        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
-        app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
+        console.log(`The player is the winner`);
+  
+        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
+        </h3></div>`);
+        app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
+        app.launchConfetti();
         return;
+      }else {
+        setTimeout(function(){
+          console.log('in setTimeout of playersTurn')
+          callback();
+        }, 2500);
+        // return;
+      };   
+
+    
+  };
+}; // end of app.playersTurn
+
+// app.gamePlay = () => {
+//   // player's turn
+//   // when user submits guess, assign value of input to variable
+//   const playersInput = $('#playersGuess').val();
+//   let  playersGuess = playersInput;
+//   //check that it is a valid entry
+//   const playersGuessValid = app.checkEntryIsValid(playersGuess);
+  
+//   if (!playersGuessValid[0]){
+//     // guess isn't valid
+//     // reset players guess
+//     app.playersGuessInput = $('#playersGuess').val('');
+//     return;
+//   }else {
+//     // guess is a valid square
+//     playersGuess = playersGuessValid[1];
+//     //check if the square was already guessed
+//     if (app.player1Guesses.includes(playersGuess)){
+//       app.playersGuessInput = $('#playersGuess').val('');
+//       Swal.fire('That square was already guessed. \nPlease try again.');
+//       return; 
+//     }else {
+//       // add guess to player1Guesses array
+//       app.player1Guesses.push(playersGuess);
+//     };
+//     // check if the square is occuppied
+//     (async () => {
+//       const playerDone = await app.checkGuess(playersGuess, 'player2');
+//       if (playerDone){
+//         // game is over
+//         console.log(`The player is the winner`);
+
+//         app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
+//         </h3></div>`);
+//         app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
+//         app.launchConfetti();
+//         return;
+//       }else {
+//         // computer's turn
+//         (async() => {
+//           let nextRound = await app.computersTurn();
+//           if (nextRound){
+//             console.log('Computer is done. The game continues. Next Round');
+//             return;
+//           }
+//         })();
+//       };
+      
+//       // let nextRound = await Promise.all([playerDone, computerDone]);
+
+//       // if(nextRound){
+//       //   return;
+//       // }else {
+//       //   console.log(`nextRound threw an error`);
+//       // };
+
+//     })();
+//   };
+// };//end of app.gamePlay
+
+app.computersTurn = () => {
+  // check if the computer had a hit with the last guess
+  if (app.computerHit.hit){
+    //if the previous guess was a hit create a new object and save it in an array
+    console.log(`There was a previous hit by the computer`);
+
+    if (app.computerHit.guess === app.computersGuess.guess && !app.previousHitArray.includes(app.computerHit)){
+
+      const previousHit = JSON.parse(JSON.stringify(app.computerHit));
+
+      app.previousHitArray.push(previousHit);
+
+      console.log(`${previousHit.guess} pushed to previousHitArray`);
+      console.log(`previousHitArray has: ${app.previousHitArray.length} elements`);
+      
+      // for testing purposes only
+      for (let index = app.previousHitArray.length - 1; index >= 0; index -=1){
+        if (index % 2 === 0){
+          console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is even`);
+        }else {
+          console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is odd`);
+        };
       };
+
+    };
+
+
+    // assign column, row and position with values of previous hit
+    if (app.computerHit.guess.length === 2){
+      app.computersGuess.column = app.computerHit.guess[0];
+      const row = app.computerHit.guess[1];
+
+      // for testing purposes only
+      console.log(`row is type of ${typeof(row)}`);
+      if (typeof(row) === 'number'){
+        app.computersGuess.row = row;
+      }else {
+        app.computersGuess.row = parseInt(row);
+      };
+      console.log(`column is ${app.computersGuess.column} and row is ${app.computersGuess.row} row is type of ${typeof(app.computersGuess.row)}`);
+
+    }else {
+      app.computersGuess.column = app.computerHit.guess[0];
+      const concatRow = app.computerHit.guess[1].concat(app.computerHit.guess[2]);
+      app.computersGuess.row = parseInt(concatRow);
+
+      // for testing purposes only
+      console.log(`column is ${app.computersGuess.column} and row is ${app.computersGuess.row} row is type of ${typeof(app.computersGuess.row)}`);
+
+    };
+    console.log(`${app.computersGuess.column}${app.computersGuess.row} was the previous guess by the computer` );
+
+    app.computersGuess.position = app.columnArray.indexOf(app.computersGuess.column);
+
+    console.log(app.computerHit.up, app.computerHit.down, app.computerHit.left, app.computerHit.right);
+
+
+    // ** check which direction to guess next
+
+    // first direction condition (no direction)
+    if (!app.computerHit.up && !app.computerHit.down && !app.computerHit.left && !app.computerHit.right){
+
+      console.log(`All directions should be false `);
+
+      //if no guesses, it was the first hit
+      //check square above
+      if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
+        //square is not first row and not a previous guess
+        app.computersGuess.row -= 1;
+        app.computerHit.up = true;
+      } else {
+        // can't check square above
+        app.computerHit.up = true;
+        // check square below
+        app.checkSquaresBelow();
+      };
+
+    // second direction condition (up)
+    }else if (app.computerHit.up && !app.computerHit.down){
+      console.log(`computerHit.up is true down is false. Check square above`);
+      // check square above was not already guessed
+      if (app.computersGuess.row > 1 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row - 1}`)){
+        //square is not first row and not a previous guess
+        app.computersGuess.row -= 1;
+        app.computerHit.up = true;
+      }else {
+        // can't check square above
+        // need to check squares below until not already guessed
+        app.checkSquaresBelow();
+      };
+
+    // third direction condition (down)
+    }else if (app.computerHit.up && app.computerHit.down && !app.computerHit.left){
+      console.log(`computerHit.up and down are true, left is false. Check square below`);
+      // check square below
+      app.checkSquaresBelow();
+      
+    // fourth direction condition (to left)
+    }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && !app.computerHit.right){
+      console.log(`computerHit.up, down and left are true, right is false. Check square to left`);
+      //check square to the left
+      app.checkSquareToLeft();
+      
+    
+    // fifth direction condition (to right)
+    }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
+      console.log(`computerHit.up,down, left and right are true. Check square to right`);
+      // check square to right
+      app.checkSquareToRight();
+    };
+  }else {
+    // if no previous hit, generate a random row and column for computer
+    app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
+    app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
+    // check if this was already guessed
+    while (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row}`)){
+      app.computersGuess.column = app.columnArray[Math.floor(Math.random() * 10)];
+      app.computersGuess.row = Math.floor(Math.random() * 10) + 1;
     };
   };
-};//end of app.gamePlay
+
+  //assign column and row to variable
+  app.computersGuess.guess = `${app.computersGuess.column}${app.computersGuess.row}`; 
+  
+  console.log(`${app.computersGuess.guess} is the computer's guess`);
+
+  // add the guess to the player2Guesses array
+  app.player2Guesses.push(app.computersGuess.guess);
+
+  console.log(`The computer's guesses array contains: ${app.player2Guesses}`);
+
+  const continueGame = app.checkGuess(app.computersGuess.guess, 'player1');
+        
+  if (!continueGame){
+    // game is over
+    console.log(`The computer is the winner`);
+    app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
+    app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
+    return false;
+  } else{
+    return true;
+  };
+
+
+  // (async () => {
+  //   const computerDone = await app.checkGuess(app.computersGuess.guess, 'player1');
+        
+  //   if (computerDone){
+  //     // game is over
+  //     console.log(`The computer is the winner`);
+  //     app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
+  //     app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
+  //     return false;
+  //   } else{
+  //     return true;
+  //   };
+  // })();
+}; // end of app.computersTurn
 
 app.checkSquaresBelow = () => {
   if (app.computersGuess.row < 10 && !app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`)){
@@ -1027,55 +1101,83 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
   // if not occuppied, change colour of square to show miss
   let continueGame = true;
 
-  if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass("occuppied")){
-    $(`.${playersGuess}${playerBeingAttacked}`).addClass('hit');
-    $(`.${playersGuess}${playerBeingAttacked}`).prepend('<i class="fas fa-bomb"></i>');
+  if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass("occuppied")){
+    // guess is a hit; add class and image
+    $(`.${playersGuess}.${playerBeingAttacked}`).addClass('hit');
+    $(`.${playersGuess}.${playerBeingAttacked}`).prepend('<i class="fas fa-bomb"></i>');
 
-    console.log (`.${playersGuess}${playerBeingAttacked} is a hit`);
+    console.log (`.${playersGuess}.${playerBeingAttacked} is a hit`);
 
-    if (playerBeingAttacked === '.player2'){
+    // add hit to array for boat and check if sunk
+    if (playerBeingAttacked === 'player2'){
       //user attacking the computer
-      if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
+      if($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('carrier')){
         app.player2Boats.carrier[1] += 1;
         console.log(`player2's carrier has ${app.player2Boats.carrier[1]} hits`);
-
+        
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
+          // sunk ship
           app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
-          alert('You sunk their carrier!');
+          continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
+          // alert('You sunk their carrier!');
+        }else{
+          // hit but didn't sink a ship
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('battleship')){
         app.player2Boats.battleship[1] += 1;
         console.log(`player2's battleship has ${app.player2Boats.battleship[1]} hits`);
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
+           // sunk ship
           app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
-          alert('You sunk their battleship!');
+          continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
+          // alert('You sunk their battleship!');
+        }else{
+          // hit but didn't sink a ship
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('cruiser')){
         app.player2Boats.cruiser[1] += 1;
         console.log(`player2's cruiser has ${app.player2Boats.cruiser[1]} hits`);
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
+          // sunk a ship
           app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
-          alert('You sunk their cruiser!');
+          continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
+          // alert('You sunk their cruiser!');
+        }else{
+          // hit but didn't sink a ship
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('submarine')){
         app.player2Boats.submarine[1] += 1;
         console.log(`player2's submarine has ${app.player2Boats.submarine[1]} hits`);
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
+          // sunk ship
           app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
-          alert('You sunk their submarine!');
+          continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
+          // alert('You sunk their submarine!');
+        }else{
+          // hit but didn't sink ship
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
       }else {
         app.player2Boats.destroyer[1] += 1;
         console.log(`player2's destroyer has ${app.player2Boats.destroyer[1]} hits`);
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
+          // sunk ship
           app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
-          alert('You sunk their destroyer!');
+          continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
+          // alert('You sunk their destroyer!');
+        }else{
+          // hit but didn't sink ship
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
       };
+
     }else {
       //computer attacking user
       // track the space that was hit by the computer
@@ -1084,71 +1186,96 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
       // check which type of boat was hit and track the number of hits
       // check if the boat was sunk
-      if($(`.${playersGuess}${playerBeingAttacked}`).hasClass('carrier')){
+      if($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('carrier')){
         app.player1Boats.carrier[1] += 1;
         console.log(`player1's carrier has ${app.player1Boats.carrier[1]} hits`);
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
+          // ship sunk
           app.legendDivI = $('p.carrier i.player1').addClass('player1Sunk');
-          alert('They sunk your carrier!');
+          continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
+          // alert('They sunk your carrier!');
           // remove any previous hits with class carrier
           app.removeHitsWithBoatClass('carrier');
+        }else{
+          // hit but not sunk
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('battleship')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('battleship')){
         app.player1Boats.battleship[1] += 1;
         console.log(`player1's battleship has ${app.player1Boats.battleship[1]} hits`);
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
+          // ship sunk
           app.legendDivI = $('p.battleship i.player1').addClass('player1Sunk');
-          alert('They sunk your battleship!');
+          continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
+          // alert('They sunk your battleship!');
          
           // remove any previous hits with class battleship
           app.removeHitsWithBoatClass('battleship');
+        }else{
+          // hit but not sunk
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('cruiser')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('cruiser')){
         app.player1Boats.cruiser[1] += 1;
         console.log(`player1's cruiser has ${app.player1Boats.cruiser[1]} hits`);
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
+          // ship sunk
           app.legendDivI = $('p.cruiser i.player1').addClass('player1Sunk');
-          alert('They sunk your cruiser!');
+          continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
+          // alert('They sunk your cruiser!');
           // remove any previous hits with class cruiser
           app.removeHitsWithBoatClass('cruiser');
+        }else{
+          // hit but not sunk
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
-      }else if ($(`.${playersGuess}${playerBeingAttacked}`).hasClass('submarine')){
+      }else if ($(`.${playersGuess}.${playerBeingAttacked}`).hasClass('submarine')){
         app.player1Boats.submarine[1] += 1;
         console.log(`player1's submarine has ${app.player1Boats.submarine[1]} hits`);
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
+          // ship sunk
           app.legendDivI = $('p.submarine i.player1').addClass('player1Sunk');
-          alert('They sunk your submarine!');
+          continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
+          // alert('They sunk your submarine!');
           // remove any previous hits with class submarine
           app.removeHitsWithBoatClass('submarine');
+        }else{
+          // hit but not sunk
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
       }else {
         app.player1Boats.destroyer[1] += 1;
         console.log(`player1's destroyer has ${app.player1Boats.destroyer[1]} hits`);
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
+          // ship sunk
           app.legendDivI = $('p.destroyer i.player1').addClass('player1Sunk');
-          alert('They sunk your destroyer!');
+          continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
+          // alert('They sunk your destroyer!');
           // remove any previous hits with class destroyer
           app.removeHitsWithBoatClass('destroyer');
+        }else{
+          // hit but not sunk
+          app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
         };
       };
     };
-    // check if game should continue 
-    continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
 
   }else {
     // the guess was a miss
     // add class miss to the square
-    $(`.${playersGuess}${playerBeingAttacked}`).addClass('miss');
+    $(`.${playersGuess}.${playerBeingAttacked}`).addClass('miss');
 
     console.log(`.${playersGuess} on ${playerBeingAttacked}'s board is a miss`);
+    // hit or miss alert
+    app.hitOrMissAlert('miss', playersGuess, playerBeingAttacked);
 
-    // if there is a hit but this guess was a miss, change the value on the next direction to check (only for the computer)
-    if (app.computerHit.hit && playerBeingAttacked === '.player1'){
+    // if the computer had a previous hit but this guess was a miss, change the value on the next direction to check
+    if (app.computerHit.hit && playerBeingAttacked === 'player1'){
       if (!app.computerHit.down){
         app.computerHit.down = true;
         console.log(`computerHit.down changed to true`);
@@ -1158,17 +1285,127 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
       }else if (!app.computerHit.right){
         app.computerHit.right = true;
         console.log(`computerHit.right changed to true`);
-      }
-    }
+      };
+    };
   };
   if (continueGame){
     console.log(`The game will continue: ${continueGame}`);
-    return false;
+    return true;
   }else{
     console.log(`The game will continue: ${continueGame}. Game over.`);
-    return true;
+    return false;
   };
 };// end of app.checkGuess
+
+app.hitOrMissAlert = (hitOrMiss, playersGuess, playerBeingAttacked) => {
+  // shows an alert with the square guessed and if it was a hit or miss
+  // let timerInterval;
+  let message;
+  const square = playersGuess.toUpperCase();
+
+  if (hitOrMiss === 'hit'){
+    if (playerBeingAttacked === 'player1'){
+      // computer's guess
+      message = `The computer guessed: ${square} 
+      It was a was a hit!`
+    }else{
+      // player's guess
+      message = `${square} was a hit!`
+    }
+  }else {
+    if (playerBeingAttacked === 'player1'){
+      //computer's guess
+      message = `The computer guessed: ${square} 
+      It was a miss.`
+    }else{
+      // player's guess
+      message = `${square} was a miss.`
+    };
+  };
+
+  Swal.fire(`${message}`);
+
+  // Swal.fire({
+  //   title: `${message}`,
+  //   timer: 3000,
+  //   timerProgressBar: true,
+  //   didOpen: () => {
+  //     Swal.showLoading()
+  //     const b = Swal.getHtmlContainer().querySelector('b')
+  //     timerInterval = setInterval(() => {
+  //       b.textContent = Swal.getTimerLeft()
+  //     }, 3000)
+  //   },
+  //   willClose: () => {
+  //     clearInterval(timerInterval)
+  //   }
+  // }).then((result) => {
+    
+  //   if (result.dismiss === Swal.DismissReason.timer) {
+  //     console.log('I was closed by the timer')
+  //   };
+
+  // });
+};// end of app.hitOrMissAlert
+
+app.sunkAlert = (shipName, playerBeingAttacked, playersGuess) => {
+  // alert when a ship is sunk
+  // let timerInterval;
+  let youOrTheySunkMessage;
+  const square = playersGuess.toUpperCase();
+
+  if (playerBeingAttacked === 'player2'){
+    youOrTheySunkMessage = `${square} was a hit! 
+    You sunk their ${shipName}!`
+  }else {
+    youOrTheySunkMessage = `The computer guessed: ${square} 
+    It was a hit. 
+    They sunk your ${shipName}!`
+  };
+
+  Swal.fire(`${youOrTheySunkMessage}`);
+
+  // check if game should continue 
+  const continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
+  if (continueGame){
+    console.log(`The game will continue: ${continueGame}`);
+    return true;
+  }else{
+    console.log(`Result:${continueGame}. The game will not continue. Game over.`);
+    return false;
+  };
+
+  // Swal.fire({
+  //   title: `${youOrTheySunkMessage}`,
+  //   timer: 3000,
+  //   timerProgressBar: true,
+  //   didOpen: () => {
+  //     Swal.showLoading()
+  //     const b = Swal.getHtmlContainer().querySelector('b')
+  //     timerInterval = setInterval(() => {
+  //       b.textContent = Swal.getTimerLeft()
+  //     }, 3000)
+  //   },
+  //   willClose: () => {
+  //     clearInterval(timerInterval)
+  //   }
+  // }).then((result) => {
+  //   /* Read more about handling dismissals below */
+  //   if (result.dismiss === Swal.DismissReason.timer) {
+  //     console.log('I was closed by the timer')
+  //   }
+
+  //   // check if game should continue 
+  //   const continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
+  //   if (continueGame){
+  //     console.log(`The game will continue: ${continueGame}`);
+  //     return false;
+  //   }else{
+  //     console.log(`Result:${continueGame}. The game will not continue. Game over.`);
+  //     return true;
+  //   };
+  // })
+};// end of app.sunkAlert
 
 app.resetComputerHit = (remainingHits) => {
   if (remainingHits.length >= 1){
@@ -1180,7 +1417,13 @@ app.resetComputerHit = (remainingHits) => {
     computerHit.up is: ${app.computerHit.up}
     computerHit.down is: ${app.computerHit.down}
     computerHit.left is: ${app.computerHit.left} 
-    computerHit.right is: ${app.computerHit.right}`)
+    computerHit.right is: ${app.computerHit.right}`);
+
+    // // reset all directions to false
+    // app.computerHit.up = false;
+    // app.computerHit.down = false;
+    // app.computerHit.left = false;
+    // app.computerHit.right = false;
     
   }else {
     // reset computerHit to false and empty
@@ -1192,7 +1435,7 @@ app.resetComputerHit = (remainingHits) => {
     app.computerHit.right = false;
     console.log('computerHit is now false');
   };
-};
+};// end of app.resetComputerHit
 
 app.removeHitsWithBoatClass = (boatClass) => {
   // checks for squares with the matching boatClass
@@ -1215,25 +1458,25 @@ app.removeHitsWithBoatClass = (boatClass) => {
   remainingHits: ${remainingHits}`);
 
   app.resetComputerHit(remainingHits);
-};
+};// end of app.removeHitsWithBoatClass
 
-app.checkAllBoatsSunk = (player) => {
+app.checkAllBoatsSunk = (playerBeingAttacked) => {
   //check if all player's boats are sunk
-  if (player === '.player1'){
+  if (playerBeingAttacked === 'player1'){
     if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0] && app.player1Boats.battleship[1] === app.player1Boats.battleship[0] && app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0] && app.player1Boats.submarine[1] === app.player1Boats.submarine[0] && app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
       console.log('Game over!');
       app.gamePlayDiv = $('.gamePlay').hide();
-      return false
+      return false;
     }else {
-      return true
+      return true;
     };
   }else {
     if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0] && app.player2Boats.battleship[1] === app.player2Boats.battleship[0] && app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0] && app.player2Boats.submarine[1] === app.player2Boats.submarine[0] && app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
       console.log('Game over!');
       app.gamePlayForm = $('.gamePlay').hide();
-      return false
+      return false;
     }else {
-      return true
+      return true;
     };
   };
 };
@@ -1274,13 +1517,6 @@ app.init = () => {
   app.setFormElements = $('.setForm').hide();
   app.inputDiv = $('.startGame').hide();
   app.gamePlayDiv = $('.gamePlay').hide();
-
-  // Swal.fire({
-  //   title: 'Error!',
-  //   text: 'Do you want to continue',
-  //   icon: 'error',
-  //   confirmButtonText: 'Cool'
-  // });
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {
@@ -1299,14 +1535,13 @@ app.init = () => {
     // app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
     (async () => {
       const { value: text } = await Swal.fire({
-        input: 'textarea',
+        input: 'text',
         inputLabel: 'Your name:',
         inputPlaceholder: 'Type your name here...',
         inputAttributes: {
           'aria-label': 'Type your name here'
-        },
-        showCancelButton: true
-      })
+        }
+      });
       
       if (text) {
         Swal.fire(`Welcome ${text}!`)
@@ -1314,7 +1549,13 @@ app.init = () => {
         app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
         //set the player's and computer's boats
         app.setBoats('.player1', app.setComputersBoats);
-      }
+      }else{
+        Swal.fire(`You didn't enter a name. \nI will call you Captain Fantastico!`);
+        app.userName = 'Captain Fantastico';
+        app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
+        //set the player's and computer's boats
+        app.setBoats('.player1', app.setComputersBoats);
+      };
     })();
 
 
@@ -1337,7 +1578,8 @@ app.init = () => {
         
         console.log('guessForm has been submitted');
        e.preventDefault();
-        app.gamePlay();
+       app.playersTurn(app.computersTurn);
+        // app.gamePlay();
       }); 
     });
   });
