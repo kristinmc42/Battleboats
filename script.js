@@ -1024,7 +1024,7 @@ app.checkSquaresBelow = () => {
         // square below is a miss
         console.log(`can't check down, checking left`);
         // check square to left of last hit in the previous hit array
-        app.
+        app.computerHit.down = true;
         app.checkSquareToLeft();
       };
     }else {
