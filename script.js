@@ -1120,6 +1120,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           // sunk ship
           app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
+          app.player2Divs = $('.player2.carrier').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
           // alert('You sunk their carrier!');
         }else{
@@ -1133,6 +1134,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
            // sunk ship
           app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
+          app.player2Divs = $('.player2.battleship').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
           // alert('You sunk their battleship!');
         }else{
@@ -1146,6 +1148,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           // sunk a ship
           app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
+          app.player2Divs = $('.player2.cruiser').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
           // alert('You sunk their cruiser!');
         }else{
@@ -1159,6 +1162,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           // sunk ship
           app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
+          app.player2Divs = $('.player2.submarine').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
           // alert('You sunk their submarine!');
         }else{
@@ -1172,6 +1176,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           // sunk ship
           app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
+          app.player2Divs = $('.player2.destroyer').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
           // alert('You sunk their destroyer!');
         }else{
