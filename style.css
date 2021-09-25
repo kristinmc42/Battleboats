@@ -40,6 +40,7 @@ h1 {
   font-size: 4rem;
   color: darkblue;
   text-transform: uppercase;
+  text-shadow: 2px 2px rgb(186, 221, 244);
   padding: 0 3rem;
 }
 
@@ -396,6 +397,7 @@ h3 {
   text-transform: uppercase;
   font-size: 2.2rem;
   color: blue;
+  text-shadow: 2px 2px rgb(186, 221, 244);
   outline: 5px dotted black;
   margin: 0 1rem;
   padding: 0 .5rem;
