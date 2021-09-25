@@ -403,6 +403,16 @@ h3 {
   padding: 0 .5rem;
 }
 
+/* footer */
+footer p{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: darkblue;
+}
+
 /* media queries */
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
