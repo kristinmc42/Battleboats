@@ -288,10 +288,10 @@ h3 {
   background-color: white;
 }
 
-/* .hit {
-  background-color: red;
+.hit {
+  /* background-color: red; */
   color: rgb(255, 0, 0);
-} */
+}
 
 .player1.hit,
 .player2.hit {
