@@ -258,46 +258,52 @@ h3 {
   background-color: green;
 } */
 
+
 .carrier.player1.occuppied,
-.carrier.player2.hit {
+.carrier.player2.sunk {
   border: 1px solid lightskyblue;
 }
 
 .battleship.player1.occuppied,
-.battleship.player2.hit {
+.battleship.player2.sunk {
   border: 1px solid lightsalmon;
 }
 
 .cruiser.player1.occuppied,
-.cruiser.player2.hit {
+.cruiser.player2.sunk {
   border: 1px solid lightseagreen;
 }
 
 .submarine.player1.occuppied,
-.submarine.player2.hit {
+.submarine.player2.sunk {
   border: 1px solid violet;
 }
 
 .destroyer.player1.occuppied,
-.destroyer.player2.hit {
+.destroyer.player2.sunk {
   border: 1px solid lightgoldenrodyellow;
-}
-
-.hit {
-  background-color: red;
-  color: rgb(255, 0, 0);
 }
 
 .miss {
   background-color: white;
 }
 
-.player1.hit {
+/* .hit {
+  background-color: red;
+  color: rgb(255, 0, 0);
+} */
+
+.player1.hit,
+.player2.hit {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.player2.hit {
+  /* border: 1px solid black; */
+  background-color: black;
+}
 
 
 /* input div */
@@ -388,6 +394,11 @@ h3 {
 .winner,
 .lost {
   text-transform: uppercase;
+  font-size: 2.2rem;
+  color: blue;
+  outline: 5px dotted black;
+  margin: 0 1rem;
+  padding: 0 .5rem;
 }
 
 /* media queries */
