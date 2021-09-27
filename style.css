@@ -260,28 +260,28 @@ h3 {
 } */
 
 
-.carrier.player1.occuppied,
-.carrier.player2.sunk {
+div.carrier.player1.occuppied,
+div.carrier.player2.sunk {
   border: 1px solid lightskyblue;
 }
 
-.battleship.player1.occuppied,
-.battleship.player2.sunk {
+div.battleship.player1.occuppied,
+div.battleship.player2.sunk {
   border: 1px solid lightsalmon;
 }
 
-.cruiser.player1.occuppied,
-.cruiser.player2.sunk {
+div.cruiser.player1.occuppied,
+div.cruiser.player2.sunk {
   border: 1px solid lightseagreen;
 }
 
-.submarine.player1.occuppied,
-.submarine.player2.sunk {
+div.submarine.player1.occuppied,
+div.submarine.player2.sunk {
   border: 1px solid violet;
 }
 
-.destroyer.player1.occuppied,
-.destroyer.player2.sunk {
+div.destroyer.player1.occuppied,
+div.destroyer.player2.sunk {
   border: 1px solid lightgoldenrodyellow;
 }
 
