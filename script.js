@@ -968,6 +968,8 @@ app.computersTurn = () => {
     console.log(`The computer is the winner`);
     app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3><span class="lost">Game Over!</span> The computer won this round.</h3></div>`);
     app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
+    app.fillDiv = $('.fill').show();
+    app.bannerDiv = $('#banner').addClass('playerLost');
     return false;
   } else{
     return true;
@@ -1528,6 +1530,7 @@ app.init = () => {
   app.setFormElements = $('.setForm').hide();
   app.inputDiv = $('.startGame').hide();
   app.gamePlayDiv = $('.gamePlay').hide();
+  app.fillDiv = $('.fill').hide();
   
   // event listener for when new game is clicked
   app.newGameButton = $('#newGame').on('click', function (e) {

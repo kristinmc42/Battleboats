@@ -18,6 +18,7 @@ h1, h2, h3, p, a, div, button, i, span {
 body {
   letter-spacing: .07rem;
   font-family: 'Prompt', sans-serif;
+  position: relative;
 }
 
 /* header */
@@ -387,21 +388,97 @@ div.destroyer.player2.sunk {
   text-transform: uppercase;
 }
 
+/* gameOver div */
+.gameOver {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  color:white;
+  margin: 0;
+  padding: .5rem;
+}
+
+.gameOverText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* height:65vh; */
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
 .gameOver h3 {
-  font-size: 2rem;
-  margin-top: 1.8rem;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  color: white;
 }
 
 .winner,
 .lost {
   text-transform: uppercase;
-  font-size: 2.2rem;
-  color: blue;
-  text-shadow: 2px 2px rgb(186, 221, 244);
+  font-size: 2rem;
+  color: white;
+  text-shadow: 5px 5px black;
   outline: 5px dotted black;
   margin: 0 1rem;
-  padding: 0 .5rem;
+  padding: 0 1rem;
 }
+
+.winner {
+  color: blue;
+}
+
+#banner {
+  position: absolute;
+  width: 100vw;
+  height: 83vh;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+#banner.playerLost .fill {
+    animation-name: fillAction;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(.2, .6, .8, .4);
+    animation-duration: 10s;
+    animation-fill-mode: forwards;  
+}
+
+#banner.playerLost #waveShape {
+    animation-name: waveAction;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: .5s;
+    width:100vw;
+    height: 85vh;
+    fill: #04ACFF;
+    opacity: 0.3;
+    position: absolute;
+    z-index: 10;
+}
+@keyframes fillAction {
+    0% {
+      top: 0;
+        transform: translate(0, 20rem);
+    }
+    100% {
+      top:100vh;
+        transform: translate(0, -50rem);
+    }
+}
+@keyframes waveAction {
+    0% {
+        transform: translate(-150px, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
 
 /* footer */
 footer p{
