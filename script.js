@@ -1019,6 +1019,7 @@ app.checkSquaresBelow = () => {
         };
 
         app.computersGuess.row += i;
+        app.computerHit.down = true;
 
         console.log(`Checking rows below row 1; i= ${i}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
     
@@ -1065,6 +1066,7 @@ app.checkSquareToLeft = () => {
         console.log(`j = ${j}`);
       };
       app.computersGuess.column = app.columnArray[app.computersGuess.position - j];
+      app.computerHit.left = true;
 
       console.log(`Checking columns to left; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
     }else {
