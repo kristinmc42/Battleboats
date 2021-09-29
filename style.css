@@ -150,16 +150,16 @@ h2.player2 {
   justify-content: space-between;
   width: 200px;
 }
-.legend i:first-of-type {
+.legend i.player1 {
   color: forestgreen;
   align-self: flex-start;
 }
-.legend i:last-of-type {
+.legend i.player2 {
   color: rebeccapurple;
   align-self: flex-end;
 }
 
-i.sunk {
+.legend i.sunk {
   color: red;
 }
 
