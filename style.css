@@ -137,55 +137,16 @@ section::after {
   text-align: center;
 }
 
-/* .ships p.ship::before,
-.ships p.ship::after {
-  font-family: 'Font Awesome\ 5 Free';
-  content: "";
-  font-weight: 900;
-  display: inline;
-  color: forestgreen;
-  padding-right: .5rem;
-} */
-
-/* .ships p.ship::after {
-  color: rebeccapurple;
-  padding-right: 0;
-  padding-left: .5rem;
-} */
-
-i.player1,
 h2.player1 {
   color: forestgreen;
 }
 
-i.player2,
 h2.player2 {
   color: rebeccapurple;
 }
 
-i.carrier.player1,
-i.cruiser.player1 {
-  padding-right: 19px;
-}
-
-i.carrier.player2,
-i.cruiser.player2 {
-  padding-left: 19px;
-}
-
-i.destroyer.player1 {
-  padding-right: 7px;
-}
-
-i.destroyer.player2 {
-  padding-left: 7px;
-}
-
-.player1Sunk::before,
-.player1Sunk p.ship::before,
-.player1Sunk p.ship::after,
-.player2Sunk p.ship::before,
-.player2Sunk p.ship::after{
+i.player1Sunk,
+i.player2Sunk{
   color: red;
 }
 
