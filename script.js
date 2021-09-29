@@ -1121,7 +1121,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           // sunk ship
-          app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.carrier.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.carrier').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
           // alert('You sunk their carrier!');
@@ -1135,7 +1135,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
            // sunk ship
-          app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.battleship.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.battleship').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
           // alert('You sunk their battleship!');
@@ -1149,7 +1149,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           // sunk a ship
-          app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.cruiser.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.cruiser').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
           // alert('You sunk their cruiser!');
@@ -1163,7 +1163,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           // sunk ship
-          app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.submarine.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.submarine').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
           // alert('You sunk their submarine!');
@@ -1177,7 +1177,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           // sunk ship
-          app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.destroyer.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.destroyer').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
           // alert('You sunk their destroyer!');
@@ -1201,7 +1201,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           // ship sunk
-          app.legendDivI = $('p.carrier i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.carrier.player1').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
           // alert('They sunk your carrier!');
           // remove any previous hits with class carrier
@@ -1216,7 +1216,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           // ship sunk
-          app.legendDivI = $('p.battleship i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.battleship.player1').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
           // alert('They sunk your battleship!');
          
@@ -1232,7 +1232,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           // ship sunk
-          app.legendDivI = $('p.cruiser i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.cruiser.player1').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
           // alert('They sunk your cruiser!');
           // remove any previous hits with class cruiser
@@ -1247,7 +1247,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           // ship sunk
-          app.legendDivI = $('p.submarine i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.submarine.player1').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
           // alert('They sunk your submarine!');
           // remove any previous hits with class submarine
@@ -1262,7 +1262,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           // ship sunk
-          app.legendDivI = $('p.destroyer i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.destroyer.player1').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
           // alert('They sunk your destroyer!');
           // remove any previous hits with class destroyer

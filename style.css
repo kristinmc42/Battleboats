@@ -144,25 +144,23 @@ h2.player1 {
 h2.player2 {
   color: rebeccapurple;
 }
-
-i.player1Sunk,
-i.player2Sunk{
-  color: red;
-}
-
 .circleMarkers {
   display: flex;
   font-size: 1.4rem;
   justify-content: space-between;
   width: 200px;
 }
-i:first-of-type {
+.legend i:first-of-type {
   color: forestgreen;
   align-self: flex-start;
 }
-i:last-of-type {
+.legend i:last-of-type {
   color: rebeccapurple;
   align-self: flex-end;
+}
+
+i.sunk {
+  color: red;
 }
 
 .text {
