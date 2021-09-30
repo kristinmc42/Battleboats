@@ -96,9 +96,9 @@ button[type="submit"]:hover {
 section{
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: nowrap ;
   padding: 1rem 0;
   width: 100vw;
+  min-width: 1017px;
   position: relative;
   border-top: 3px double grey;
   border-bottom: 3px double grey;
@@ -126,7 +126,9 @@ section::after {
   background-color: white;
   border: 6px double darkblue;
   padding: .7rem;
-  
+  margin-left: .7rem;
+  max-height: 56vh;
+  min-width: 210px;
 }
 
 .ship {
@@ -135,39 +137,31 @@ section::after {
   text-align: center;
 }
 
-i.player1,
 h2.player1 {
   color: forestgreen;
 }
 
-i.player2,
 h2.player2 {
   color: rebeccapurple;
 }
-
-i.carrier.player1,
-i.cruiser.player1 {
-  padding-right: 19px;
+.circleMarkers {
+  display: flex;
+  font-size: 1.4rem;
+  justify-content: space-between;
+  width: 200px;
+}
+.legend i.player1 {
+  color: forestgreen;
+  align-self: flex-start;
+}
+.legend i.player2 {
+  color: rebeccapurple;
+  align-self: flex-end;
 }
 
-i.carrier.player2,
-i.cruiser.player2 {
-  padding-left: 19px;
-}
-
-i.destroyer.player1 {
-  padding-right: 7px;
-}
-
-i.destroyer.player2 {
-  padding-left: 7px;
-}
-
-i.player1Sunk,
-i.player2Sunk {
+.legend i.sunk {
   color: red;
 }
-
 
 .text {
   font-size: 1.2rem;
@@ -195,6 +189,12 @@ i.player2Sunk {
 
 
 /* game boards div*/
+#gameBoards {
+  display: flex;
+  justify-content: space-around;
+  max-width: 930px;
+  width: 55rem;
+}
 
 h2 {
   font-size: 2rem;
@@ -516,18 +516,25 @@ footer p{
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media (max-width: 969px) {
-  /* section {
+  section {
     flex-wrap: wrap;
+    min-width: 100vw;
   };
 
   .legend {
     flex-direction: row;
-    flex-wrap: nowrap;
-    width:90vw;
+    min-width: 93vmin;
+    width:90vmin;
+    margin-left: 0;
+    margin-bottom: .7rem;
+  }
+
+  .ship {
+    font-size: 1.4rem;
   }
   .ships {
     display: inline-block;
-  } */
+  }
 
 } 
 

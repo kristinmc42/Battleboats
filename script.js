@@ -1001,28 +1001,41 @@ app.checkSquaresBelow = () => {
     // square below is already guessed or is the last row
     if (app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + 1}`)  && !$(`.${app.computersGuess.column}${app.computersGuess.row + 1}.player1`).hasClass('sunk')){
       // square below was already guessed but not sunk
-      // check if square is a hit or miss
-      
+      // check if next square below is a hit or miss
       if ($(`.${app.computersGuess.column}${app.computersGuess.row + 1}.player1`).hasClass('hit')){
-        // current square is a hit and square 
-        // check if square below is a hit until not a hit
+        // square below is a hit 
+        // check if square below that is a hit 
         app.computersGuess.row += 1;
         let i =1;
         
         console.log(`The square is a hit. current guess is now:${app.computersGuess.column}${app.computersGuess.row}
         checking square: ${app.computersGuess.column}${app.computersGuess.row + i}`)
 
-        while(app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + i}`)){
+        while(app.player2Guesses.includes(`${app.computersGuess.column}${app.computersGuess.row + i}`)&& (app.computersGuess.row !== 10) && !$(`.${app.computersGuess.column}${app.computersGuess.row + i}.player1`).hasClass('sunk')){
+          // loop through until square is not guessed, is the last row or is sunk
           console.log(`${app.computersGuess.column}${app.computersGuess.row + i} was already guessed`);
+
           i++;
+          
           console.log(`i = ${i}`);
         };
 
+<<<<<<< HEAD
         app.computersGuess.row += i;
+=======
+>>>>>>> legend
         app.computerHit.down = true;
 
-        console.log(`Checking rows below row 1; i= ${i}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
-    
+        // check if current square was already guessed and sunk or is last row
+        if ($(`.${app.computersGuess.column}${app.computersGuess.row + i}.player1`).hasClass('sunk') || (app.computersGuess.row === 10)){
+          // can't check below, check square to left of last guess
+          console.log(`can't check down, checking left`);
+          app.computersGuess.row -= 1;
+          app.checkSquareToLeft();
+        } else{
+          // square was not guessed yet
+          app.computersGuess.row += i;
+        };
       }else {
         // square below is a miss
         console.log(`can't check down, checking left`);
@@ -1041,34 +1054,55 @@ app.checkSquaresBelow = () => {
 
 app.checkSquareToLeft = () => {
   if (app.computersGuess.column !== 'a' && !app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`)){
-    // square to left is not first column and was not previously guessed
+    // square is not first column and square to left was not previously guessed
     // guess square to the left
+    console.log('checking square to left');
     app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
     app.computerHit.left = true;
   }else if(app.computersGuess.column !== 'a'){
     // can't check square to the left
     app.computerHit.left = true;
     // need to check squares to the right 
+    console.log('square is in column a; checking square to right');
     app.checkSquareToRight();
   }else {
     // square to left was previously guessed
     app.computerHit.left = true;
+    console.log('square to left previously guessed');
     // need to check if it was a hit or a miss
     if ($(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('hit')  && !$(`.${app.columnArray[app.computersGuess.position - 1]}${app.computersGuess.row}`).hasClass('sunk')){
       // square was a hit but not sunk
       // check to left until not a hit
+      console.log('square to left was a hit but not sunk; checking further left');
       app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
       let j = 1;
 
-      while (app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`) && app.computersGuess.column !== 'a'){
+      while (app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`) && app.computersGuess.column !== 'a' && !$(`.${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`).hasClass('sunk')){
         console.log(`${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row} was already guessed`);
         j--;
         console.log(`j = ${j}`);
       };
+<<<<<<< HEAD
       app.computersGuess.column = app.columnArray[app.computersGuess.position - j];
       app.computerHit.left = true;
 
       console.log(`Checking columns to left; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
+=======
+      app.computerHit.left = true;
+      
+      // check if square was already guessed and sunk or in row a 
+      if ($(`.${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`).hasClass('sunk') || app.computersGuess.column === 'a'){
+        // can't check further left
+        // check to right of last guess
+        console.log('square to left is in column a or sunk; checking square to right of last guess');
+        app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
+        app.checkSquareToRight();
+      }else{
+        // square was not guessed
+        app.computersGuess.column = app.columnArray[app.computersGuess.position - j];
+        console.log(`square was not guessed; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
+      };
+>>>>>>> legend
     }else {
       // square to left was a miss or sunk
       app.computerHit.left = true;
@@ -1089,15 +1123,34 @@ app.checkSquareToRight = () => {
     let k = 1;
     app.computersGuess.column = app.columnArray[app.computersGuess.position + 1];
 
-    while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`)){
+    console.log(`now checking square ${app.computersGuess.column}${app.computersGuess.row}; k=${k}`)
+
+    while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`) && !$(`.${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`).hasClass('sunk')){
+      // while square is not row j and is previously guessed but not sunk
+      console.log('in while loop in checkSqaureToRight')
       app.computersGuess.column = app.columnArray[app.computersGuess.position + k];
       k++;
     };
-    app.computersGuess.column = app.columnArray[app.computersGuess.position + k]
+
     app.computerHit.right = true;
+    
+    // check if square is in row j or is sunk
+    if (app.computersGuess.column !== 'j' || $(`.${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`).hasClass('sunk')){
+      // can't check further right
+      // check left of last guess
+      console.log("can't check further right; cheking left of previous square");
+
+      app.computersGuess.column = app.columnArray[app.computersGuess.position - 1];
+      app.checkSquareToLeft();
+    }else{
+      app.computersGuess.column = app.columnArray[app.computersGuess.position + k];
+  
+      console.log(`now checking square ${app.computersGuess.column}${app.computersGuess.row}; k=${k}`);
+    };
   }else{
     // is last column or was sunk
     // check squares to left
+    console.log('square is in last column or was sunk; checking square to left');
     app.checkSquareToLeft();
   };
 };// end of app.checkSquareToRight
@@ -1123,7 +1176,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           // sunk ship
-          app.legendDivI = $('p.carrier i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.carrier.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.carrier').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
           // alert('You sunk their carrier!');
@@ -1137,7 +1190,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
            // sunk ship
-          app.legendDivI = $('p.battleship i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.battleship.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.battleship').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
           // alert('You sunk their battleship!');
@@ -1151,7 +1204,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           // sunk a ship
-          app.legendDivI = $('p.cruiser i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.cruiser.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.cruiser').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
           // alert('You sunk their cruiser!');
@@ -1165,7 +1218,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           // sunk ship
-          app.legendDivI = $('p.submarine i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.submarine.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.submarine').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
           // alert('You sunk their submarine!');
@@ -1179,7 +1232,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           // sunk ship
-          app.legendDivI = $('p.destroyer i.player2').addClass('player2Sunk');
+          // app.legendDivI = $('i.destroyer.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.destroyer').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
           // alert('You sunk their destroyer!');
@@ -1203,7 +1256,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.carrier[1] === app.player1Boats.carrier[0]){
           // ship sunk
-          app.legendDivI = $('p.carrier i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.carrier.player1').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
           // alert('They sunk your carrier!');
           // remove any previous hits with class carrier
@@ -1218,7 +1271,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.battleship[1] === app.player1Boats.battleship[0]){
           // ship sunk
-          app.legendDivI = $('p.battleship i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.battleship.player1').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
           // alert('They sunk your battleship!');
          
@@ -1234,7 +1287,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.cruiser[1] === app.player1Boats.cruiser[0]){
           // ship sunk
-          app.legendDivI = $('p.cruiser i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.cruiser.player1').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
           // alert('They sunk your cruiser!');
           // remove any previous hits with class cruiser
@@ -1249,7 +1302,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.submarine[1] === app.player1Boats.submarine[0]){
           // ship sunk
-          app.legendDivI = $('p.submarine i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.submarine.player1').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
           // alert('They sunk your submarine!');
           // remove any previous hits with class submarine
@@ -1264,7 +1317,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player1Boats.destroyer[1] === app.player1Boats.destroyer[0]){
           // ship sunk
-          app.legendDivI = $('p.destroyer i.player1').addClass('player1Sunk');
+          app.legendDivI = $('i.destroyer.player1').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
           // alert('They sunk your destroyer!');
           // remove any previous hits with class destroyer
