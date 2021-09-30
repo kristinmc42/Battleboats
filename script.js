@@ -1,52 +1,41 @@
-const app = {
-  // boats: [{name:'carrier', length: 5}, {name: 'battleship', length: 4}, {name: 'cruiser', length: 3}, {name: 'submarine', length: 3}, {name: 'destroyer', length: 2}],
+let app = {
+  columnArray = ["a","b","c","d","e","f","g","h","i","j"],
+  player1Boats = {
+    carrier: [5, 0],
+    battleship: [4, 0],
+    cruiser: [3, 0],
+    submarine: [3, 0],
+    destroyer: [2, 0]
+  },
+  player2Boats = {
+    carrier: [5, 0],
+    battleship: [4, 0],
+    cruiser: [3, 0],
+    submarine: [3, 0],
+    destroyer: [2, 0]
+  },
+  gameOver = {
+    finished: false,
+    player: ''
+  },
+  computersGuess = {
+    guess: '',
+    column:'',
+    row: 0,
+    position: 0
+  },
+  computerHit = {
+    hit: false,
+    guess: '',
+    left: false,
+    right: false,
+    up: false,
+    down: false
+  },
+  previousHitArray = [],
+  player1Guesses = [],
+  player2Guesses = [],
 };
-
-app.columnArray = ["a","b","c","d","e","f","g","h","i","j"];
-
-
-app.player1Boats = {
-  carrier: [5, 0],
-  battleship: [4, 0],
-  cruiser: [3, 0],
-  submarine: [3, 0],
-  destroyer: [2, 0]
-};
-app.player2Boats = {
-  carrier: [5, 0],
-  battleship: [4, 0],
-  cruiser: [3, 0],
-  submarine: [3, 0],
-  destroyer: [2, 0]
-};
-
-app.gameOver = {
-  finished: false,
-  player: ''
-};
-
-app.computersGuess = {
-  guess: '',
-  column:'',
-  row: 0,
-  position: 0
-};
-
-app.computerHit = {
-  hit: false,
-  guess: '',
-  left: false,
-  right: false,
-  up: false,
-  down: false
-};
-
-app.previousHitArray = [];
-
-app.player1Guesses = [];
-
-app.player2Guesses = [];
-
 
 app.resetForms = () => {
   //reset all input fields and radio buttons
@@ -76,14 +65,10 @@ app.setBoats = (player, callback) => {
   
   app.inputDiv = $('.input').prepend(`<p class="bolder animate__zoomIn">${app.userName}. Let's set your boats!</p>`);
   
-  
   setTimeout(function(){ 
     app.setFormElements = $('form[name="setCarrierForm"]').show();
-    
-
   }, 1600);
   
-
   // event listener for setting carrier
   app.setCarrierForm = $('form[name="setCarrierForm"]').on('submit', function(e) {
     // when the user clicks on the submit button: 
@@ -124,7 +109,7 @@ app.setBoats = (player, callback) => {
         e.preventDefault();
         
       } else {
-        // Carrier successfully placed
+        // Carrier successfully placed and hide carrier form
         // disable  setCarrier button and show form for Battleship
         
         app.setCarrierButton = $('#submitCarrier').attr('disabled', true);
@@ -174,7 +159,6 @@ app.setBoats = (player, callback) => {
         // reset battleship form and prompt for input again
         app.setBattleshipInput = $('#setBattleship').val('');
         app.setBattleshipRadioButtons = $('input[name="battleshipDirection"]').prop('checked', false);
-        
         e.preventDefault();
         
       } else {
@@ -368,164 +352,6 @@ app.setBoats = (player, callback) => {
     };
   });// end of setDestroyer event listener
 }; // end of app.setBoats function
-
-  //commented code below is for using prompt to get user input for setting boats
-  //prompt box blocked the game board though so wasn't ideal
-  // for (let i = 0; i < app.boats.length; i++){
-  
-  //   startingPosition = prompt(`Where would you like to set your ${app.boats[i].name} (${app.boats[i].length} tiles)? Select the starting square (eg. F4)`);
-    
-  //   startingPosition = startingPosition.toLowerCase();
-  //   startingPosition = '.' + startingPosition;
-    
-  //   let boatLength = app.boats[i].length;
-    
-  //   direction = prompt('Would you like to place it vertically or horizontally? (v/h)');
-  //   direction = direction.toLowerCase();
-
-  //   if (direction === 'v'){
-  //     vertical = true;
-  //   }else {
-  //     vertical = false;
-  //   };
-
-  //   console.log(startingPosition, direction, vertical)
-  //   app.placeOnBoard(startingPosition, boatLength, vertical, player);
-  //   app.inputDiv = $('.input').append(`<p>${app.boats[i].name}  - Placed</p>`);
-  // };
-
-
-// app.setCarrier = () => {
-//   //    assign the text field to variable startingPosition
-//   //    asssign variable vertical true or false depending on the radio button value
-
-//   let vertical = true;
-
-//   let startingPosition = $('#setCarrier').val();
-  
-//   startingPosition = app.checkEntryIsValid(startingPosition);
-  
-//   if (!startingPosition){
-//     app.setCarrierInput = $('#setCarrier').val('');
-//   }
-  
-//   const direction = $('input[name="carrierDirection"][type="radio"]:checked').val();
-
-//   if (direction === 'carrierVertical'){
-//     vertical = true;
-//   } else {
-//     vertical = false;
-//   }
-  
-//   const boatLength = 5;
-
-//   console.log(startingPosition, direction, vertical)
-
-//   return [startingPosition, vertical, boatLength];
-// }; //end of app.setCarrier function
-
-
-// app.setBattleship = () => {
-//   //    assign the text field to variable startingPosition
-//   //    asssign variable vertical true or false depending on the radio button value
-
-//   let vertical = true;
-
-//   let startingPosition = $('#setBattleship').val();
-//   startingPosition = '.' + startingPosition.toLowerCase();
-  
-//   const direction = $('input[name="battleshipDirection"][type="radio"]:checked').val();
-
-//   if (direction === 'battleshipVertical'){
-//     vertical = true;
-//   } else {
-//     vertical = false;
-//   }
-  
-//   const boatLength = 4;
-
-//   console.log(startingPosition, direction, vertical)
-
-
-//   return [startingPosition, vertical, boatLength];
-// }; //end of setBattleship function
-
-// app.setCruiser = () => {
-//   //    assign the text field to variable startingPosition
-//   //    asssign variable vertical true or false depending on the radio button value
-
-//   console.log('setcruiser app called');
-
-//   let vertical = true;
-
-//   let startingPosition = $('#setCruiser').val();
-//   startingPosition = '.' + startingPosition.toLowerCase();
-  
-//   const direction = $('input[name="cruiserDirection"][type="radio"]:checked').val();
-
-//   if (direction === 'cruiserVertical'){
-//     vertical = true;
-//   } else {
-//     vertical = false;
-//   }
-  
-//   const boatLength = 3;
-
-//   console.log(startingPosition, direction, vertical);
-
-
-//   return [startingPosition, vertical, boatLength];
-// }; //end of setCruiser function
-
-// app.setSubmarine = () => {
-//   //    assign the text field to variable startingPosition
-//   //    asssign variable vertical true or false depending on the radio button value
-
-//   let vertical = true;
-
-//   let startingPosition = $('#setSubmarine').val();
-//   startingPosition = '.' + startingPosition.toLowerCase();
-  
-//   const direction = $('input[name="submarineDirection"][type="radio"]:checked').val();
-
-//   if (direction === 'submarineVertical'){
-//     vertical = true;
-//   } else {
-//     vertical = false;
-//   }
-  
-//   const boatLength = 3;
-
-//   console.log(startingPosition, direction, vertical)
-
-
-//   return [startingPosition, vertical, boatLength];
-// }; //end of setSubmarine function
-
-// app.setDestroyer = () => {
-//   //    assign the text field to variable startingPosition
-//   //    asssign variable vertical true or false depending on the radio button value
-
-//   let vertical = true;
-
-//   let startingPosition = $('#setDestroyer').val();
-//   startingPosition = '.' + startingPosition.toLowerCase();
-  
-//   const direction = $('input[name="destroyerDirection"][type="radio"]:checked').val();
-
-//   if (direction === 'destroyerVertical'){
-//     vertical = true;
-//   } else {
-//     vertical = false;
-//   }
-  
-//   const boatLength = 2;
-
-//   console.log(startingPosition, direction, vertical)
-
-
-//   return [startingPosition, vertical, boatLength];
-// }; // end of setDestroyer function
 
 app.checkEntryIsValid = (startingPosition) => {
   // check that the value entered is a valid square (a-j and 1-10)
@@ -747,88 +573,25 @@ app.playersTurn = (callback) => {
     };
 
     // check if the square is occuppied
-    
-      const continueGame = app.checkGuess(playersGuess, 'player2');
-      if (!continueGame){
-        // game is over
-        console.log(`The player is the winner`);
-  
-        app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
-        </h3></div>`);
-        app.gameOverDiv = $('div.gameOver').append(`<h3>Congratulations ${app.userName}! You won!</h3>`)
-        app.launchConfetti();
-        return;
-      }else {
-        setTimeout(function(){
-          console.log('in setTimeout of playersTurn')
-          callback();
-        }, 2500);
-        // return;
-      };   
+    const continueGame = app.checkGuess(playersGuess, 'player2');
+    if (!continueGame){
+      // game is over
+      console.log(`The player is the winner`);
 
-    
+      app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
+      </h3></div>`);
+      app.gameOverDiv = $('div.gameOver').append(`<h3>Congratulations ${app.userName}! You won!</h3>`)
+      app.launchConfetti();
+      return;
+    }else {
+      setTimeout(function(){
+        console.log('in setTimeout of playersTurn')
+        callback();
+      }, 2500);
+      // return;
+    };   
   };
 }; // end of app.playersTurn
-
-// app.gamePlay = () => {
-//   // player's turn
-//   // when user submits guess, assign value of input to variable
-//   const playersInput = $('#playersGuess').val();
-//   let  playersGuess = playersInput;
-//   //check that it is a valid entry
-//   const playersGuessValid = app.checkEntryIsValid(playersGuess);
-  
-//   if (!playersGuessValid[0]){
-//     // guess isn't valid
-//     // reset players guess
-//     app.playersGuessInput = $('#playersGuess').val('');
-//     return;
-//   }else {
-//     // guess is a valid square
-//     playersGuess = playersGuessValid[1];
-//     //check if the square was already guessed
-//     if (app.player1Guesses.includes(playersGuess)){
-//       app.playersGuessInput = $('#playersGuess').val('');
-//       Swal.fire('That square was already guessed. \nPlease try again.');
-//       return; 
-//     }else {
-//       // add guess to player1Guesses array
-//       app.player1Guesses.push(playersGuess);
-//     };
-//     // check if the square is occuppied
-//     (async () => {
-//       const playerDone = await app.checkGuess(playersGuess, 'player2');
-//       if (playerDone){
-//         // game is over
-//         console.log(`The player is the winner`);
-
-//         app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="winner">Game Over!
-//         </h3></div>`);
-//         app.gameOverDiv = $('div.gameOver').append(`<h3 class="winner">Congratulations ${app.userName}! You won!</h3>`)
-//         app.launchConfetti();
-//         return;
-//       }else {
-//         // computer's turn
-//         (async() => {
-//           let nextRound = await app.computersTurn();
-//           if (nextRound){
-//             console.log('Computer is done. The game continues. Next Round');
-//             return;
-//           }
-//         })();
-//       };
-      
-//       // let nextRound = await Promise.all([playerDone, computerDone]);
-
-//       // if(nextRound){
-//       //   return;
-//       // }else {
-//       //   console.log(`nextRound threw an error`);
-//       // };
-
-//     })();
-//   };
-// };//end of app.gamePlay
 
 app.computersTurn = () => {
   // check if the computer had a hit with the last guess
@@ -853,10 +616,7 @@ app.computersTurn = () => {
           console.log(`${app.previousHitArray[index].guess} is in previousHitArray. index is odd`);
         };
       };
-
     };
-
-
     // assign column, row and position with values of previous hit
     if (app.computerHit.guess.length === 2){
       app.computersGuess.column = app.computerHit.guess[0];
@@ -878,7 +638,6 @@ app.computersTurn = () => {
 
       // for testing purposes only
       console.log(`column is ${app.computersGuess.column} and row is ${app.computersGuess.row} row is type of ${typeof(app.computersGuess.row)}`);
-
     };
     console.log(`${app.computersGuess.column}${app.computersGuess.row} was the previous guess by the computer` );
 
@@ -932,7 +691,6 @@ app.computersTurn = () => {
       console.log(`computerHit.up, down and left are true, right is false. Check square to left`);
       //check square to the left
       app.checkSquareToLeft();
-      
     
     // fifth direction condition (to right)
     }else if (app.computerHit.up && app.computerHit.down && app.computerHit.left && app.computerHit.right){
@@ -974,21 +732,6 @@ app.computersTurn = () => {
   } else{
     return true;
   };
-
-
-  // (async () => {
-  //   const computerDone = await app.checkGuess(app.computersGuess.guess, 'player1');
-        
-  //   if (computerDone){
-  //     // game is over
-  //     console.log(`The computer is the winner`);
-  //     app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3 class="lost">Game Over! The computer won this round.</h3></div>`);
-  //     app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! Better luck next time.</h3>`);
-  //     return false;
-  //   } else{
-  //     return true;
-  //   };
-  // })();
 }; // end of app.computersTurn
 
 app.checkSquaresBelow = () => {
@@ -1145,7 +888,7 @@ app.checkSquareToRight = () => {
 };// end of app.checkSquareToRight
 
 app.checkGuess = (playersGuess, playerBeingAttacked) => {
-  // if square is occuppied, change colour of square (NOTE: color is not changing; need to check CSS) and add bomb image; also, keep track of how many hits the boat has taken 
+  // if square is occuppied,  add bomb image; also, keep track of how many hits the boat has taken 
   // if not occuppied, change colour of square to show miss
   let continueGame = true;
 
@@ -1375,35 +1118,11 @@ app.hitOrMissAlert = (hitOrMiss, playersGuess, playerBeingAttacked) => {
       message = `${square} was a miss.`
     };
   };
-
   Swal.fire(`${message}`);
-
-  // Swal.fire({
-  //   title: `${message}`,
-  //   timer: 3000,
-  //   timerProgressBar: true,
-  //   didOpen: () => {
-  //     Swal.showLoading()
-  //     const b = Swal.getHtmlContainer().querySelector('b')
-  //     timerInterval = setInterval(() => {
-  //       b.textContent = Swal.getTimerLeft()
-  //     }, 3000)
-  //   },
-  //   willClose: () => {
-  //     clearInterval(timerInterval)
-  //   }
-  // }).then((result) => {
-    
-  //   if (result.dismiss === Swal.DismissReason.timer) {
-  //     console.log('I was closed by the timer')
-  //   };
-
-  // });
 };// end of app.hitOrMissAlert
 
 app.sunkAlert = (shipName, playerBeingAttacked, playersGuess) => {
   // alert when a ship is sunk
-  // let timerInterval;
   let youOrTheySunkMessage;
   const square = playersGuess.toUpperCase();
 
@@ -1427,37 +1146,6 @@ app.sunkAlert = (shipName, playerBeingAttacked, playersGuess) => {
     console.log(`Result:${continueGame}. The game will not continue. Game over.`);
     return false;
   };
-
-  // Swal.fire({
-  //   title: `${youOrTheySunkMessage}`,
-  //   timer: 3000,
-  //   timerProgressBar: true,
-  //   didOpen: () => {
-  //     Swal.showLoading()
-  //     const b = Swal.getHtmlContainer().querySelector('b')
-  //     timerInterval = setInterval(() => {
-  //       b.textContent = Swal.getTimerLeft()
-  //     }, 3000)
-  //   },
-  //   willClose: () => {
-  //     clearInterval(timerInterval)
-  //   }
-  // }).then((result) => {
-  //   /* Read more about handling dismissals below */
-  //   if (result.dismiss === Swal.DismissReason.timer) {
-  //     console.log('I was closed by the timer')
-  //   }
-
-  //   // check if game should continue 
-  //   const continueGame = app.checkAllBoatsSunk(playerBeingAttacked);
-  //   if (continueGame){
-  //     console.log(`The game will continue: ${continueGame}`);
-  //     return false;
-  //   }else{
-  //     console.log(`Result:${continueGame}. The game will not continue. Game over.`);
-  //     return true;
-  //   };
-  // })
 };// end of app.sunkAlert
 
 app.resetComputerHit = (remainingHits) => {
@@ -1615,8 +1303,6 @@ app.init = () => {
         app.setBoats('.player1', app.setComputersBoats);
       };
     })();
-
-
     
     // event listener for start game button
     app.startGameButton = $('#startGame').on('click', function(e){
