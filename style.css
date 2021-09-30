@@ -497,26 +497,82 @@ footer p{
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media (min-width: 600px) and (max-width: 969px){
-  /* section {
-   
-  };
+
+
+
+/* iPad in portrait mode */
+@media (max-width: 768px){
+  section {
+    flex-wrap: wrap;
+    min-width: 100vw;
+  }
 
   .legend {
-    display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    width:90vw;
+    min-width: 93vmin;
+    width:90vmin;
+    margin: 1rem 0;
+    
+  }
+
+  .circleMarkers {
+    justify-content: space-around;
+    width: 100px;
+    padding: .4rem 0;
+  }
+
+  .legend img {
+    display: none;
+  }
+
+  .ship {
+    font-size: 1.4rem;
   }
   .ships {
     display: inline-block;
-  /* } */
+    margin: 0 auto;
+    padding-right: .6rem;
+    border-right: 2px dashed darkblue;
+  }
+
+  .ships:last-of-type{
+    border: none;
+  }
+
+  .text {
+    margin: 0;
+    border: none;
+  }
+
+  #gameBoards {
+    margin-bottom: 1rem;
+  }
+
+  .input p:last-of-type{
+    margin: 1rem 0;
+  }
+
+  .input button {
+    margin-top: 1rem;
+  }
+  #submitCruiser {
+    margin-left: 3rem;
+  }
+
+  .startGame h3{
+    margin: 3rem 0 2rem 0;
+  }
+
+  #guessForm {
+    margin-top: 3rem;
+  }
 } 
 
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media (max-width: 969px) {
-  section {
+/* iPad in portrait mode */
+@media (min-width: 768px) and (max-width: 969px) {
+  /* section {
     flex-wrap: wrap;
     min-width: 100vw;
   };
@@ -534,7 +590,7 @@ footer p{
   }
   .ships {
     display: inline-block;
-  }
+  } */
 
 } 
 
