@@ -1020,10 +1020,6 @@ app.checkSquaresBelow = () => {
           console.log(`i = ${i}`);
         };
 
-<<<<<<< HEAD
-        app.computersGuess.row += i;
-=======
->>>>>>> legend
         app.computerHit.down = true;
 
         // check if current square was already guessed and sunk or is last row
@@ -1082,12 +1078,6 @@ app.checkSquareToLeft = () => {
         j--;
         console.log(`j = ${j}`);
       };
-<<<<<<< HEAD
-      app.computersGuess.column = app.columnArray[app.computersGuess.position - j];
-      app.computerHit.left = true;
-
-      console.log(`Checking columns to left; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
-=======
       app.computerHit.left = true;
       
       // check if square was already guessed and sunk or in row a 
@@ -1102,7 +1092,6 @@ app.checkSquareToLeft = () => {
         app.computersGuess.column = app.columnArray[app.computersGuess.position - j];
         console.log(`square was not guessed; j= ${j}; next guess should be ${app.computersGuess.column}${app.computersGuess.row}`);
       };
->>>>>>> legend
     }else {
       // square to left was a miss or sunk
       app.computerHit.left = true;
