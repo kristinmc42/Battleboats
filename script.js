@@ -819,7 +819,7 @@ app.checkSquareToLeft = () => {
       while (app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`) && app.computersGuess.column !== 'a' && !$(`.${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`).hasClass('sunk') && !$(`.${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row}`).hasClass('miss')){
         console.log(`${app.columnArray[app.computersGuess.position - j]}${app.computersGuess.row} was already guessed`);
         j--;
-        console.log(`j = ${j}`);
+        console.log(`in checkLeft while loop, j = ${j}`);
       };
       app.computerHit.left = true;
       
@@ -859,9 +859,9 @@ app.checkSquareToRight = () => {
 
     while(app.computersGuess.column !== 'j' && app.player2Guesses.includes(`${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`) && !$(`.${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`).hasClass('sunk') && !$(`.${app.columnArray[app.computersGuess.position + k]}${app.computersGuess.row}`).hasClass('miss')){
       // while square is not row j and is previously guessed but not sunk
-      console.log('in while loop in checkSqaureToRight');
-      app.computersGuess.column = app.columnArray[app.computersGuess.position + k];
       k++;
+
+      console.log(`in while loop in checkSqaureToRight k=${k}`);
     };
 
     app.computerHit.right = true;
