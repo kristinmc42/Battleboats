@@ -491,15 +491,6 @@ footer p{
 }
 
 /* media queries */
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-
-
-
 /* iPad in portrait mode */
 @media (max-width: 768px){
   section {
@@ -575,6 +566,25 @@ footer p{
     display: block;
   }
 } 
+
+/* Extra small devices (phones, 600px and down) */
+/* in portrait mode */
+@media (min-width: 360px) and (max-width:414px){
+  .legend {
+    flex-wrap: wrap;
+  }
+  .ship {
+    font-size: 1.2rem;
+  }
+  .text {
+    font-size: 1.1rem;
+  }
+}
+
+
+
+
+
 
 
 /* Medium devices (landscape tablets, 768px and up) */
