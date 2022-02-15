@@ -341,11 +341,6 @@ app.setBoats = (player, callback) => {
         app.inputDiv = $('.startGame').show();
         
         app.inputDiv = $('.startGame').prepend(`<h3 class="animate__zoomIn">Let's go!</h3>`);
-
-        // setTimeout(function(){$('.startGame').append(`<button id= 'startGame'>Start Game</button>`);}, 1500);
-        
-
-        // app.startGameButton = $('#startGame').show();
     
         callback();
       };
@@ -368,7 +363,7 @@ app.checkEntryIsValid = (startingPosition) => {
   const validRow = !isNaN(row);
 
   if (!app.columnArray.includes(startingPosition[0]) || !validRow || row < 1 || row > 10 || startingPosition.length > 3 || startingPosition.length < 2){
-    // alert('Sorry. That is not a valid square. Please try again.');
+    // if guess is valid or not
     Swal.fire('Sorry. \nThat is not a valid square. \nPlease try again.');
     return [false, startingPosition];
   } else {
@@ -424,7 +419,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
     // if yes, returns false and quits function
     for (let a = 0; a < boatLength; a++){
       if ($(`${player}.${column}${convertedRow + a}`).hasClass('occuppied')){
-        // alert('Oops! That boat overlaps another. Please try again.');
+        // displays error message
         Swal.fire('Oops! \nThat boat overlaps another. \nPlease try again.');
         return false;
       };
@@ -444,7 +439,7 @@ app.placeOnBoard = (shipArray, player, boatName) => {
       column = app.columnArray[convertedColumn + b];
 
       if ($(`${player}.${column}${convertedRow}`).hasClass('occuppied')){
-        // alert('Oops! That boat overlaps another. Please try again.');
+        // shows alert
         Swal.fire('Oops! \nThat boat overlaps another. \nPlease try again.');
         return false;
       };
@@ -461,7 +456,6 @@ app.placeOnBoard = (shipArray, player, boatName) => {
     return true;
   }else {
     // condition for when boat length will be outside of the board dimensions
-    // alert('The boat does not fit inside the board in that direction. Please try again')
     Swal.fire('The boat does not fit inside the board in that direction. \nPlease try again.');
     return false;
   };
@@ -908,10 +902,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
         
         if (app.player2Boats.carrier[1] === app.player2Boats.carrier[0]){
           // sunk ship
-          // app.legendDivI = $('i.carrier.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.carrier').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
-          // alert('You sunk their carrier!');
+         
         }else{
           // hit but didn't sink a ship
           app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
@@ -922,10 +915,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.battleship[1] === app.player2Boats.battleship[0]){
            // sunk ship
-          // app.legendDivI = $('i.battleship.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.battleship').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
-          // alert('You sunk their battleship!');
+         
         }else{
           // hit but didn't sink a ship
           app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
@@ -936,10 +928,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.cruiser[1] === app.player2Boats.cruiser[0]){
           // sunk a ship
-          // app.legendDivI = $('i.cruiser.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.cruiser').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
-          // alert('You sunk their cruiser!');
+        
         }else{
           // hit but didn't sink a ship
           app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
@@ -950,10 +941,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.submarine[1] === app.player2Boats.submarine[0]){
           // sunk ship
-          // app.legendDivI = $('i.submarine.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.submarine').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
-          // alert('You sunk their submarine!');
+          
         }else{
           // hit but didn't sink ship
           app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
@@ -964,10 +954,9 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
         if (app.player2Boats.destroyer[1] === app.player2Boats.destroyer[0]){
           // sunk ship
-          // app.legendDivI = $('i.destroyer.player2').addClass('player2Sunk');
           app.player2Divs = $('.player2.destroyer').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
-          // alert('You sunk their destroyer!');
+          
         }else{
           // hit but didn't sink ship
           app.hitOrMissAlert('hit', playersGuess, playerBeingAttacked);
@@ -990,7 +979,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           // ship sunk
           app.legendDivI = $('i.carrier.player1').addClass('sunk');
           continueGame = app.sunkAlert('carrier', playerBeingAttacked, playersGuess);
-          // alert('They sunk your carrier!');
+          
           // remove any previous hits with class carrier
           app.removeHitsWithBoatClass('carrier');
         }else{
@@ -1005,7 +994,6 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           // ship sunk
           app.legendDivI = $('i.battleship.player1').addClass('sunk');
           continueGame = app.sunkAlert('battleship', playerBeingAttacked, playersGuess);
-          // alert('They sunk your battleship!');
          
           // remove any previous hits with class battleship
           app.removeHitsWithBoatClass('battleship');
@@ -1021,7 +1009,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           // ship sunk
           app.legendDivI = $('i.cruiser.player1').addClass('sunk');
           continueGame = app.sunkAlert('cruiser', playerBeingAttacked, playersGuess);
-          // alert('They sunk your cruiser!');
+       
           // remove any previous hits with class cruiser
           app.removeHitsWithBoatClass('cruiser');
         }else{
@@ -1036,7 +1024,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           // ship sunk
           app.legendDivI = $('i.submarine.player1').addClass('sunk');
           continueGame = app.sunkAlert('submarine', playerBeingAttacked, playersGuess);
-          // alert('They sunk your submarine!');
+     
           // remove any previous hits with class submarine
           app.removeHitsWithBoatClass('submarine');
         }else{
@@ -1051,7 +1039,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
           // ship sunk
           app.legendDivI = $('i.destroyer.player1').addClass('sunk');
           continueGame = app.sunkAlert('destroyer', playerBeingAttacked, playersGuess);
-          // alert('They sunk your destroyer!');
+  
           // remove any previous hits with class destroyer
           app.removeHitsWithBoatClass('destroyer');
         }else{
@@ -1095,7 +1083,7 @@ app.checkGuess = (playersGuess, playerBeingAttacked) => {
 
 app.hitOrMissAlert = (hitOrMiss, playersGuess, playerBeingAttacked) => {
   // shows an alert with the square guessed and if it was a hit or miss
-  // let timerInterval;
+ 
   let message;
   const square = playersGuess.toUpperCase();
 
@@ -1277,8 +1265,6 @@ app.init = () => {
     app.restartButton = $('#restart').show();
 
     //get player's name and display it on their board
-    // app.userName = prompt("What is your name?");
-    // app.h3UserName = $('#user').html(`(${app.userName}'s board)`);
     (async () => {
       const { value: text } = await Swal.fire({
         input: 'text',
@@ -1319,11 +1305,9 @@ app.init = () => {
       app.gamePlayDiv = $('.gamePlay').show();
 
       app.playersGuessForm = $('#guessForm').on('submit', function(e){
-        
         console.log('guessForm has been submitted');
-       e.preventDefault();
-       app.playersTurn(app.computersTurn);
-        // app.gamePlay();
+        e.preventDefault();
+        app.playersTurn(app.computersTurn);
       }); 
     });
   });
