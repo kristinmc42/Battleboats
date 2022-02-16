@@ -16,7 +16,8 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" href="./assets/icons8-battleship-48.png" />
 
   <!-- my style sheet -->
   <link rel="stylesheet" href="style.css">
@@ -26,15 +27,15 @@
   <header class="wrapper">
     <nav>
      
-      <img src="./assets/shipClipart.png" alt="clipart of animated style battleship" id="headerImage">
+      <img src="./assets/shipClipart.png" alt="clipart of animated style battleship" id="headerImage" class="headerImage">
       <h1>Battleboats</h1>
   
       <ul>
         <li>
-          <button id="newGame">New Game</button>
+          <button id="newGame" class="button">New Game</button>
         </li>
         <li>
-          <button id="restart">Restart</button>
+          <button id="restart" class="button">Restart</button>
         </li>
 
       </ul>
@@ -42,7 +43,7 @@
   </header>
 
   <!-- gameboards section -->
-  <div id="banner">
+  <div id="banner" class="banner">
     <section > 
       <!-- start of legend div -->
       <div class="legend">
@@ -51,7 +52,7 @@
           <p class="ship carrier">Carrier</p>
           <div class="circleMarkers">
             <i class="fas fa-times-circle carrier player1"></i>
-            <img src="./assets/carrier.png" alt="black and white silhouette of a carrier ship" id="carrierImage">
+            <img src="./assets/carrier.png" alt="black and white silhouette of a carrier ship" id="carrierImage" class="boatImg">
             <i class="fas fa-times-circle carrier player2"></i>
           </div>
           <p class="text">5 tiles long</p>
@@ -61,7 +62,7 @@
           <p class="ship battleship">Battleship</p>
           <div class="circleMarkers">
             <i class="fas fa-times-circle battleship player1"></i>
-            <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage">
+            <img src="./assets/battleship.png" alt="black and white silhouette of a battleship" id="battleshipImage" class="boatImg">
             <i class="fas fa-times-circle battleship player2"></i>
           </div>
           <p class="text">4 tiles long</p>
@@ -71,7 +72,7 @@
           <p class="ship cruiser">Cruiser</p>
           <div class="circleMarkers">
             <i class="fas fa-times-circle cruiser player1"></i>
-            <img src="./assets/cruiser.png" alt="black and white silhouette of a naval cruiser" id="cruiserImage">
+            <img src="./assets/cruiser.png" alt="black and white silhouette of a naval cruiser" id="cruiserImage" class="boatImg">
             <i class="fas fa-times-circle cruiser player2"></i>
           </div>
           <p class="text">3 tiles long</p>
@@ -81,7 +82,7 @@
           <p class="ship submarine">Submarine</p>
           <div class="circleMarkers">
             <i class="fas fa-times-circle submarine player1"></i>
-            <img src="./assets/submarine.png" alt="black and white silhouette of a submarine" id="submarineImage">
+            <img src="./assets/submarine.png" alt="black and white silhouette of a submarine" id="submarineImage" class="boatImg">
             <i class="fas fa-times-circle submarine player2"></i>
           </div>
           <p class="text">3 tiles long</p>
@@ -91,7 +92,7 @@
           <p class="ship destroyer">Destroyer</p>
           <div class="circleMarkers">
             <i class="fas fa-times-circle destroyer player1"></i>
-            <img src="./assets/destroyer.png" alt="black and white silhouette of a naval destroyer" id="destroyerImage">
+            <img src="./assets/destroyer.png" alt="black and white silhouette of a naval destroyer" id="destroyerImage" class="boatImg">
             <i class="fas fa-times-circle destroyer player2"></i>
           </div>
           <p class="text">2 tiles long</p>
@@ -100,7 +101,7 @@
       <!-- end of legend div -->
       
       <!-- gameBoards Div -->
-      <div id="gameBoards">
+      <div id="gameBoards" class="gameBoards">
         <!-- start of player1 div -->
         <div class="player1Board">
           <!-- will display board for Player 1 (user) -->
@@ -434,7 +435,7 @@
         <input type="text" id="setCruiser" onfocus="this.value=''" name="setCruiser" placeholder="e.g. F4" autocomplete="off">
         <label for="cruiserVertical">Vertical <input type="radio" name="cruiserDirection" value="vertical" id="cruiserVertical"></label>
         <label for="cruiserHorizontal">Horizontal <input type="radio" name="cruiserDirection"  value="horizontal" id="cruiserHorizontal"></label>
-        <button type="submit" id="submitCruiser">Set Cruiser</button>
+        <button type="submit" id="submitCruiser" class="submitCruiser">Set Cruiser</button>
       </form>
       <!-- Form for Submarine -->
       <form action="#" method="#" class="setForm" name="setSubmarineForm">
@@ -457,14 +458,14 @@
     <!-- end of input section -->
     
     <div class="startGame">
-      <button id= 'startGame'>Start Game</button>
+      <button id= 'startGame' class="button">Start Game</button>
     </div>
 
     <div class="gamePlay">
-      <form action="#" method="#" class="guess" name="playerGuess" id="guessForm">
+      <form action="#" method="#" class="guess" name="playerGuess" id="guessForm" class="guessForm">
         <label for="playersGuess">Choose a square</label>
         <input type="text" id ="playersGuess" name="playersGuess" placeholder="e.g. F4 " onfocus="this.value=''" autocomplete="off">
-        <button type="submit" id="attack">Attack!</button>
+        <button type="submit" id="attack" class="attack">Attack!</button>
       </form>
     </div>
 
@@ -482,7 +483,7 @@
 
   <!-- footer -->
   <footer>
-    <p>Copyright @2021 K McCollum</p>
+    <p>Copyright @2022 K McCollum</p>
   </footer>
 
   <!-- end of footer -->

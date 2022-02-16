@@ -24,8 +24,6 @@ body {
 /* header */
 header {
   background-color: white;
-  /* border: 3px double grey; */
- 
   margin-bottom: 1rem;
 }
 
@@ -45,7 +43,7 @@ h1 {
   padding: 0 3rem;
 }
 
-#headerImage {
+.headerImage {
   width: 100px;
   height: auto;
 }
@@ -56,8 +54,6 @@ ul {
   justify-content: flex-end;
   align-items: center;
   list-style: none;
-  /* width: 50%; */
-  
 }
 
 a {
@@ -79,11 +75,7 @@ button[type="submit"]:hover {
   background-color: darkblue;
 }
 
-#newGame, 
-#restart,
-#saveGame,
-#next,
-#startGame {
+.button {
   border: 2px double darkblue;
   width: 130px;
   height: 50px;
@@ -176,11 +168,7 @@ h2.player2 {
   margin: 0;
 }
  
-#carrierImage,
-#battleshipImage,
-#cruiserImage,
-#submarineImage,
-#destroyerImage {
+.boatImg {
   height:auto;
   width: 70px;
   margin-left: 20%;
@@ -189,7 +177,7 @@ h2.player2 {
 
 
 /* game boards div*/
-#gameBoards {
+.gameBoards {
   display: flex;
   justify-content: space-around;
   max-width: 930px;
@@ -291,7 +279,6 @@ div.destroyer.player2.sunk {
 }
 
 .hit {
-  /* background-color: red; */
   color: rgb(255, 0, 0);
 }
 
@@ -303,7 +290,6 @@ div.destroyer.player2.sunk {
 }
 
 .player2.hit {
-  /* border: 1px solid black; */
   background-color: black;
 }
 
@@ -384,7 +370,7 @@ div.destroyer.player2.sunk {
   margin-top: 2rem;
 }
 
-#attack {
+.attack {
   text-transform: uppercase;
 }
 
@@ -404,7 +390,6 @@ div.destroyer.player2.sunk {
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* height:65vh; */
   width:100%;
   margin: 0;
   padding: 0;
@@ -431,7 +416,7 @@ div.destroyer.player2.sunk {
   color: blue;
 }
 
-#banner {
+.banner {
   position: absolute;
   width: 100vw;
   height: 83vh;
@@ -440,7 +425,7 @@ div.destroyer.player2.sunk {
   transform: translate3d(0, 0, 0);
 }
 
-#banner.playerLost .fill {
+.banner.playerLost .fill {
     animation-name: fillAction;
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(.2, .6, .8, .4);
@@ -448,7 +433,7 @@ div.destroyer.player2.sunk {
     animation-fill-mode: forwards;  
 }
 
-#banner.playerLost #waveShape {
+.banner.playerLost #waveShape {
     animation-name: waveAction;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
@@ -538,7 +523,7 @@ and (orientation : portrait){
     border: none;
   }
 
-  #gameBoards {
+  .gameBoards {
     margin-bottom: 1rem;
   }
 
@@ -549,7 +534,7 @@ and (orientation : portrait){
   .input button {
     margin-top: 1rem;
   }
-  #submitCruiser {
+  .submitCruiser {
     margin-left: 3rem;
   }
 
@@ -557,7 +542,7 @@ and (orientation : portrait){
     margin: 3rem 0 2rem 0;
   }
 
-  #guessForm {
+  .guessForm {
     margin-top: 3rem;
   }
 
@@ -565,7 +550,7 @@ and (orientation : portrait){
     margin: 1.3rem 0;
   }
 
-  #indent {
+  .indent {
     display: block;
   }
 } 
@@ -593,7 +578,7 @@ and (orientation : portrait){
     display: none;
   }
 
-  #gameBoards {
+  .gameBoards {
     flex-direction: column;
     max-width: 370px;
   }
@@ -613,46 +598,5 @@ and (orientation : portrait){
   .text {
     font-size: 1.1rem;
   }
-}
-
-
-
-
-
-
-
-/* Medium devices (landscape tablets, 768px and up) */
-/* iPad in portrait mode */
-@media (min-width: 768px) and (max-width: 969px) {
-  /* section {
-    flex-wrap: wrap;
-    min-width: 100vw;
-  };
-
-  .legend {
-    flex-direction: row;
-    min-width: 93vmin;
-    width:90vmin;
-    margin-left: 0;
-    margin-bottom: .7rem;
-  }
-
-  .ship {
-    font-size: 1.4rem;
-  }
-  .ships {
-    display: inline-block;
-  } */
-
-} 
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  
-} 
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  
 }
 

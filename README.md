@@ -1,5 +1,5 @@
 # Battleboats
-Play Battle Boats against the computer. Built with JavaScript, JQuery, HTML and CSS. Optimized for larger screens.
+Play Battle Boats against the computer. Built with JavaScript, JQuery, HTML and CSS. Optimized for larger screens (iPads and up).
 
 This is still in beta testing so there are still console.logs to continue debugging the logic.
 
