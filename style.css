@@ -492,7 +492,10 @@ footer p{
 
 /* media queries */
 /* iPad in portrait mode */
-@media (max-width: 768px){
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait){
   section {
     flex-wrap: wrap;
     min-width: 100vw;
@@ -566,6 +569,37 @@ footer p{
     display: block;
   }
 } 
+
+/* stack boards above each other */
+@media (max-width: 768px){
+  section {
+    
+    justify-content: center;
+    min-width: 370px;
+  }
+  .legend {
+   min-width: 130px;
+  }
+  /* .ships {
+    
+  } */
+   .circleMarkers {
+    justify-content: space-evenly;
+    width: 100px;
+    padding: .4rem 0;
+  }
+
+  .legend img {
+    display: none;
+  }
+
+  #gameBoards {
+    flex-direction: column;
+    max-width: 370px;
+  }
+}
+
+
 
 /* Extra small devices (phones, 600px and down) */
 /* in portrait mode */
