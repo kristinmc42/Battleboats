@@ -719,7 +719,7 @@ app.computersTurn = () => {
     // game is over
     console.log(`The computer is the winner`);
     app.gamePlayDiv = $('.gamePlay').after(`<div class="gameOver"><h3><span class="lost">Game Over!</span> The computer won this round.</h3></div>`);
-    app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! <span id="indent">Better luck next time.</span></h3>`);
+    app.gameOverDiv = $('div.gameOver').append(`<h3>Good battle ${app.userName}! <span id="indent" class="indent">Better luck next time.</span></h3>`);
     app.fillDiv = $('.fill').show();
     app.bannerDiv = $('#banner').addClass('playerLost');
     return false;
